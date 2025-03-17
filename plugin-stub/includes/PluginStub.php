@@ -119,8 +119,8 @@ final class PluginStub {
         defined( 'PLUGIN_STUB_INC_DIR' ) || define( 'PLUGIN_STUB_INC_DIR', PLUGIN_STUB_DIR . '/includes' );
         defined( 'PLUGIN_STUB_TEMPLATE_DIR' ) || define( 'PLUGIN_STUB_TEMPLATE_DIR', PLUGIN_STUB_DIR . '/templates' );
         defined( 'PLUGIN_STUB_PLUGIN_ASSET' ) || define( 'PLUGIN_STUB_PLUGIN_ASSET', plugins_url( 'assets', PLUGIN_STUB_FILE ) );
-        defined( 'PLUGIN_STUB_PLUGIN_ADMIN_ASSET' ) || define( 'PLUGIN_STUB_PLUGIN_ADMIN_ASSET', plugins_url( 'admin', PLUGIN_STUB_PLUGIN_ASSET ) );
-        defined( 'PLUGIN_STUB_PLUGIN_PUBLIC_ASSET' ) || define( 'PLUGIN_STUB_PLUGIN_PUBLIC_ASSET', plugins_url( 'public', PLUGIN_STUB_PLUGIN_ASSET ) );
+        defined( 'PLUGIN_STUB_PLUGIN_ADMIN_ASSET' ) || define( 'PLUGIN_STUB_PLUGIN_ADMIN_ASSET' , PLUGIN_STUB_PLUGIN_ASSET . '/admin' );
+        defined( 'PLUGIN_STUB_PLUGIN_PUBLIC_ASSET' ) || define( 'PLUGIN_STUB_PLUGIN_PUBLIC_ASSET' , PLUGIN_STUB_PLUGIN_ASSET . '/public' );
 
         // give a way to turn off loading styles and scripts from parent theme
         defined( 'PLUGIN_STUB_LOAD_STYLE' ) || define( 'PLUGIN_STUB_LOAD_STYLE', true );
