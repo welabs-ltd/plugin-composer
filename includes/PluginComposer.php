@@ -18,7 +18,7 @@ final class PluginComposer {
 	 *
 	 * @var string
 	 */
-	public $version = '1.0.0';
+	public $version = '1.1.0';
 
 	/**
 	 * Instance of self
@@ -59,7 +59,7 @@ final class PluginComposer {
 	 * and if it doesn't find one, creates it.
 	 */
 	public static function init() {
-        if ( self::$instance === null ) {
+		if ( self::$instance === null ) {
 			self::$instance = new self();
 		}
 
@@ -86,7 +86,8 @@ final class PluginComposer {
 	 *
 	 * Nothing being called here yet.
 	 */
-	public function activate() {        // Rewrite rules during plugin_composer activation
+	public function activate() {
+		// Rewrite rules during plugin_composer activation
 		if ( $this->has_woocommerce() ) {
 			$this->flush_rewrite_rules();
 		}
@@ -162,7 +163,7 @@ final class PluginComposer {
 		// initialize the classes
 		add_action( 'init', array( $this, 'init_classes' ), 4 );
 		add_action( 'plugins_loaded', array( $this, 'after_plugins_loaded' ) );
-        do_action( 'welabs_plugin_composer_loaded' );
+		do_action( 'welabs_plugin_composer_loaded' );
 	}
 
 	/**
@@ -180,33 +181,33 @@ final class PluginComposer {
 	 * @return void
 	 */
 	public function init_classes() {
-		$this->container['shortcode'] = new ShortCode();
-		$this->container['assets'] = new Assets();
+		$this->container['shortcode']   = new ShortCode();
+		$this->container['assets']      = new Assets();
 		$this->container['file_system'] = new FileSystem();
-		$this->container['builder'] = new PluginBuilder( $this->get_file_system() );
+		$this->container['builder']     = new PluginBuilder( $this->get_file_system() );
 	}
 
-    /**
-     * Get the filesystem class.
-     *
-     * @return \WeLabs\PluginComposer\Contracts\FileSystemContract
-     */
-    public function get_file_system() {
-        if ( ! $this->file_system ) {
+	/**
+	 * Get the filesystem class.
+	 *
+	 * @return \WeLabs\PluginComposer\Contracts\FileSystemContract
+	 */
+	public function get_file_system() {
+		if ( ! $this->file_system ) {
 			$this->container['file_system'] = new FileSystem();
-        }
+		}
 
-        return $this->file_system;
-    }
+		return $this->file_system;
+	}
 
-    /**
-     * Get the plugin builder.
-     *
-     * @return \WeLabs\PluginComposer\Contracts\BuilderContract
-     */
-    public function get_builder() {
+	/**
+	 * Get the plugin builder.
+	 *
+	 * @return \WeLabs\PluginComposer\Contracts\BuilderContract
+	 */
+	public function get_builder() {
 		return $this->builder;
-    }
+	}
 
 	/**
 	 * Executed after all plugins are loaded
