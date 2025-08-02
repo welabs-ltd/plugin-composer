@@ -8,7 +8,7 @@
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
-Generate wordpress plugin boilerplate having `PSR4` auto-loading.
+Generate wordpress plugin boilerplate having `PSR4` auto-loading with enhanced security features.
 
 ## Description ##
 
@@ -22,6 +22,20 @@ You may easily generate a PSR4 auto-loading WordPress plugin by submitting a sim
 
 
 👉 **Official Demo Link:** Try out the [Plugin Composer](https://welabs.dev/plugin-composer).
+
+## 🔒 Security Features
+
+This plugin includes comprehensive security measures:
+
+- **Input Validation**: All form inputs are validated and sanitized
+- **XSS Protection**: All outputs are properly escaped
+- **Path Traversal Protection**: File operations are secured against directory traversal
+- **Rate Limiting**: Protection against abuse with configurable limits
+- **User Capability Checks**: Only authorized users can generate plugins
+- **Comprehensive Logging**: Security events and errors are logged
+- **Configuration Management**: Centralized, filterable configuration
+
+For detailed security information, see [SECURITY.md](SECURITY.md).
 
 ### Build Release:
 

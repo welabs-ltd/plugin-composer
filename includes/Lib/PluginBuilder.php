@@ -3,6 +3,7 @@
 namespace WeLabs\PluginComposer\Lib;
 
 use WeLabs\PluginComposer\Constants;
+use WeLabs\PluginComposer\Config;
 use WeLabs\PluginComposer\Contracts\BuilderContract;
 use WeLabs\PluginComposer\Contracts\FileSystemContract;
 
@@ -18,38 +19,67 @@ class PluginBuilder implements BuilderContract {
      */
     protected $file_system;
 
-    protected $placeholders = [
-        'plugin_description' => 'Custom plugin by weLabs',
-        'plugin_license' => 'GPL2',
-        'plugin_uri' => 'https://welabs.dev',
-        'plugin_author_name' => 'WeLabs',
-        'plugin_author_email' => 'contact@welabs.dev',
-        'plugin_author_uri' => 'https://welabs.dev',
-    ];
+    /**
+     * Default placeholders for plugin generation
+     * @var array
+     */
+    protected $placeholders = [];
 
     public function __construct( FileSystemContract $file_system ) {
         $this->file_system = $file_system;
+        $this->set_default_placeholders();
     }
 
     public function build( $plugin_name ): string {
-        $plugin_dir_name = $this->get_plugin_directory_name( $plugin_name );
-        $dest_dir = $this->get_dest_plugin_path( $plugin_dir_name );
-        $this->file_system->copy(
-            $this->get_stub_plugin_path(),
-            $dest_dir
-        );
-        $zip_path = $dest_dir . time() . '.zip';
+        try {
+            // Validate plugin name
+            if ( empty( $plugin_name ) ) {
+                throw new \InvalidArgumentException( 'Plugin name cannot be empty' );
+            }
 
-        $placeholders = $this->get_placeholders( $plugin_name );
-        $plugin_class_name = $placeholders['PluginStub'];
+            $plugin_dir_name = $this->get_plugin_directory_name( $plugin_name );
+            $dest_dir = $this->get_dest_plugin_path( $plugin_dir_name );
+            
+            // Ensure destination directory doesn't exist
+            if ( is_dir( $dest_dir ) ) {
+                $this->file_system->remove( $dest_dir );
+            }
 
-        $this->file_system->replace( $dest_dir, $placeholders );
-        $this->file_system->rename( $dest_dir . '/plugin-stub.php', $dest_dir . '/' . $plugin_dir_name . '.php' );
-        $this->file_system->rename( $dest_dir . '/includes/PluginStub.php', $dest_dir . '/includes/' . $plugin_class_name . '.php' );
-        $this->file_system->zip( $dest_dir, $zip_path );
-        $this->file_system->remove( $dest_dir );
+            // Copy stub plugin
+            $this->file_system->copy(
+                $this->get_stub_plugin_path(),
+                $dest_dir
+            );
 
-        return $zip_path;
+            $zip_path = $dest_dir . time() . '.zip';
+
+            $placeholders = $this->get_placeholders( $plugin_name );
+            $plugin_class_name = $placeholders['PluginStub'];
+
+            // Replace placeholders in files
+            $this->file_system->replace( $dest_dir, $placeholders );
+            
+            // Rename files
+            $this->file_system->rename( $dest_dir . '/plugin-stub.php', $dest_dir . '/' . $plugin_dir_name . '.php' );
+            $this->file_system->rename( $dest_dir . '/includes/PluginStub.php', $dest_dir . '/includes/' . $plugin_class_name . '.php' );
+            
+            // Create zip file
+            if ( ! $this->file_system->zip( $dest_dir, $zip_path ) ) {
+                throw new \RuntimeException( 'Failed to create zip file' );
+            }
+
+            // Clean up temporary directory
+            $this->file_system->remove( $dest_dir );
+
+            return $zip_path;
+
+        } catch ( \Exception $e ) {
+            // Clean up on error
+            if ( isset( $dest_dir ) && is_dir( $dest_dir ) ) {
+                $this->file_system->remove( $dest_dir );
+            }
+            throw $e;
+        }
     }
 
     public function set_stub_plugin_path( string $src_dir_of_stub_plugin ): self {
@@ -104,5 +134,12 @@ class PluginBuilder implements BuilderContract {
 
     protected function get_plugin_directory_name( $plugin_name ): string {
         return sanitize_title( $plugin_name );
+    }
+
+    /**
+     * Set default placeholders from configuration
+     */
+    private function set_default_placeholders(): void {
+        $this->placeholders = Config::get_default_placeholders();
     }
 }

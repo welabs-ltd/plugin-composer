@@ -5,7 +5,7 @@
         </label>
         <div class="input-group">
             <input name="plugin_name" id="plugin_name" required class="input-control" placeholder="My Plugin">
-            <div class="error-message"> <?php echo $error_messages['plugin_name'] ?? ''; ?></div>
+            <div class="error-message"><?php echo esc_html( $error_messages['plugin_name'] ?? '' ); ?></div>
         </div>
     </div>
 
