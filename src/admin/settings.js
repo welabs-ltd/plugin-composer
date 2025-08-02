@@ -380,40 +380,46 @@ function PluginComposerSettings() {
                                 {tab.name === 'general' && (
                                     <PanelBody>
                                         <PanelRow>
-                                            <ToggleControl
-                                                label={__('Allow Guest Access', 'welabs-plugin-composer')}
-                                                help={__('Allow non-logged-in users to generate plugins', 'welabs-plugin-composer')}
-                                                checked={settings.allow_guest_access || false}
-                                                onChange={(value) => updateSetting('allow_guest_access', value)}
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <ToggleControl
+                                                    label={__('Allow Guest Access', 'welabs-plugin-composer')}
+                                                    help={__('Allow non-logged-in users to generate plugins', 'welabs-plugin-composer')}
+                                                    checked={settings.allow_guest_access || false}
+                                                    onChange={(value) => updateSetting('allow_guest_access', value)}
+                                                />
+                                            </div>
                                         </PanelRow>
                                         
                                         <PanelRow>
-                                            <SelectControl
-                                                label={__('Required Capability', 'welabs-plugin-composer')}
-                                                help={__('Minimum capability required for logged-in users', 'welabs-plugin-composer')}
-                                                value={settings.required_capability || 'edit_posts'}
-                                                options={[
-                                                    { label: __('Read', 'welabs-plugin-composer'), value: 'read' },
-                                                    { label: __('Edit Posts', 'welabs-plugin-composer'), value: 'edit_posts' },
-                                                    { label: __('Publish Posts', 'welabs-plugin-composer'), value: 'publish_posts' },
-                                                    { label: __('Manage Options', 'welabs-plugin-composer'), value: 'manage_options' },
-                                                ]}
-                                                onChange={(value) => updateSetting('required_capability', value)}
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <SelectControl
+                                                    label={__('Required Capability', 'welabs-plugin-composer')}
+                                                    help={__('Minimum capability required for logged-in users', 'welabs-plugin-composer')}
+                                                    value={settings.required_capability || 'edit_posts'}
+                                                    options={[
+                                                        { label: __('Read', 'welabs-plugin-composer'), value: 'read' },
+                                                        { label: __('Edit Posts', 'welabs-plugin-composer'), value: 'edit_posts' },
+                                                        { label: __('Publish Posts', 'welabs-plugin-composer'), value: 'publish_posts' },
+                                                        { label: __('Manage Options', 'welabs-plugin-composer'), value: 'manage_options' },
+                                                    ]}
+                                                    onChange={(value) => updateSetting('required_capability', value)}
+                                                />
+                                            </div>
                                         </PanelRow>
 
                                         <PanelRow>
-                                            <SelectControl
-                                                label={__('Default Plugin Type', 'welabs-plugin-composer')}
-                                                help={__('Default plugin type when generating new plugins', 'welabs-plugin-composer')}
-                                                value={settings.default_plugin_type || 'container_based'}
-                                                options={[
-                                                    { label: __('Container Based', 'welabs-plugin-composer'), value: 'container_based' },
-                                                    { label: __('Classic', 'welabs-plugin-composer'), value: 'classic' },
-                                                ]}
-                                                onChange={(value) => updateSetting('default_plugin_type', value)}
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <SelectControl
+                                                    label={__('Default Plugin Type', 'welabs-plugin-composer')}
+                                                    help={__('Default plugin type when generating new plugins', 'welabs-plugin-composer')}
+                                                    value={settings.default_plugin_type || 'container_based'}
+                                                    options={[
+                                                        { label: __('Container Based', 'welabs-plugin-composer'), value: 'container_based' },
+                                                        { label: __('Classic', 'welabs-plugin-composer'), value: 'classic' },
+                                                    ]}
+                                                    onChange={(value) => updateSetting('default_plugin_type', value)}
+                                                />
+                                            </div>
                                         </PanelRow>
 
                                         <PanelRow>
@@ -631,13 +637,15 @@ function PluginComposerSettings() {
                                         </PanelRow>
                                         
                                         <PanelRow>
-                                            <TextControl
-                                                label={__('Allowed File Extensions', 'welabs-plugin-composer')}
-                                                help={__('Comma-separated list of allowed file extensions', 'welabs-plugin-composer')}
-                                                value={Array.isArray(settings.allowed_file_extensions) ? settings.allowed_file_extensions.join(', ') : ''}
-                                                onChange={(value) => updateSetting('allowed_file_extensions', value.split(',').map(ext => ext.trim()).filter(ext => ext))}
-                                                placeholder="php, js, css, json, md, txt, xml"
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <TextControl
+                                                    label={__('Allowed File Extensions', 'welabs-plugin-composer')}
+                                                    help={__('Comma-separated list of allowed file extensions', 'welabs-plugin-composer')}
+                                                    value={Array.isArray(settings.allowed_file_extensions) ? settings.allowed_file_extensions.join(', ') : ''}
+                                                    onChange={(value) => updateSetting('allowed_file_extensions', value.split(',').map(ext => ext.trim()).filter(ext => ext))}
+                                                    placeholder="php, js, css, json, md, txt, xml"
+                                                />
+                                            </div>
                                         </PanelRow>
                                     </PanelBody>
                                 )}
@@ -645,21 +653,25 @@ function PluginComposerSettings() {
                                 {tab.name === 'advanced' && (
                                     <PanelBody>
                                         <PanelRow>
-                                            <ToggleControl
-                                                label={__('Enable Debug Mode', 'welabs-plugin-composer')}
-                                                help={__('Enable detailed logging for troubleshooting', 'welabs-plugin-composer')}
-                                                checked={settings.enable_debug_mode || false}
-                                                onChange={(value) => updateSetting('enable_debug_mode', value)}
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <ToggleControl
+                                                    label={__('Enable Debug Mode', 'welabs-plugin-composer')}
+                                                    help={__('Enable detailed logging for troubleshooting', 'welabs-plugin-composer')}
+                                                    checked={settings.enable_debug_mode || false}
+                                                    onChange={(value) => updateSetting('enable_debug_mode', value)}
+                                                />
+                                            </div>
                                         </PanelRow>
                                         
                                         <PanelRow>
-                                            <ToggleControl
-                                                label={__('Auto-cleanup Generated Files', 'welabs-plugin-composer')}
-                                                help={__('Automatically clean up generated files after download', 'welabs-plugin-composer')}
-                                                checked={settings.auto_cleanup_files || true}
-                                                onChange={(value) => updateSetting('auto_cleanup_files', value)}
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <ToggleControl
+                                                    label={__('Auto-cleanup Generated Files', 'welabs-plugin-composer')}
+                                                    help={__('Automatically clean up generated files after download', 'welabs-plugin-composer')}
+                                                    checked={settings.auto_cleanup_files || true}
+                                                    onChange={(value) => updateSetting('auto_cleanup_files', value)}
+                                                />
+                                            </div>
                                         </PanelRow>
                                         
                                         <PanelRow>
@@ -677,12 +689,14 @@ function PluginComposerSettings() {
                                         </PanelRow>
                                         
                                         <PanelRow>
-                                            <ToggleControl
-                                                label={__('Enable Plugin Preview', 'welabs-plugin-composer')}
-                                                help={__('Allow users to preview generated plugins before download', 'welabs-plugin-composer')}
-                                                checked={settings.enable_plugin_preview || false}
-                                                onChange={(value) => updateSetting('enable_plugin_preview', value)}
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <ToggleControl
+                                                    label={__('Enable Plugin Preview', 'welabs-plugin-composer')}
+                                                    help={__('Allow users to preview generated plugins before download', 'welabs-plugin-composer')}
+                                                    checked={settings.enable_plugin_preview || false}
+                                                    onChange={(value) => updateSetting('enable_plugin_preview', value)}
+                                                />
+                                            </div>
                                         </PanelRow>
                                     </PanelBody>
                                 )}
