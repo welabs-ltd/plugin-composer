@@ -25,6 +25,7 @@ function PluginComposerSettings() {
     const [notice, setNotice] = useState(null);
     const [activeTab, setActiveTab] = useState('general');
     const [showResetModal, setShowResetModal] = useState(false);
+    const [validationErrors, setValidationErrors] = useState({});
 
     // Persist active tab in localStorage
     useEffect(() => {
@@ -67,6 +68,17 @@ function PluginComposerSettings() {
         setSaving(true);
         setNotice(null);
 
+        // Check for validation errors before saving
+        const hasValidationErrors = Object.values(validationErrors).some(error => error !== null);
+        if (hasValidationErrors) {
+            setNotice({
+                type: 'error',
+                message: __('Please fix validation errors before saving.', 'welabs-plugin-composer')
+            });
+            setSaving(false);
+            return;
+        }
+
         console.log('Saving settings:', settings);
         console.log('Settings keys:', Object.keys(settings));
         console.log('Rate limit attempts value:', settings.rate_limit_attempts, 'Type:', typeof settings.rate_limit_attempts);
@@ -108,10 +120,108 @@ function PluginComposerSettings() {
         }
     };
 
+    // Validation rules that match backend validation
+    const validationRules = {
+        rate_limit_attempts: {
+            validate: (value) => {
+                const num = parseInt(value);
+                return !isNaN(num) && num >= 1 && num <= 100;
+            },
+            message: __('Rate limit attempts must be between 1 and 100.', 'welabs-plugin-composer')
+        },
+        rate_limit_duration: {
+            validate: (value) => {
+                const num = parseInt(value);
+                return !isNaN(num) && num >= 60 && num <= 86400;
+            },
+            message: __('Rate limit duration must be between 60 and 86400 seconds.', 'welabs-plugin-composer')
+        },
+        max_plugin_name_length: {
+            validate: (value) => {
+                const num = parseInt(value);
+                return !isNaN(num) && num >= 10 && num <= 200;
+            },
+            message: __('Plugin name length must be between 10 and 200 characters.', 'welabs-plugin-composer')
+        },
+        max_description_length: {
+            validate: (value) => {
+                const num = parseInt(value);
+                return !isNaN(num) && num >= 50 && num <= 2000;
+            },
+            message: __('Description length must be between 50 and 2000 characters.', 'welabs-plugin-composer')
+        },
+        max_license_length: {
+            validate: (value) => {
+                const num = parseInt(value);
+                return !isNaN(num) && num >= 10 && num <= 100;
+            },
+            message: __('License length must be between 10 and 100 characters.', 'welabs-plugin-composer')
+        },
+        max_author_name_length: {
+            validate: (value) => {
+                const num = parseInt(value);
+                return !isNaN(num) && num >= 10 && num <= 200;
+            },
+            message: __('Author name length must be between 10 and 200 characters.', 'welabs-plugin-composer')
+        },
+        file_permissions: {
+            validate: (value) => {
+                const num = parseInt(value);
+                return !isNaN(num) && num >= 400 && num <= 777;
+            },
+            message: __('File permissions must be between 400 and 777.', 'welabs-plugin-composer')
+        },
+        file_cleanup_delay: {
+            validate: (value) => {
+                const num = parseInt(value);
+                return !isNaN(num) && num >= 1 && num <= 1440;
+            },
+            message: __('File cleanup delay must be between 1 and 1440 minutes.', 'welabs-plugin-composer')
+        },
+        default_namespace: {
+            validate: (value) => {
+                return value && value.length > 0 && /^[A-Z][a-zA-Z0-9_]*(\/[A-Z][a-zA-Z0-9_]*)*$/.test(value);
+            },
+            message: __('Default namespace must start with a capital letter and contain only letters, numbers, and underscores.', 'welabs-plugin-composer')
+        },
+        default_author_name: {
+            validate: (value) => {
+                return value && value.length > 0 && value.length <= 100;
+            },
+            message: __('Default author name must not be empty and must be 100 characters or less.', 'welabs-plugin-composer')
+        },
+        default_author_url: {
+            validate: (value) => {
+                return value && value.length > 0 && /^https?:\/\/.+/.test(value);
+            },
+            message: __('Default author URL must be a valid URL starting with http:// or https://', 'welabs-plugin-composer')
+        }
+    };
+
+    const validateField = (key, value) => {
+        if (!validationRules[key]) return null;
+        
+        const rule = validationRules[key];
+        const isValid = rule.validate(value);
+        
+        if (!isValid) {
+            return rule.message;
+        }
+        
+        return null;
+    };
+
     const updateSetting = (key, value) => {
         setSettings(prev => ({
             ...prev,
             [key]: value
+        }));
+
+        // Validate the field and update validation errors
+        const error = validateField(key, value);
+        setValidationErrors(prev => ({
+            ...prev,
+            [key]: error
         }));
     };
 
@@ -119,6 +229,24 @@ function PluginComposerSettings() {
     const getNumericValue = (value, defaultValue = 0) => {
         const parsed = parseInt(value);
         return isNaN(parsed) ? defaultValue : parsed;
+    };
+
+    // Helper function to render validation error message
+    const renderValidationError = (fieldKey) => {
+        const error = validationErrors[fieldKey];
+        if (!error) return null;
+        
+        return (
+            <p style={{ 
+                color: '#d63638', 
+                fontSize: '12px', 
+                marginTop: '4px', 
+                marginBottom: '0',
+                fontWeight: '500'
+            }}>
+                {error}
+            </p>
+        );
     };
 
     const handleResetClick = () => {
@@ -289,33 +417,45 @@ function PluginComposerSettings() {
                                         </PanelRow>
 
                                         <PanelRow>
-                                            <TextControl
-                                                label={__('Default Namespace', 'welabs-plugin-composer')}
-                                                help={__('Default namespace for generated plugins (e.g., MyPlugin or AB/AC for multi-word)', 'welabs-plugin-composer')}
-                                                value={settings.default_namespace ?? 'MyPlugin'}
-                                                onChange={(value) => updateSetting('default_namespace', value)}
-                                                placeholder="MyPlugin"
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <TextControl
+                                                    label={__('Default Namespace', 'welabs-plugin-composer')}
+                                                    help={__('Default namespace for generated plugins (e.g., MyPlugin or AB/AC for multi-word)', 'welabs-plugin-composer')}
+                                                    value={settings.default_namespace ?? 'MyPlugin'}
+                                                    onChange={(value) => updateSetting('default_namespace', value)}
+                                                    placeholder="MyPlugin"
+                                                    className={validationErrors.default_namespace ? 'has-error' : ''}
+                                                />
+                                                {renderValidationError('default_namespace')}
+                                            </div>
                                         </PanelRow>
 
                                         <PanelRow>
-                                            <TextControl
-                                                label={__('Default Author Name', 'welabs-plugin-composer')}
-                                                help={__('Default author name for generated plugins', 'welabs-plugin-composer')}
-                                                value={settings.default_author_name ?? 'Your Name'}
-                                                onChange={(value) => updateSetting('default_author_name', value)}
-                                                placeholder="Your Name"
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <TextControl
+                                                    label={__('Default Author Name', 'welabs-plugin-composer')}
+                                                    help={__('Default author name for generated plugins', 'welabs-plugin-composer')}
+                                                    value={settings.default_author_name ?? 'Your Name'}
+                                                    onChange={(value) => updateSetting('default_author_name', value)}
+                                                    placeholder="Your Name"
+                                                    className={validationErrors.default_author_name ? 'has-error' : ''}
+                                                />
+                                                {renderValidationError('default_author_name')}
+                                            </div>
                                         </PanelRow>
 
                                         <PanelRow>
-                                            <TextControl
-                                                label={__('Default Author URL', 'welabs-plugin-composer')}
-                                                help={__('Default author URL for generated plugins', 'welabs-plugin-composer')}
-                                                value={settings.default_author_url ?? 'https://example.com'}
-                                                onChange={(value) => updateSetting('default_author_url', value)}
-                                                placeholder="https://example.com"
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <TextControl
+                                                    label={__('Default Author URL', 'welabs-plugin-composer')}
+                                                    help={__('Default author URL for generated plugins', 'welabs-plugin-composer')}
+                                                    value={settings.default_author_url ?? 'https://example.com'}
+                                                    onChange={(value) => updateSetting('default_author_url', value)}
+                                                    placeholder="https://example.com"
+                                                    className={validationErrors.default_author_url ? 'has-error' : ''}
+                                                />
+                                                {renderValidationError('default_author_url')}
+                                            </div>
                                         </PanelRow>
                                     </PanelBody>
                                 )}
@@ -323,24 +463,31 @@ function PluginComposerSettings() {
                                 {tab.name === 'rate-limiting' && (
                                     <PanelBody>
                                         <PanelRow>
-                                            <RangeControl
-                                                label={__('Rate Limit Attempts', 'welabs-plugin-composer')}
-                                                help={__('Maximum number of plugin generation attempts per time period', 'welabs-plugin-composer')}
-                                                value={settings.rate_limit_attempts || 5}
-                                                onChange={(value) => updateSetting('rate_limit_attempts', value)}
-                                                min={1}
-                                                max={100}
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <RangeControl
+                                                    label={__('Rate Limit Attempts', 'welabs-plugin-composer')}
+                                                    help={__('Maximum number of plugin generation attempts per time period', 'welabs-plugin-composer')}
+                                                    value={settings.rate_limit_attempts || 5}
+                                                    onChange={(value) => updateSetting('rate_limit_attempts', value)}
+                                                    min={1}
+                                                    max={100}
+                                                />
+                                                {renderValidationError('rate_limit_attempts')}
+                                            </div>
                                         </PanelRow>
                                         
                                         <PanelRow>
-                                            <TextControl
-                                                type="number"
-                                                label={__('Rate Limit Duration (seconds)', 'welabs-plugin-composer')}
-                                                help={__('Time period for rate limiting in seconds', 'welabs-plugin-composer')}
-                                                value={settings.rate_limit_duration || 3600}
-                                                onChange={(value) => updateSetting('rate_limit_duration', value)}
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <TextControl
+                                                    type="number"
+                                                    label={__('Rate Limit Duration (seconds)', 'welabs-plugin-composer')}
+                                                    help={__('Time period for rate limiting in seconds', 'welabs-plugin-composer')}
+                                                    value={settings.rate_limit_duration || 3600}
+                                                    onChange={(value) => updateSetting('rate_limit_duration', value)}
+                                                    className={validationErrors.rate_limit_duration ? 'has-error' : ''}
+                                                />
+                                                {renderValidationError('rate_limit_duration')}
+                                            </div>
                                         </PanelRow>
                                     </PanelBody>
                                 )}
@@ -348,43 +495,59 @@ function PluginComposerSettings() {
                                 {tab.name === 'validation' && (
                                     <PanelBody>
                                         <PanelRow>
-                                            <TextControl
-                                                type="number"
-                                                label={__('Max Plugin Name Length', 'welabs-plugin-composer')}
-                                                help={__('Maximum allowed length for plugin names', 'welabs-plugin-composer')}
-                                                value={settings.max_plugin_name_length || 100}
-                                                onChange={(value) => updateSetting('max_plugin_name_length', value)}
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <TextControl
+                                                    type="number"
+                                                    label={__('Max Plugin Name Length', 'welabs-plugin-composer')}
+                                                    help={__('Maximum allowed length for plugin names', 'welabs-plugin-composer')}
+                                                    value={settings.max_plugin_name_length || 100}
+                                                    onChange={(value) => updateSetting('max_plugin_name_length', value)}
+                                                    className={validationErrors.max_plugin_name_length ? 'has-error' : ''}
+                                                />
+                                                {renderValidationError('max_plugin_name_length')}
+                                            </div>
                                         </PanelRow>
                                         
                                         <PanelRow>
-                                            <TextControl
-                                                type="number"
-                                                label={__('Max Description Length', 'welabs-plugin-composer')}
-                                                help={__('Maximum allowed length for plugin descriptions', 'welabs-plugin-composer')}
-                                                value={settings.max_description_length || 500}
-                                                onChange={(value) => updateSetting('max_description_length', value)}
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <TextControl
+                                                    type="number"
+                                                    label={__('Max Description Length', 'welabs-plugin-composer')}
+                                                    help={__('Maximum allowed length for plugin descriptions', 'welabs-plugin-composer')}
+                                                    value={settings.max_description_length || 500}
+                                                    onChange={(value) => updateSetting('max_description_length', value)}
+                                                    className={validationErrors.max_description_length ? 'has-error' : ''}
+                                                />
+                                                {renderValidationError('max_description_length')}
+                                            </div>
                                         </PanelRow>
                                         
                                         <PanelRow>
-                                            <TextControl
-                                                type="number"
-                                                label={__('Max License Length', 'welabs-plugin-composer')}
-                                                help={__('Maximum allowed length for license text', 'welabs-plugin-composer')}
-                                                value={settings.max_license_length || 50}
-                                                onChange={(value) => updateSetting('max_license_length', value)}
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <TextControl
+                                                    type="number"
+                                                    label={__('Max License Length', 'welabs-plugin-composer')}
+                                                    help={__('Maximum allowed length for license text', 'welabs-plugin-composer')}
+                                                    value={settings.max_license_length || 50}
+                                                    onChange={(value) => updateSetting('max_license_length', value)}
+                                                    className={validationErrors.max_license_length ? 'has-error' : ''}
+                                                />
+                                                {renderValidationError('max_license_length')}
+                                            </div>
                                         </PanelRow>
                                         
                                         <PanelRow>
-                                            <TextControl
-                                                type="number"
-                                                label={__('Max Author Name Length', 'welabs-plugin-composer')}
-                                                help={__('Maximum allowed length for author names', 'welabs-plugin-composer')}
-                                                value={settings.max_author_name_length || 100}
-                                                onChange={(value) => updateSetting('max_author_name_length', value)}
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <TextControl
+                                                    type="number"
+                                                    label={__('Max Author Name Length', 'welabs-plugin-composer')}
+                                                    help={__('Maximum allowed length for author names', 'welabs-plugin-composer')}
+                                                    value={settings.max_author_name_length || 100}
+                                                    onChange={(value) => updateSetting('max_author_name_length', value)}
+                                                    className={validationErrors.max_author_name_length ? 'has-error' : ''}
+                                                />
+                                                {renderValidationError('max_author_name_length')}
+                                            </div>
                                         </PanelRow>
                                     </PanelBody>
                                 )}
@@ -392,13 +555,17 @@ function PluginComposerSettings() {
                                 {tab.name === 'file-settings' && (
                                     <PanelBody>
                                         <PanelRow>
-                                            <TextControl
-                                                type="number"
-                                                label={__('File Permissions', 'welabs-plugin-composer')}
-                                                help={__('Octal permissions for generated files (e.g., 755, 644)', 'welabs-plugin-composer')}
-                                                value={settings.file_permissions || 755}
-                                                onChange={(value) => updateSetting('file_permissions', value)}
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <TextControl
+                                                    type="number"
+                                                    label={__('File Permissions', 'welabs-plugin-composer')}
+                                                    help={__('Octal permissions for generated files (e.g., 755, 644)', 'welabs-plugin-composer')}
+                                                    value={settings.file_permissions || 755}
+                                                    onChange={(value) => updateSetting('file_permissions', value)}
+                                                    className={validationErrors.file_permissions ? 'has-error' : ''}
+                                                />
+                                                {renderValidationError('file_permissions')}
+                                            </div>
                                         </PanelRow>
                                         
                                         <PanelRow>
@@ -496,13 +663,17 @@ function PluginComposerSettings() {
                                         </PanelRow>
                                         
                                         <PanelRow>
-                                            <TextControl
-                                                type="number"
-                                                label={__('File Cleanup Delay (minutes)', 'welabs-plugin-composer')}
-                                                help={__('Time to wait before cleaning up generated files', 'welabs-plugin-composer')}
-                                                value={settings.file_cleanup_delay || 30}
-                                                onChange={(value) => updateSetting('file_cleanup_delay', value)}
-                                            />
+                                            <div style={{ width: '100%' }}>
+                                                <TextControl
+                                                    type="number"
+                                                    label={__('File Cleanup Delay (minutes)', 'welabs-plugin-composer')}
+                                                    help={__('Time to wait before cleaning up generated files', 'welabs-plugin-composer')}
+                                                    value={settings.file_cleanup_delay || 30}
+                                                    onChange={(value) => updateSetting('file_cleanup_delay', value)}
+                                                    className={validationErrors.file_cleanup_delay ? 'has-error' : ''}
+                                                />
+                                                {renderValidationError('file_cleanup_delay')}
+                                            </div>
                                         </PanelRow>
                                         
                                         <PanelRow>

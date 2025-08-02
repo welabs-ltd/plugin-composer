@@ -288,4 +288,33 @@
     background: #007cba;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 124, 186, 0.3);
+}
+
+/* Validation Error Styling */
+.plugin-composer-settings .components-text-control__input.has-error,
+.plugin-composer-settings .components-select-control__input.has-error {
+    border-color: #d63638;
+    box-shadow: 0 0 0 1px #d63638;
+}
+
+.plugin-composer-settings .components-text-control__input.has-error:focus,
+.plugin-composer-settings .components-select-control__input.has-error:focus {
+    border-color: #d63638;
+    box-shadow: 0 0 0 1px #d63638;
+}
+
+.plugin-composer-settings .validation-error {
+    color: #d63638;
+    font-size: 12px;
+    margin-top: 4px;
+    margin-bottom: 0;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.plugin-composer-settings .validation-error::before {
+    content: '⚠';
+    margin-right: 4px;
+    font-size: 14px;
 } 
