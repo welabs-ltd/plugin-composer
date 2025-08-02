@@ -1,0 +1,44 @@
+{
+    "name": "welabs/plugin-stub",
+    "description": "plugin_description",
+    "license": "plugin_license",
+    "autoload": {
+        "psr-4": {
+            "WeLabs\\PluginStub\\": "includes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "plugin_author_name",
+            "email": "plugin_author_email",
+            "homepage": "plugin_author_uri"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require-dev": {
+        "wp-coding-standards/wpcs": "dev-develop",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
+        "tareq1988/wp-php-cs-fixer": "dev-master",
+        "phpcompatibility/phpcompatibility-wp": "dev-master",
+        "phpunit/phpunit": "~8.5",
+        "wp-phpunit/wp-phpunit": "^6.1",
+        "yoast/phpunit-polyfills": "^1.0",
+        "symfony/var-dumper": "6.4.x-dev"
+    },
+   "scripts": {
+        "phpcs": [
+            "vendor/bin/phpcs -p -s"
+        ],
+        "phpcs:report": [
+            "vendor/bin/phpcs --report-file='phpcs-report.txt'"
+        ],
+        "phpcbf": [
+            "vendor/bin/phpcbf -p"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

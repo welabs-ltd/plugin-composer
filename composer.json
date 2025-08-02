@@ -4,7 +4,9 @@
     "license": "GPL2",
     "autoload": {
         "psr-4": {
-            "WeLabs\\PluginComposer\\": "includes/"
+            "WeLabs\\PluginComposer\\": "includes/",
+			"WeLabs\\PluginComposer\\ThirdParty\\Packages\\": "lib/packages/"
+
         }
     },
     "authors": [
@@ -14,16 +16,15 @@
             "homepage": "https://welabs.dev"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require-dev": {
-        "wp-coding-standards/wpcs": "dev-develop",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
-        "tareq1988/wp-php-cs-fixer": "dev-master",
-        "phpcompatibility/phpcompatibility-wp": "dev-master",
-        "phpunit/phpunit": "~8.5",
-        "wp-phpunit/wp-phpunit": "^6.1",
-        "yoast/phpunit-polyfills": "^1.0",
-        "symfony/var-dumper": "6.4.x-dev"
+        "wp-coding-standards/wpcs": "^3.1",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.1",
+        "yoast/phpunit-polyfills": "^4.0",
+        "symfony/var-dumper": "^6.4",
+        "wp-phpunit/wp-phpunit": "^6.8",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "tareq1988/wp-php-cs-fixer": "dev-master"
     },
    "scripts": {
         "phpcs": [
@@ -40,5 +41,8 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
+    },
+    "require": {
+        "league/container": "^4.2"
     }
 }

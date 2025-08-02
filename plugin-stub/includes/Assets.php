@@ -2,83 +2,83 @@
 
 namespace WeLabs\PluginStub;
 
-class Assets {
-	/**
-	 * The constructor.
-	 */
-	public function __construct() {
-		add_action( 'init', array( $this, 'register_all_scripts' ), 10 );
+use WeLabs\PluginStub\Contracts\HookRegistry;
 
-		if ( is_admin() ) {
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
-		} else {
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_front_scripts' ) );
-		}
-	}
+class Assets implements HookRegistry {
+    /**
+     * Resister the hooks.
+     *
+     * @return void
+     */
+    public function register_hooks(): void {
+        add_action( 'init', [ $this, 'register_all_scripts' ], 10 );
 
-	/**
-	 * Register all Dokan scripts and styles.
-	 *
-	 * @return void
-	 */
-	public function register_all_scripts() {
-		$this->register_styles();
-		$this->register_scripts();
-	}
+        if ( is_admin() ) {
+            add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ], 10 );
+        } else {
+            add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_front_scripts' ] );
+        }
+    }
 
-	/**
-	 * Register scripts.
-	 *
-	 * @param array $scripts
-	 *
-	 * @return void
-	 */
-	public function register_scripts() {
-		$admin_script    = PLUGIN_STUB_PLUGIN_ADMIN_ASSET . '/js/script.js';
-		$frontend_script = PLUGIN_STUB_PLUGIN_PUBLIC_ASSET . '/js/script.js';
+    /**
+     * Register all Dokan scripts and styles.
+     *
+     * @return void
+     */
+    public function register_all_scripts() {
+        $this->register_styles();
+        $this->register_scripts();
+    }
 
-		wp_register_script( 'plugin_stub_admin_script', $admin_script, array(), PLUGIN_STUB_PLUGIN_VERSION, true );
-		wp_register_script( 'plugin_stub_script', $frontend_script, array(), PLUGIN_STUB_PLUGIN_VERSION, true );
-	}
+    /**
+     * Register scripts.
+     *
+     * @param array $scripts
+     *
+     * @return void
+     */
+    public function register_scripts() {
+        $admin_script       = PLUGIN_STUB_PLUGIN_ASSET . '/admin/script.js';
+        $frontend_script    = PLUGIN_STUB_PLUGIN_ASSET . '/frontend/script.js';
 
-	/**
-	 * Register styles.
-	 *
-	 * @return void
-	 */
-	public function register_styles() {
-		$admin_style    = PLUGIN_STUB_PLUGIN_ADMIN_ASSET . '/css/style.css';
-		$frontend_style = PLUGIN_STUB_PLUGIN_PUBLIC_ASSET . '/css/style.css';
+        wp_register_script( 'plugin_stub_admin_script', $admin_script, [], filemtime( PLUGIN_STUB_DIR . '/assets/admin/script.js' ), true );
+        wp_register_script( 'plugin_stub_script', $frontend_script, [], filemtime( PLUGIN_STUB_DIR . '/assets/frontend/script.js' ), true );
+    }
 
-		wp_register_style( 'plugin_stub_admin_style', $admin_style, array(), PLUGIN_STUB_PLUGIN_VERSION );
-		wp_register_style( 'plugin_stub_style', $frontend_style, array(), PLUGIN_STUB_PLUGIN_VERSION );
-	}
+    /**
+     * Register styles.
+     *
+     * @return void
+     */
+    public function register_styles() {
+        $admin_style       = PLUGIN_STUB_PLUGIN_ASSET . '/admin/style.css';
+        $frontend_style    = PLUGIN_STUB_PLUGIN_ASSET . '/frontend/style.css';
 
-	/**
-	 * Enqueue admin scripts.
-	 *
-	 * @return void
-	 */
-	public function enqueue_admin_scripts() {
-		wp_enqueue_script( 'plugin_stub_admin_script' );
-		wp_localize_script(
-			'plugin_stub_admin_script',
-			'Plugin_Stub_Admin',
-			array()
-		);
-	}
+        wp_register_style( 'plugin_stub_admin_style', $admin_style, [], filemtime( PLUGIN_STUB_DIR . '/assets/admin/style.css' ) );
+        wp_register_style( 'plugin_stub_style', $frontend_style, [], filemtime( PLUGIN_STUB_DIR . '/assets/frontend/style.css' ) );
+    }
 
-	/**
-	 * Enqueue front-end scripts.
-	 *
-	 * @return void
-	 */
-	public function enqueue_front_scripts() {
-		wp_enqueue_script( 'plugin_stub_script' );
-		wp_localize_script(
-			'plugin_stub_script',
-			'Plugin_Stub',
-			array()
-		);
-	}
+    /**
+     * Enqueue admin scripts.
+     *
+     * @return void
+     */
+    public function enqueue_admin_scripts() {
+        wp_enqueue_script( 'plugin_stub_admin_script' );
+        wp_localize_script(
+            'plugin_stub_admin_script', 'Plugin_Stub_Admin', []
+        );
+    }
+
+    /**
+     * Enqueue front-end scripts.
+     *
+     * @return void
+     */
+    public function enqueue_front_scripts() {
+        wp_enqueue_script( 'plugin_stub_script' );
+        wp_localize_script(
+            'plugin_stub_script', 'Plugin_Stub', []
+        );
+    }
 }

@@ -43,7 +43,7 @@ status "Generating build... 👷‍♀️"
 
 # Copy all files
 status "Copying files... ✌️"
-FILES=(plugin-stub.php readme.txt dist includes templates assets languages composer.json composer.lock)
+FILES=(plugin-stub.php readme.txt dist includes lib templates assets languages composer.json composer.lock)
 
 for file in ${FILES[@]}; do
     if [ -f "$file" ] || [ -d "$file" ]; then

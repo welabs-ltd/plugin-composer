@@ -9,7 +9,7 @@ interface FileSystemContract {
      * @param string $src The source to scan.
      * @return array Return all files inside the given path.
      */
-    public function get_files( string $src): array;
+    public function get_files( string $src ): array;
 
     /**
      * Copy all files from source file/directory to destination file/directory.
@@ -18,7 +18,7 @@ interface FileSystemContract {
      * @param  string $dest Destination file or directory.
      * @return void
      */
-    public function copy( string $src, string $dest): void;
+    public function copy( string $src, string $dest ): void;
 
     /**
      * Compress to zip
@@ -36,7 +36,7 @@ interface FileSystemContract {
      * @param  array  $placeholders key value paired placeholders.
      * @return void
      */
-    public function replace( string $src, array $placeholders): void;
+    public function replace( string $src, array $placeholders ): void;
 
     /**
      * Rename the file to destination.

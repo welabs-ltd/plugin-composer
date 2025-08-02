@@ -2,8 +2,10 @@
 
 namespace WeLabs\PluginComposer;
 
-class Assets {
-    public function __construct() {
+use WeLabs\PluginComposer\Contracts\Hookable;
+
+class Assets implements Hookable {
+    public function register_hooks(): void {
         add_action( 'init', [ $this, 'register_scripts' ] );
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
     }

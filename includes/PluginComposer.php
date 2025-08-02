@@ -2,10 +2,10 @@
 
 namespace WeLabs\PluginComposer;
 
-use WeLabs\PluginComposer\Assets;
-use WeLabs\PluginComposer\Lib\FileSystem;
-use WeLabs\PluginComposer\Lib\PluginBuilder;
-use WeLabs\PluginComposer\ShortCode;
+use WeLabs\PluginComposer\Contracts\BuilderContract;
+use WeLabs\PluginComposer\Contracts\FileSystemContract;
+use WeLabs\PluginComposer\Contracts\Hookable;
+use WeLabs\PluginComposer\DependencyManagement\Container;
 
 /**
  * PluginComposer class.
@@ -18,7 +18,7 @@ final class PluginComposer {
 	 *
 	 * @var string
 	 */
-	public $version = '1.1.0';
+	public $version = '0.0.1';
 
 	/**
 	 * Instance of self
@@ -44,10 +44,8 @@ final class PluginComposer {
 	 */
 	private function __construct() {
 		$this->define_constants();
-
 		register_activation_hook( PLUGIN_COMPOSER_FILE, array( $this, 'activate' ) );
 		register_deactivation_hook( PLUGIN_COMPOSER_FILE, array( $this, 'deactivate' ) );
-
 		add_action( 'plugins_loaded', array( $this, 'init_plugin' ) );
 		add_action( 'woocommerce_flush_rewrite_rules', array( $this, 'flush_rewrite_rules' ) );
 	}
@@ -59,7 +57,7 @@ final class PluginComposer {
 	 * and if it doesn't find one, creates it.
 	 */
 	public static function init() {
-		if ( self::$instance === null ) {
+        if ( self::$instance === null ) {
 			self::$instance = new self();
 		}
 
@@ -75,10 +73,8 @@ final class PluginComposer {
 	 *
 	 * @return Class Instance
 	 */
-	public function __get( $prop ) {
-		if ( array_key_exists( $prop, $this->container ) ) {
-			return apply_filters( 'welabs_pc_container_' . $prop, $this->container[ $prop ] );
-		}
+	public function __get( $key ) {
+		return $this->get_container()->get( $key );
 	}
 
 	/**
@@ -87,7 +83,7 @@ final class PluginComposer {
 	 * Nothing being called here yet.
 	 */
 	public function activate() {
-		// Rewrite rules during plugin_composer activation
+        // Rewrite rules during plugin_composer activation
 		if ( $this->has_woocommerce() ) {
 			$this->flush_rewrite_rules();
 		}
@@ -117,31 +113,16 @@ final class PluginComposer {
 	 * @return void
 	 */
 	public function define_constants() {
-		$this->define( 'PLUGIN_COMPOSER_PLUGIN_VERSION', $this->version );
-		$this->define( 'PLUGIN_COMPOSER_DIR', dirname( PLUGIN_COMPOSER_FILE ) );
-		$this->define( 'PLUGIN_COMPOSER_INC_DIR', PLUGIN_COMPOSER_DIR . '/includes' );
-		$this->define( 'PLUGIN_COMPOSER_TEMPLATE_DIR', PLUGIN_COMPOSER_DIR . '/templates' );
-		$this->define( 'PLUGIN_COMPOSER_PLUGIN_ASSET', plugins_url( 'assets', PLUGIN_COMPOSER_FILE ) );
+		defined( 'PLUGIN_COMPOSER_PLUGIN_VERSION' ) || define( 'PLUGIN_COMPOSER_PLUGIN_VERSION', $this->version );
+		defined( 'PLUGIN_COMPOSER_DIR' ) || define( 'PLUGIN_COMPOSER_DIR', dirname( PLUGIN_COMPOSER_FILE ) );
+		defined( 'PLUGIN_COMPOSER_INC_DIR' ) || define( 'PLUGIN_COMPOSER_INC_DIR', PLUGIN_COMPOSER_DIR . '/includes' );
+		defined( 'PLUGIN_COMPOSER_TEMPLATE_DIR' ) || define( 'PLUGIN_COMPOSER_TEMPLATE_DIR', PLUGIN_COMPOSER_DIR . '/templates' );
+		defined( 'PLUGIN_COMPOSER_PLUGIN_ASSET' ) || define( 'PLUGIN_COMPOSER_PLUGIN_ASSET', plugins_url( 'assets', PLUGIN_COMPOSER_FILE ) );
 
 		// give a way to turn off loading styles and scripts from parent theme
-		$this->define( 'PLUGIN_COMPOSER_LOAD_STYLE', true );
-		$this->define( 'PLUGIN_COMPOSER_LOAD_SCRIPTS', true );
+		defined( 'PLUGIN_COMPOSER_LOAD_STYLE' ) || define( 'PLUGIN_COMPOSER_LOAD_STYLE', true );
+		defined( 'PLUGIN_COMPOSER_LOAD_SCRIPTS' ) || define( 'PLUGIN_COMPOSER_LOAD_SCRIPTS', true );
 	}
-
-	/**
-	 * Define constant if not already defined
-	 *
-	 * @param string      $name
-	 * @param string|bool $value
-	 *
-	 * @return void
-	 */
-	private function define( $name, $value ) {
-		if ( ! defined( $name ) ) {
-			define( $name, $value );
-		}
-	}
-
 	/**
 	 * Load the plugin after WP User Frontend is loaded
 	 *
@@ -163,7 +144,7 @@ final class PluginComposer {
 		// initialize the classes
 		add_action( 'init', array( $this, 'init_classes' ), 4 );
 		add_action( 'plugins_loaded', array( $this, 'after_plugins_loaded' ) );
-		do_action( 'welabs_plugin_composer_loaded' );
+        do_action( 'welabs_plugin_composer_loaded' );
 	}
 
 	/**
@@ -181,33 +162,37 @@ final class PluginComposer {
 	 * @return void
 	 */
 	public function init_classes() {
-		$this->container['shortcode']   = new ShortCode();
-		$this->container['assets']      = new Assets();
-		$this->container['file_system'] = new FileSystem();
-		$this->container['builder']     = new PluginBuilder( $this->get_file_system() );
-	}
+		$container = $this->get_container();
 
-	/**
-	 * Get the filesystem class.
-	 *
-	 * @return \WeLabs\PluginComposer\Contracts\FileSystemContract
-	 */
-	public function get_file_system() {
-		if ( ! $this->file_system ) {
-			$this->container['file_system'] = new FileSystem();
+		/**
+		 * These classes have a register method for attaching hooks.
+		 *
+		 * @var RegisterHooksInterface[] $hook_register_classes
+		 */
+		$hook_register_classes = $container->get( Hookable::class );
+
+		foreach ( $hook_register_classes as $hook_register_class ) {
+			$hook_register_class->register_hooks();
 		}
-
-		return $this->file_system;
 	}
 
-	/**
-	 * Get the plugin builder.
-	 *
-	 * @return \WeLabs\PluginComposer\Contracts\BuilderContract
-	 */
-	public function get_builder() {
-		return $this->builder;
-	}
+    /**
+     * Get the filesystem class.
+     *
+     * @return \WeLabs\PluginComposer\Contracts\FileSystemContract
+     */
+    public function get_file_system() {
+        return $this->get_container()->get( FileSystemContract::class );
+    }
+
+    /**
+     * Get the plugin builder.
+     *
+     * @return \WeLabs\PluginComposer\Contracts\BuilderContract
+     */
+    public function get_builder() {
+		return $this->get_container()->get( BuilderContract::class );
+    }
 
 	/**
 	 * Executed after all plugins are loaded
@@ -242,5 +227,9 @@ final class PluginComposer {
 	 */
 	public function is_woocommerce_installed() {
 		return in_array( 'woocommerce/woocommerce.php', array_keys( get_plugins() ), true );
+	}
+
+	public function get_container(): Container {
+		return welabs_plugin_composer_get_container();
 	}
 }

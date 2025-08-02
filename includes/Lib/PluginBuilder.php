@@ -2,10 +2,16 @@
 
 namespace WeLabs\PluginComposer\Lib;
 
+use WeLabs\PluginComposer\Constants;
 use WeLabs\PluginComposer\Contracts\BuilderContract;
 use WeLabs\PluginComposer\Contracts\FileSystemContract;
 
 class PluginBuilder implements BuilderContract {
+    /**
+     * The directory name for the plugin stub.
+     * @var string
+     */
+    protected $src_dir_of_stub_plugin = Constants::DEFAULT_PLUGIN_STUB_SRC_DIR ;
 
     /**
      * @var \WeLabs\PluginComposer\Contracts\FileSystemContract
@@ -47,12 +53,18 @@ class PluginBuilder implements BuilderContract {
         return $zip_path;
     }
 
-    protected function get_stub_plugin_path(): string {
-        return PLUGIN_COMPOSER_DIR . '/plugin-stub';
+    public function set_stub_plugin_path( string $src_dir_of_stub_plugin ): self {
+        $this->src_dir_of_stub_plugin = $src_dir_of_stub_plugin;
+
+        return $this;
+    }
+
+    public function get_stub_plugin_path(): string {
+        return PLUGIN_COMPOSER_DIR . DIRECTORY_SEPARATOR . untrailingslashit( $this->src_dir_of_stub_plugin );
     }
 
     protected function get_dest_plugin_path( $plugin_dir_name ): string {
-        return PLUGIN_COMPOSER_DIR . '/' . $plugin_dir_name;
+        return PLUGIN_COMPOSER_DIR . DIRECTORY_SEPARATOR . $plugin_dir_name;
     }
 
     /**

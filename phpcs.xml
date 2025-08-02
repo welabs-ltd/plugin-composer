@@ -9,6 +9,7 @@
     <exclude-pattern>*/.make/*</exclude-pattern>
     <exclude-pattern>*/assets/*</exclude-pattern>
     <exclude-pattern>*/src/*</exclude-pattern>
+    <exclude-pattern>lib/*</exclude-pattern>
     <exclude-pattern>*/dist/*</exclude-pattern>
     <exclude-pattern>*/build/*</exclude-pattern>
     <exclude-pattern>*/node_modules/*</exclude-pattern>
@@ -51,7 +52,9 @@
     <rule ref="WordPress.WP.I18n">
         <properties>
             <!-- Value: replace the text domain used. -->
-            <property name="text_domain" type="array" value="welabs-plugin-composer"/>
+             <property name="text_domain" type="array">
+                <element value="welabs-plugin-composer"/>
+            </property>
         </properties>
     </rule>
     <rule ref="WordPress.WhiteSpace.ControlStructureSpacing">

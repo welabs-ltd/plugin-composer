@@ -2,11 +2,13 @@
 
 namespace WeLabs\PluginComposer;
 
-class ShortCode {
+use WeLabs\PluginComposer\Contracts\Hookable;
+
+class ShortCode implements Hookable {
     public const NAME = 'wlb_plugin_composer';
     protected $error_messages = [];
 
-    public function __construct() {
+    public function register_hooks(): void {
         add_shortcode( self::NAME, [ $this, 'shortcode' ], 2 );
         add_action( 'template_redirect', [ $this, 'handle_form_submission' ] );
     }
@@ -60,8 +62,13 @@ class ShortCode {
 
         $request_data = apply_filters( 'welabs_plugin_composer_form_data', array_filter( $request_data ) );
 
+        $plugin_type = $post_data['plugin_type'] ?? '';
+
+        $plugin_stub_src_dir = $plugin_type === 'classic' ? Constants::CLASSIC_PLUGIN_STUB_SRC_DIR : Constants::PLUGIN_STUB_SRC_DIR;
         $builder = welabs_plugin_composer()->get_builder();
-        $builder->set_placeholders( $request_data );
+        $builder->set_stub_plugin_path( $plugin_stub_src_dir )
+            ->set_placeholders( $request_data );
+
         $zip_name = $builder->build( $request_data['plugin_name'] );
 
         $plugin_folder_name = sanitize_title( $request_data['plugin_name'] );
