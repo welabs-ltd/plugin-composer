@@ -321,10 +321,35 @@
 
 /* Form Field Width Consistency */
 .plugin-composer-settings .components-text-control__input,
-.plugin-composer-settings .components-select-control__input {
+.plugin-composer-settings .components-select-control__input,
+.plugin-composer-settings .components-select-control select {
     max-width: 400px !important;
+    width: 400px !important;
 }
 
 .plugin-composer-settings .components-range-control {
     max-width: 400px;
+}
+
+/* Additional select control targeting */
+.plugin-composer-settings .components-select-control {
+    max-width: 400px;
+}
+
+.plugin-composer-settings .components-select-control .components-base-control__field {
+    max-width: 400px;
+}
+
+/* More specific select targeting */
+.plugin-composer-settings select,
+.plugin-composer-settings .components-select-control select,
+.plugin-composer-settings .components-base-control select {
+    max-width: 400px !important;
+    width: 400px !important;
+}
+
+/* Target the select wrapper */
+.plugin-composer-settings .components-select-control,
+.plugin-composer-settings .components-base-control {
+    max-width: 400px !important;
 } 
