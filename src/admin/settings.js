@@ -50,6 +50,7 @@ function PluginComposerSettings() {
                 method: 'GET',
             });
             console.log('Loaded settings:', response);
+            console.log('Loaded settings keys:', Object.keys(response));
             setSettings(response);
         } catch (error) {
             console.error('Error loading settings:', error);
@@ -67,6 +68,7 @@ function PluginComposerSettings() {
         setNotice(null);
 
         console.log('Saving settings:', settings);
+        console.log('Settings keys:', Object.keys(settings));
         console.log('Rate limit attempts value:', settings.rate_limit_attempts, 'Type:', typeof settings.rate_limit_attempts);
 
         try {

@@ -59,7 +59,9 @@ class SettingsController extends WP_REST_Controller {
      * Check permissions
      */
     public function check_permissions(): bool {
-        return current_user_can( 'manage_options' );
+        $has_permission = current_user_can( 'manage_options' );
+        error_log( 'Plugin Composer - Permission check: ' . ( $has_permission ? 'GRANTED' : 'DENIED' ) . ' for user ID: ' . get_current_user_id() );
+        return $has_permission;
     }
 
     /**
@@ -379,6 +381,9 @@ class SettingsController extends WP_REST_Controller {
             'default_author_url' => get_option( 'plugin_composer_default_author_url', 'https://example.com' ),
         ];
 
+        error_log( 'Plugin Composer - GET settings called. Rate limit attempts: ' . $settings['rate_limit_attempts'] );
+        error_log( 'Plugin Composer - GET settings full response: ' . print_r( $settings, true ) );
+
         return new \WP_REST_Response( $settings, 200 );
     }
 
@@ -535,10 +540,8 @@ class SettingsController extends WP_REST_Controller {
             if ( isset( $params[ $key ] ) ) {
                 $value = $params[ $key ];
 
-                // Debug logging for rate_limit_attempts
-                if ( $key === 'rate_limit_attempts' ) {
-                    error_log( 'Plugin Composer - Processing rate_limit_attempts: ' . print_r( $value, true ) );
-                }
+                // Debug logging for all settings
+                error_log( 'Plugin Composer - Processing setting: ' . $key . ' = ' . print_r( $value, true ) );
 
                 // Sanitize the value
                 if ( $config['sanitize'] === 'array' ) {
@@ -549,10 +552,8 @@ class SettingsController extends WP_REST_Controller {
                     $value = $config['sanitize']( $value );
                 }
 
-                // Debug logging for rate_limit_attempts after sanitization
-                if ( $key === 'rate_limit_attempts' ) {
-                    error_log( 'Plugin Composer - rate_limit_attempts after sanitization: ' . print_r( $value, true ) );
-                }
+                // Debug logging after sanitization
+                error_log( 'Plugin Composer - Setting after sanitization: ' . $key . ' = ' . print_r( $value, true ) );
 
                 // Validate the value
                 if ( ! $config['validate']( $value ) ) {
@@ -561,12 +562,13 @@ class SettingsController extends WP_REST_Controller {
                     continue;
                 }
 
-                // Debug logging for rate_limit_attempts before saving
-                if ( $key === 'rate_limit_attempts' ) {
-                    error_log( 'Plugin Composer - Saving rate_limit_attempts: ' . $value );
-                }
+                // Debug logging before saving
+                error_log( 'Plugin Composer - Saving setting: ' . $key . ' = ' . $value );
 
                 update_option( 'plugin_composer_' . $key, $value );
+            } else {
+                // Debug logging for missing settings
+                error_log( 'Plugin Composer - Setting not found in params: ' . $key );
             }
         }
 
