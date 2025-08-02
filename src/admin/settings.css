@@ -317,4 +317,14 @@
     content: '⚠';
     margin-right: 4px;
     font-size: 14px;
+}
+
+/* Form Field Width Consistency */
+.plugin-composer-settings .components-text-control__input,
+.plugin-composer-settings .components-select-control__input {
+    max-width: 400px !important;
+}
+
+.plugin-composer-settings .components-range-control {
+    max-width: 400px;
 } 
