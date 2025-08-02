@@ -9,6 +9,7 @@
  * Text Domain: plugin-stub
  * WC requires at least: 5.0.0
  * Domain Path: /languages/
+ * Requires Plugins: plugin_requires
  * License: plugin_license
  */
 use WeLabs\PluginStub\PluginStub;

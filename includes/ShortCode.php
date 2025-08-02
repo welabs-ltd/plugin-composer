@@ -58,6 +58,7 @@ class ShortCode implements Hookable {
         $request_data['plugin_author_name'] = sanitize_text_field( $post_data['plugin_author_name'] ?? '' );
         $request_data['plugin_author_email'] = sanitize_text_field( $post_data['plugin_author_email'] ?? '' );
         $request_data['plugin_author_uri'] = sanitize_text_field( $post_data['plugin_uri'] ?? '' );
+        $request_data['plugin_requires'] = sanitize_text_field( $post_data['plugin_requires'] ?? '' );
 
         $request_data = apply_filters( 'welabs_plugin_composer_form_data', array_filter( $request_data ) );
 

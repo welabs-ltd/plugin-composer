@@ -25,6 +25,7 @@ class PluginBuilder implements BuilderContract {
         'plugin_author_name' => 'WeLabs',
         'plugin_author_email' => 'contact@welabs.dev',
         'plugin_author_uri' => 'https://welabs.dev',
+        'plugin_requires' => '',
     ];
 
     public function __construct( FileSystemContract $file_system ) {
@@ -78,6 +79,7 @@ class PluginBuilder implements BuilderContract {
      * @type string    $plugin_author_name        The name of the plugin author.
      * @type string    $plugin_author_email       The email of the plugin author.
      * @type string    $plugin_author_uri         The url of the plugin author profile.
+     * @type string    $plugin_requires           Comma separated require plugins slug.
      * }
      *
      * @return void
