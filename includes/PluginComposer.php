@@ -119,11 +119,13 @@ final class PluginComposer {
 		defined( 'PLUGIN_COMPOSER_INC_DIR' ) || define( 'PLUGIN_COMPOSER_INC_DIR', PLUGIN_COMPOSER_DIR . '/includes' );
 		defined( 'PLUGIN_COMPOSER_TEMPLATE_DIR' ) || define( 'PLUGIN_COMPOSER_TEMPLATE_DIR', PLUGIN_COMPOSER_DIR . '/templates' );
 		defined( 'PLUGIN_COMPOSER_PLUGIN_ASSET' ) || define( 'PLUGIN_COMPOSER_PLUGIN_ASSET', plugins_url( 'assets', PLUGIN_COMPOSER_FILE ) );
+		defined( 'PLUGIN_COMPOSER_LANG_DIR' ) || define( 'PLUGIN_COMPOSER_LANG_DIR', PLUGIN_COMPOSER_DIR . '/languages' );
 
 		// give a way to turn off loading styles and scripts from parent theme
 		defined( 'PLUGIN_COMPOSER_LOAD_STYLE' ) || define( 'PLUGIN_COMPOSER_LOAD_STYLE', true );
 		defined( 'PLUGIN_COMPOSER_LOAD_SCRIPTS' ) || define( 'PLUGIN_COMPOSER_LOAD_SCRIPTS', true );
 	}
+
 	/**
 	 * Load the plugin after WP User Frontend is loaded
 	 *
@@ -131,9 +133,23 @@ final class PluginComposer {
 	 */
 	public function init_plugin() {
 		$this->includes();
+		$this->load_textdomain();
 		$this->init_hooks();
 
 		do_action( 'plugin_composer_loaded' );
+	}
+
+	/**
+	 * Load plugin textdomain for translations
+	 *
+	 * @return void
+	 */
+	public function load_textdomain() {
+		load_plugin_textdomain(
+			'welabs-plugin-composer',
+			false,
+			dirname( plugin_basename( PLUGIN_COMPOSER_FILE ) ) . '/languages'
+		);
 	}
 
 	/**
@@ -144,6 +160,7 @@ final class PluginComposer {
 	public function init_hooks() {
 		// initialize the classes
 		add_action( 'init', array( $this, 'init_classes' ), 4 );
+		add_action( 'init', array( $this, 'load_textdomain' ), 0 );
 		add_action( 'plugins_loaded', array( $this, 'after_plugins_loaded' ) );
 
 		add_action( 'rest_api_init', array( $this, 'init_rest_api' ) );
