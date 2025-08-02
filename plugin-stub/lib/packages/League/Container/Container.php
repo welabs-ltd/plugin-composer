@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container;
 
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Definition\{DefinitionAggregate, DefinitionInterface, DefinitionAggregateInterface};
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Exception\{NotFoundException, ContainerException};
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Inflector\{InflectorAggregate, InflectorInterface, InflectorAggregateInterface};
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider\{ServiceProviderAggregate,
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Definition\{DefinitionAggregate, DefinitionInterface, DefinitionAggregateInterface};
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Exception\{NotFoundException, ContainerException};
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Inflector\{InflectorAggregate, InflectorInterface, InflectorAggregateInterface};
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider\{ServiceProviderAggregate,
     ServiceProviderAggregateInterface,
     ServiceProviderInterface};
-use WeLabs\PluginStub\ThirdParty\Packages\Psr\Container\ContainerInterface;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\Psr\Container\ContainerInterface;
 
 class Container implements DefinitionContainerInterface
 {

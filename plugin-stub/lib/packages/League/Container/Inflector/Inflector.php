@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container\Inflector;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Inflector;
 
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Argument\ArgumentResolverInterface;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Argument\ArgumentResolverTrait;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareTrait;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Argument\ArgumentResolverInterface;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Argument\ArgumentResolverTrait;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareTrait;
 
 class Inflector implements ArgumentResolverInterface, InflectorInterface
 {

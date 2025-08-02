@@ -1,9 +1,9 @@
 <?php
 
-namespace WeLabs\PluginStub\Providers;
+namespace BaseNameSpace\PluginStub\Providers;
 
-use WeLabs\PluginStub\Assets;
-use WeLabs\PluginStub\DependencyManagement\BootableServiceProvider;
+use BaseNameSpace\PluginStub\Assets;
+use BaseNameSpace\PluginStub\DependencyManagement\BootableServiceProvider;
 
 class ServiceProvider extends BootableServiceProvider {
 	protected $services = [

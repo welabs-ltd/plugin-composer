@@ -6,6 +6,7 @@ use WeLabs\PluginComposer\Contracts\BuilderContract;
 use WeLabs\PluginComposer\Contracts\FileSystemContract;
 use WeLabs\PluginComposer\Contracts\Hookable;
 use WeLabs\PluginComposer\DependencyManagement\Container;
+use WP_REST_Controller;
 
 /**
  * PluginComposer class.
@@ -144,7 +145,22 @@ final class PluginComposer {
 		// initialize the classes
 		add_action( 'init', array( $this, 'init_classes' ), 4 );
 		add_action( 'plugins_loaded', array( $this, 'after_plugins_loaded' ) );
+
+		add_action( 'rest_api_init', array( $this, 'init_rest_api' ) );
+
         do_action( 'welabs_plugin_composer_loaded' );
+	}
+
+	public function init_rest_api() {
+		$container = $this->get_container();
+		if ( ! $container->has( WP_REST_Controller::class ) ) {
+			return;
+		}
+
+		$controllers = $container->get( WP_REST_Controller::class );
+		foreach ( $controllers as $controller ) {
+			$controller->register_routes();
+		}
 	}
 
 	/**

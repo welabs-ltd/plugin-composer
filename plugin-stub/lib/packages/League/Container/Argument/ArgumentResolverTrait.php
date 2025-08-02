@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container\Argument;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Argument;
 
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\DefinitionContainerInterface;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Exception\{ContainerException, NotFoundException};
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\ReflectionContainer;
-use WeLabs\PluginStub\ThirdParty\Packages\Psr\Container\ContainerInterface;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\DefinitionContainerInterface;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Exception\{ContainerException, NotFoundException};
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ReflectionContainer;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\Psr\Container\ContainerInterface;
 use ReflectionFunctionAbstract;
 use ReflectionNamedType;
 

@@ -3,7 +3,7 @@
  * ExtendedContainer class file.
  */
 
-namespace WeLabs\PluginStub\DependencyManagement;
+namespace BaseNameSpace\PluginStub\DependencyManagement;
 
 /**
  * Class ContainerException.

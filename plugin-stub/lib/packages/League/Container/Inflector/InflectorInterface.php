@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container\Inflector;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Inflector;
 
 interface InflectorInterface
 {

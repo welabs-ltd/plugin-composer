@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider;
 
 use Generator;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Exception\ContainerException;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\{ContainerAwareInterface, ContainerAwareTrait};
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Exception\ContainerException;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\{ContainerAwareInterface, ContainerAwareTrait};
 
 class ServiceProviderAggregate implements ServiceProviderAggregateInterface
 {

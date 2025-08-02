@@ -20,7 +20,7 @@
  *
  * @version 3.74.3
  */
-namespace WeLabs\PluginStub\ThirdParty\Packages\Detection;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\Detection;
 
 use BadMethodCallException;
 

@@ -51,6 +51,14 @@ class ShortCode implements Hookable {
         $error_messages = apply_filters( 'get_welabs_plugin_compose_form_errors', $this->error_messages );
         $form_template = apply_filters( 'get_welabs_plugin_compose_form', PLUGIN_COMPOSER_TEMPLATE_DIR . '/compose-form.php' );
 
+        // Get default values from settings
+        $default_values = [
+            'plugin_type' => Config::get( 'default_plugin_type', 'container_based' ),
+            'author_name' => Config::get( 'default_author_name', 'Your Name' ),
+            'author_url' => Config::get( 'default_author_url', 'https://example.com' ),
+            'namespace' => Config::get( 'default_namespace', 'MyPlugin' ),
+        ];
+
         ob_start();
         include $form_template;
         $content = $content . ob_get_clean();
@@ -223,6 +231,22 @@ class ShortCode implements Hookable {
             $errors['plugin_author_uri'] = __( 'Please enter a valid author URL.', 'plugin-composer' );
         } else {
             $data['plugin_author_uri'] = $author_uri;
+        }
+
+        // Plugin namespace validation
+        $namespace = sanitize_text_field( $post_data['plugin_namespace'] ?? '' );
+        if ( ! empty( $namespace ) ) {
+            // Support multi-word namespaces like "AB\AC" or single word like "MyPlugin"
+            if ( ! preg_match( '/^[A-Z][a-zA-Z0-9_]*(\/[A-Z][a-zA-Z0-9_]*)*$/', $namespace ) ) {
+                $errors['plugin_namespace'] = __( 'Namespace must start with a capital letter and contain only letters, numbers, and underscores. Multi-word namespaces should use forward slashes (e.g., AB/AC).', 'plugin-composer' );
+            } elseif ( strlen( $namespace ) > 100 ) {
+                $errors['plugin_namespace'] = __( 'Namespace must be less than 100 characters.', 'plugin-composer' );
+            } else {
+                $data['plugin_namespace'] = $namespace;
+            }
+        } else {
+            // Use default namespace if not provided
+            $data['plugin_namespace'] = Config::get( 'default_namespace', 'MyPlugin' );
         }
 
         return [

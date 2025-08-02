@@ -129,6 +129,17 @@ class PluginBuilder implements BuilderContract {
             'plugin-stub' => str_replace( ' ', '-', strtolower( $plugin_name ) ),
         ];
 
+        // Add namespace placeholder if provided
+        if ( isset( $this->placeholders['plugin_namespace'] ) ) {
+            $namespace = $this->placeholders['plugin_namespace'];
+            // Convert forward slashes to backslashes for PHP namespace format
+            $php_namespace = str_replace( '/', '\\', $namespace );
+            $default['BaseNameSpace'] = $php_namespace;
+        } else {
+            // Use default namespace if not provided
+            $default['BaseNameSpace'] = Config::get( 'default_namespace', 'MyPlugin' );
+        }
+
         return array_merge( $default, $this->placeholders );
     }
 

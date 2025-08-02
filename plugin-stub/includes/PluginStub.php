@@ -1,9 +1,9 @@
 <?php
 
-namespace WeLabs\PluginStub;
+namespace BaseNameSpace\PluginStub;
 
-use WeLabs\PluginStub\DependencyManagement\Container;
-use WeLabs\PluginStub\Contracts\HookRegistry;
+use BaseNameSpace\PluginStub\DependencyManagement\Container;
+use BaseNameSpace\PluginStub\Contracts\HookRegistry;
 /**
  * PluginStub class
  *
@@ -316,6 +316,6 @@ final class PluginStub {
     }
 
     public function get_container(): Container {
-		return welabs_plugin_stub_get_container();
+		return BaseNameSpace_plugin_stub_get_container();
     }
 }

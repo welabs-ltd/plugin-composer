@@ -1,6 +1,6 @@
 <?php
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\Psr\Container;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\Psr\Container;
 
 /**
  * No entry was found in the container.

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container\Definition;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Definition;
 
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareInterface;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareInterface;
 
 interface DefinitionInterface extends ContainerAwareInterface
 {

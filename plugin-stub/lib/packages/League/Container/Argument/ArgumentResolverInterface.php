@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container\Argument;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Argument;
 
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareInterface;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareInterface;
 use ReflectionFunctionAbstract;
 
 interface ArgumentResolverInterface extends ContainerAwareInterface

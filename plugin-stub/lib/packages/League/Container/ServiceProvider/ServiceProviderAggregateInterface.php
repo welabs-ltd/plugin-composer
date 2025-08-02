@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider;
 
 use IteratorAggregate;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareInterface;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareInterface;
 
 interface ServiceProviderAggregateInterface extends ContainerAwareInterface, IteratorAggregate
 {

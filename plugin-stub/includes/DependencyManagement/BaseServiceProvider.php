@@ -3,11 +3,11 @@
  * AbstractServiceProvider class file.
  */
 
-namespace WeLabs\PluginStub\DependencyManagement;
+namespace BaseNameSpace\PluginStub\DependencyManagement;
 
 use ReflectionClass;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Definition\DefinitionInterface;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider\AbstractServiceProvider;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Definition\DefinitionInterface;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider\AbstractServiceProvider;
 
 /**
  * Base class for the service providers used to register classes in the container.

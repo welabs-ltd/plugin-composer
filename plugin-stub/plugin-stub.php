@@ -11,8 +11,8 @@
  * Domain Path: /languages/
  * License: plugin_license
  */
-use WeLabs\PluginStub\PluginStub;
-use WeLabs\PluginStub\DependencyManagement\Container;
+use BaseNameSpace\PluginStub\PluginStub;
+use BaseNameSpace\PluginStub\DependencyManagement\Container;
 
 // don't call the file directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,28 +26,28 @@ if ( ! defined( 'PLUGIN_STUB_FILE' ) ) {
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Instantiate the container
-$GLOBALS['welabs_plugin_stub_container'] = new Container();
+$GLOBALS['BaseNameSpace_plugin_stub_container'] = new Container();
 
 // Register the service providers
-$GLOBALS['welabs_plugin_stub_container']->addServiceProvider( new \WeLabs\PluginStub\Providers\ServiceProvider() );
+$GLOBALS['BaseNameSpace_plugin_stub_container']->addServiceProvider( new \BaseNameSpace\PluginStub\Providers\ServiceProvider() );
 
 /**
  * Get the container.
  *
  * @return Container
  */
-function welabs_plugin_stub_get_container(): Container {
-	return $GLOBALS['welabs_plugin_stub_container'];
+function BaseNameSpace_plugin_stub_get_container(): Container {
+	return $GLOBALS['BaseNameSpace_plugin_stub_container'];
 }
 
 /**
  * Load Plugin_Stub Plugin when all plugins loaded
  *
- * @return \WeLabs\PluginStub\PluginStub
+ * @return \BaseNameSpace\PluginStub\PluginStub
  */
-function welabs_plugin_stub() {
+function BaseNameSpace_plugin_stub() {
     return PluginStub::init();
 }
 
 // Lets Go....
-welabs_plugin_stub();
+BaseNameSpace_plugin_stub();

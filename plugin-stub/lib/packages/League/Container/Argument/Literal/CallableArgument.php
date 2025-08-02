@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container\Argument\Literal;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Argument\Literal;
 
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Argument\LiteralArgument;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Argument\LiteralArgument;
 
 class CallableArgument extends LiteralArgument
 {

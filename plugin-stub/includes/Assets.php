@@ -1,8 +1,8 @@
 <?php
 
-namespace WeLabs\PluginStub;
+namespace BaseNameSpace\PluginStub;
 
-use WeLabs\PluginStub\Contracts\HookRegistry;
+use BaseNameSpace\PluginStub\Contracts\HookRegistry;
 
 class Assets implements HookRegistry {
     /**

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container\Argument;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Argument;
 
 class DefaultValueArgument extends ResolvableArgument implements DefaultValueInterface
 {

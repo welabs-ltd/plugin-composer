@@ -24,6 +24,13 @@ class Config {
         'allowed_file_extensions' => [ 'php', 'js', 'css', 'json', 'md', 'txt', 'xml' ],
         'required_capability' => 'edit_posts',
         'allow_guest_access' => true,
+        'enable_debug_mode' => false,
+        'auto_cleanup_files' => true,
+        'file_cleanup_delay' => 30,
+        'enable_plugin_preview' => false,
+        'default_namespace' => 'MyPlugin',
+        'default_author_name' => 'Your Name',
+        'default_author_url' => 'https://example.com',
     ];
 
     /**
@@ -34,8 +41,10 @@ class Config {
      * @return mixed
      */
     public static function get( string $key, $default = null ) {
-        $value = apply_filters( "plugin_composer_config_{$key}", self::$defaults[ $key ] ?? $default );
-        return $value;
+        $option_key = 'plugin_composer_' . $key;
+        $value = get_option( $option_key, self::$defaults[ $key ] ?? $default );
+
+        return apply_filters( "plugin_composer_config_{$key}", $value );
     }
 
     /**
@@ -44,7 +53,12 @@ class Config {
      * @return array
      */
     public static function all(): array {
-        return apply_filters( 'plugin_composer_config', self::$defaults );
+        $settings = [];
+        foreach ( self::$defaults as $key => $default_value ) {
+            $settings[ $key ] = self::get( $key, $default_value );
+        }
+
+        return apply_filters( 'plugin_composer_config', $settings );
     }
 
     /**
@@ -54,7 +68,8 @@ class Config {
      * @param mixed $value
      */
     public static function set( string $key, $value ): void {
-        self::$defaults[ $key ] = $value;
+        $option_key = 'plugin_composer_' . $key;
+        update_option( $option_key, $value );
     }
 
     /**
@@ -68,9 +83,10 @@ class Config {
 				'plugin_description' => 'Custom plugin by weLabs',
 				'plugin_license' => 'GPL2',
 				'plugin_uri' => 'https://welabs.dev',
-				'plugin_author_name' => 'WeLabs',
+				'plugin_author_name' => self::get( 'default_author_name', 'Your Name' ),
 				'plugin_author_email' => 'contact@welabs.dev',
-				'plugin_author_uri' => 'https://welabs.dev',
+				'plugin_author_uri' => self::get( 'default_author_url', 'https://example.com' ),
+				'plugin_namespace' => self::get( 'default_namespace', 'MyPlugin' ),
 			]
         );
     }

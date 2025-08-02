@@ -1,11 +1,11 @@
 {
-    "name": "welabs/plugin-stub",
+    "name": "BaseNameSpace/plugin-stub",
     "description": "plugin_description",
     "license": "plugin_license",
     "autoload": {
         "psr-4": {
-            "WeLabs\\PluginStub\\": "includes/",
-			"WeLabs\\PluginStub\\ThirdParty\\Packages\\": "lib/packages/"
+            "BaseNameSpace\\PluginStub\\": "includes/",
+			"BaseNameSpace\\PluginStub\\ThirdParty\\Packages\\": "lib/packages/"
         }
     },
     "authors": [

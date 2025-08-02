@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container\Inflector;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Inflector;
 
 use Generator;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareTrait;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareTrait;
 
 class InflectorAggregate implements InflectorAggregateInterface
 {

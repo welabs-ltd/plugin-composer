@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container;
 
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Definition\DefinitionInterface;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Inflector\InflectorInterface;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider\ServiceProviderInterface;
-use WeLabs\PluginStub\ThirdParty\Packages\Psr\Container\ContainerInterface;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Definition\DefinitionInterface;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Inflector\InflectorInterface;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider\ServiceProviderInterface;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\Psr\Container\ContainerInterface;
 
 interface DefinitionContainerInterface extends ContainerInterface
 {

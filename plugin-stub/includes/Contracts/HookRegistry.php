@@ -1,6 +1,6 @@
 <?php
 
-namespace WeLabs\PluginStub\Contracts;
+namespace BaseNameSpace\PluginStub\Contracts;
 
 /**
  * Interface HooksRegisterInterface

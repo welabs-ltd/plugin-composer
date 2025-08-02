@@ -3,9 +3,9 @@
  * ExtendedContainer class file.
  */
 
-namespace WeLabs\PluginStub\DependencyManagement;
+namespace BaseNameSpace\PluginStub\DependencyManagement;
 
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Container as BaseContainer;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Container as BaseContainer;
 
 /**
  * This class extends the original League's Container object by adding some functionality

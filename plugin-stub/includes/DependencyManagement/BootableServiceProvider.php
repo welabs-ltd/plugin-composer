@@ -3,9 +3,9 @@
  * AbstractServiceProvider class file.
  */
 
-namespace WeLabs\PluginStub\DependencyManagement;
+namespace BaseNameSpace\PluginStub\DependencyManagement;
 
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider\BootableServiceProviderInterface;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider\BootableServiceProviderInterface;
 
 /**
  * Base class for the service providers used to register classes in the container or/and to register the other service providers.

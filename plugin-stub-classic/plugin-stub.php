@@ -11,7 +11,7 @@
  * Domain Path: /languages/
  * License: plugin_license
  */
-use WeLabs\PluginStub\PluginStub;
+use BaseNameSpace\PluginStub\PluginStub;
 
 // don't call the file directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,11 +27,11 @@ require_once __DIR__ . '/vendor/autoload.php';
 /**
  * Load Plugin_Stub Plugin when all plugins loaded
  *
- * @return \WeLabs\PluginStub\PluginStub
+ * @return \BaseNameSpace\PluginStub\PluginStub
  */
-function welabs_plugin_stub() {
+function BaseNameSpace_plugin_stub() {
     return PluginStub::init();
 }
 
 // Lets Go....
-welabs_plugin_stub();
+BaseNameSpace_plugin_stub();

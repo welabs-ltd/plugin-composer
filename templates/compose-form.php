@@ -9,13 +9,26 @@
         </div>
     </div>
 
+        <div class="form-group">
+        <label class="control-label" for="plugin_namespace">
+            Plugin Namespace
+        </label>
+        <div class="input-group">
+            <input name="plugin_namespace" id="plugin_namespace" class="input-control" 
+                    placeholder="<?php echo esc_attr( $default_values['namespace'] ?? 'MyPlugin' ); ?>"
+                    value="<?php echo esc_attr( $default_values['namespace'] ?? 'MyPlugin' ); ?>">
+            <small class="help-text">Use forward slashes for multi-word namespaces (e.g., AB/AC)</small>
+            <div class="error-message"><?php echo esc_html( $error_messages['plugin_namespace'] ?? '' ); ?></div>
+        </div>
+    </div>
+
     <div class="form-group">
-        <label class="control-label" for="plugin_author_uri">
+        <label class="control-label" for="plugin_type">
             Plugin Type
         </label>
         <select name="plugin_type" class="plugin-type">
-            <option value="classic">Classic</option>
-            <option value="container_based">Container Based</option>
+            <option value="classic" <?php selected( $default_values['plugin_type'] ?? 'container_based', 'classic' ); ?>>Classic</option>
+            <option value="container_based" <?php selected( $default_values['plugin_type'] ?? 'container_based', 'container_based' ); ?>>Container Based</option>
         </select>
     </div>
     <div class="form-group">
@@ -42,7 +55,9 @@
         <label class="control-label" for="plugin_author_name">
             Author Name
         </label>
-        <input name="plugin_author_name" id="plugin_author_name"  class="input-control" placeholder="weLabs">
+        <input name="plugin_author_name" id="plugin_author_name" class="input-control" 
+                placeholder="<?php echo esc_attr( $default_values['author_name'] ?? 'Your Name' ); ?>"
+                value="<?php echo esc_attr( $default_values['author_name'] ?? 'Your Name' ); ?>">
     </div>
     <div class="form-group">
         <label class="control-label" for="plugin_author_email">
@@ -54,7 +69,9 @@
         <label class="control-label" for="plugin_author_uri">
             Author URL
         </label>
-        <input name="plugin_author_uri" id="plugin_author_uri" type="url"  class="input-control" placeholder="https://author.profile">
+        <input name="plugin_author_uri" id="plugin_author_uri" type="url" class="input-control" 
+                placeholder="<?php echo esc_attr( $default_values['author_url'] ?? 'https://example.com' ); ?>"
+                value="<?php echo esc_attr( $default_values['author_url'] ?? 'https://example.com' ); ?>">
     </div>
 
     <?php wp_nonce_field( 'wlb-compose-plugin', 'wlb-compose-plugin' ); ?>

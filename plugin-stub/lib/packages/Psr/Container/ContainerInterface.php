@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\Psr\Container;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\Psr\Container;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.

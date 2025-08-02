@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container\Definition;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Definition;
 
 use Generator;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareTrait;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Exception\NotFoundException;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareTrait;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Exception\NotFoundException;
 
 class DefinitionAggregate implements DefinitionAggregateInterface
 {

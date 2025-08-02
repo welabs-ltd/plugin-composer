@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider;
 
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareTrait;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareTrait;
 
 abstract class AbstractServiceProvider implements ServiceProviderInterface
 {

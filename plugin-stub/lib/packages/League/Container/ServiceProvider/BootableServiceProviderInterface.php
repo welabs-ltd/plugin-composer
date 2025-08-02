@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider;
 
 interface BootableServiceProviderInterface extends ServiceProviderInterface
 {

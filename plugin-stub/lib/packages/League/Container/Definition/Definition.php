@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container\Definition;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Definition;
 
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Argument\{
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Argument\{
     ArgumentResolverInterface,
     ArgumentResolverTrait,
     ArgumentInterface,
     LiteralArgumentInterface
 };
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareTrait;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Exception\ContainerException;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Exception\NotFoundException;
-use WeLabs\PluginStub\ThirdParty\Packages\Psr\Container\ContainerInterface;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\ContainerAwareTrait;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Exception\ContainerException;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Exception\NotFoundException;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\Psr\Container\ContainerInterface;
 use ReflectionClass;
 
 class Definition implements ArgumentResolverInterface, DefinitionInterface

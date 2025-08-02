@@ -3,9 +3,9 @@
  * An extension to the Definition class to prevent constructor injection from being possible.
  */
 
-namespace WeLabs\PluginStub\DependencyManagement;
+namespace BaseNameSpace\PluginStub\DependencyManagement;
 
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Definition\Definition as BaseDefinition;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Definition\Definition as BaseDefinition;
 
 /**
  * An extension of the definition class that replaces constructor injection with method injection.

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container;
 
 use BadMethodCallException;
-use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Exception\ContainerException;
+use BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container\Exception\ContainerException;
 
 trait ContainerAwareTrait
 {

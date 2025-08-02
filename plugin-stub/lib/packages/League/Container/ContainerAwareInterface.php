@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeLabs\PluginStub\ThirdParty\Packages\League\Container;
+namespace BaseNameSpace\PluginStub\ThirdParty\Packages\League\Container;
 
 interface ContainerAwareInterface
 {
