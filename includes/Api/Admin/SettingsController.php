@@ -30,11 +30,13 @@ class SettingsController extends WP_REST_Controller {
                     'methods' => WP_REST_Server::READABLE,
                     'callback' => [ $this, 'get_settings' ],
                     'permission_callback' => [ $this, 'check_permissions' ],
+                    'args' => $this->get_collection_params(),
                 ],
                 [
                     'methods' => WP_REST_Server::EDITABLE,
                     'callback' => [ $this, 'update_settings' ],
                     'permission_callback' => [ $this, 'check_permissions' ],
+                    'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
                 ],
             ]
         );
@@ -47,6 +49,7 @@ class SettingsController extends WP_REST_Controller {
                     'methods' => WP_REST_Server::EDITABLE,
                     'callback' => [ $this, 'reset_settings' ],
                     'permission_callback' => [ $this, 'check_permissions' ],
+                    'args' => $this->get_collection_params(),
                 ],
             ]
         );
@@ -57,6 +60,297 @@ class SettingsController extends WP_REST_Controller {
      */
     public function check_permissions(): bool {
         return current_user_can( 'manage_options' );
+    }
+
+    /**
+     * Get the item schema
+     */
+    public function get_item_schema(): array {
+        $schema = [
+            '$schema' => 'http://json-schema.org/draft-04/schema#',
+            'title' => 'plugin-composer-settings',
+            'type' => 'object',
+            'properties' => [
+                'rate_limit_attempts' => [
+                    'description' => __( 'Number of attempts allowed before rate limiting.', 'welabs-plugin-composer' ),
+                    'type' => 'integer',
+                    'minimum' => 1,
+                    'maximum' => 100,
+                    'default' => 5,
+                ],
+                'rate_limit_duration' => [
+                    'description' => __( 'Duration in seconds for rate limiting.', 'welabs-plugin-composer' ),
+                    'type' => 'integer',
+                    'minimum' => 60,
+                    'maximum' => 86400,
+                    'default' => 3600,
+                ],
+                'max_plugin_name_length' => [
+                    'description' => __( 'Maximum length for plugin names.', 'welabs-plugin-composer' ),
+                    'type' => 'integer',
+                    'minimum' => 10,
+                    'maximum' => 200,
+                    'default' => 100,
+                ],
+                'max_description_length' => [
+                    'description' => __( 'Maximum length for plugin descriptions.', 'welabs-plugin-composer' ),
+                    'type' => 'integer',
+                    'minimum' => 50,
+                    'maximum' => 2000,
+                    'default' => 500,
+                ],
+                'max_license_length' => [
+                    'description' => __( 'Maximum length for license information.', 'welabs-plugin-composer' ),
+                    'type' => 'integer',
+                    'minimum' => 10,
+                    'maximum' => 100,
+                    'default' => 50,
+                ],
+                'max_author_name_length' => [
+                    'description' => __( 'Maximum length for author names.', 'welabs-plugin-composer' ),
+                    'type' => 'integer',
+                    'minimum' => 10,
+                    'maximum' => 200,
+                    'default' => 100,
+                ],
+                'allowed_plugin_types' => [
+                    'description' => __( 'Allowed plugin types for generation.', 'welabs-plugin-composer' ),
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'string',
+                        'enum' => [ 'classic', 'container_based' ],
+                    ],
+                    'default' => [ 'classic', 'container_based' ],
+                ],
+                'default_plugin_type' => [
+                    'description' => __( 'Default plugin type for new plugins.', 'welabs-plugin-composer' ),
+                    'type' => 'string',
+                    'enum' => [ 'classic', 'container_based' ],
+                    'default' => 'container_based',
+                ],
+                'file_permissions' => [
+                    'description' => __( 'File permissions for generated files.', 'welabs-plugin-composer' ),
+                    'type' => 'integer',
+                    'minimum' => 400,
+                    'maximum' => 777,
+                    'default' => 755,
+                ],
+                'allowed_file_extensions' => [
+                    'description' => __( 'Allowed file extensions for plugin files.', 'welabs-plugin-composer' ),
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'string',
+                    ],
+                    'default' => [ 'php', 'js', 'css', 'json', 'md', 'txt', 'xml' ],
+                ],
+                'required_capability' => [
+                    'description' => __( 'Required capability to use the plugin composer.', 'welabs-plugin-composer' ),
+                    'type' => 'string',
+                    'default' => 'edit_posts',
+                ],
+                'allow_guest_access' => [
+                    'description' => __( 'Whether to allow guest access to plugin composer.', 'welabs-plugin-composer' ),
+                    'type' => 'boolean',
+                    'default' => true,
+                ],
+                'enable_debug_mode' => [
+                    'description' => __( 'Whether to enable debug mode.', 'welabs-plugin-composer' ),
+                    'type' => 'boolean',
+                    'default' => false,
+                ],
+                'auto_cleanup_files' => [
+                    'description' => __( 'Whether to automatically cleanup temporary files.', 'welabs-plugin-composer' ),
+                    'type' => 'boolean',
+                    'default' => true,
+                ],
+                'file_cleanup_delay' => [
+                    'description' => __( 'Delay in minutes before cleaning up files.', 'welabs-plugin-composer' ),
+                    'type' => 'integer',
+                    'minimum' => 1,
+                    'maximum' => 1440,
+                    'default' => 30,
+                ],
+                'enable_plugin_preview' => [
+                    'description' => __( 'Whether to enable plugin preview functionality.', 'welabs-plugin-composer' ),
+                    'type' => 'boolean',
+                    'default' => false,
+                ],
+                'default_namespace' => [
+                    'description' => __( 'Default namespace for generated plugins.', 'welabs-plugin-composer' ),
+                    'type' => 'string',
+                    'pattern' => '^[A-Z][a-zA-Z0-9_]*(\/[A-Z][a-zA-Z0-9_]*)*$',
+                    'default' => 'MyPlugin',
+                ],
+                'default_author_name' => [
+                    'description' => __( 'Default author name for generated plugins.', 'welabs-plugin-composer' ),
+                    'type' => 'string',
+                    'maxLength' => 100,
+                    'default' => 'Your Name',
+                ],
+                'default_author_url' => [
+                    'description' => __( 'Default author URL for generated plugins.', 'welabs-plugin-composer' ),
+                    'type' => 'string',
+                    'format' => 'uri',
+                    'default' => 'https://example.com',
+                ],
+            ],
+        ];
+
+        return $this->add_additional_fields_schema( $schema );
+    }
+
+    /**
+     * Get collection parameters
+     */
+    public function get_collection_params(): array {
+        return [
+            'context' => $this->get_context_param( [ 'default' => 'view' ] ),
+        ];
+    }
+
+    /**
+     * Get endpoint arguments for item schema
+     */
+    public function get_endpoint_args_for_item_schema( $method = WP_REST_Server::CREATABLE ): array {
+        $schema = $this->get_item_schema();
+        $args = [];
+
+        if ( WP_REST_Server::EDITABLE === $method ) {
+            foreach ( $schema['properties'] as $field_id => $params ) {
+                if ( ! isset( $params['readonly'] ) || ! $params['readonly'] ) {
+                    $args[ $field_id ] = [
+                        'required' => isset( $params['required'] ) ? $params['required'] : false,
+                        'type' => isset( $params['type'] ) ? $params['type'] : 'string',
+                        'description' => isset( $params['description'] ) ? $params['description'] : '',
+                        'validate_callback' => [ $this, 'validate_setting_field' ],
+                        'sanitize_callback' => [ $this, 'sanitize_setting_field' ],
+                    ];
+
+                    // Add additional validation rules
+                    if ( isset( $params['minimum'] ) ) {
+                        $args[ $field_id ]['minimum'] = $params['minimum'];
+                    }
+                    if ( isset( $params['maximum'] ) ) {
+                        $args[ $field_id ]['maximum'] = $params['maximum'];
+                    }
+                    if ( isset( $params['enum'] ) ) {
+                        $args[ $field_id ]['enum'] = $params['enum'];
+                    }
+                    if ( isset( $params['pattern'] ) ) {
+                        $args[ $field_id ]['pattern'] = $params['pattern'];
+                    }
+                    if ( isset( $params['format'] ) ) {
+                        $args[ $field_id ]['format'] = $params['format'];
+                    }
+                    if ( isset( $params['maxLength'] ) ) {
+                        $args[ $field_id ]['maxLength'] = $params['maxLength'];
+                    }
+                }
+            }
+        }
+
+        return $args;
+    }
+
+    /**
+     * Validate setting field
+     */
+    public function validate_setting_field( $value, $request, $param ) {
+        $schema = $this->get_item_schema();
+
+        if ( ! isset( $schema['properties'][ $param ] ) ) {
+            return new WP_Error( 'invalid_param', sprintf( __( 'Invalid parameter: %s', 'welabs-plugin-composer' ), $param ) );
+        }
+
+        $field_schema = $schema['properties'][ $param ];
+
+        // Type validation
+        if ( isset( $field_schema['type'] ) ) {
+            switch ( $field_schema['type'] ) {
+                case 'integer':
+                    if ( ! is_numeric( $value ) ) {
+                        return new WP_Error( 'invalid_type', sprintf( __( 'Parameter %s must be a number.', 'welabs-plugin-composer' ), $param ) );
+                    }
+                    $value = (int) $value;
+                    break;
+                case 'boolean':
+                    if ( ! is_bool( $value ) && ! in_array( $value, [ '0', '1', 0, 1, 'true', 'false', true, false ], true ) ) {
+                        return new WP_Error( 'invalid_type', sprintf( __( 'Parameter %s must be a boolean.', 'welabs-plugin-composer' ), $param ) );
+                    }
+                    $value = (bool) $value;
+                    break;
+                case 'array':
+                    if ( ! is_array( $value ) ) {
+                        return new WP_Error( 'invalid_type', sprintf( __( 'Parameter %s must be an array.', 'welabs-plugin-composer' ), $param ) );
+                    }
+                    break;
+            }
+        }
+
+        // Range validation
+        if ( isset( $field_schema['minimum'] ) && $value < $field_schema['minimum'] ) {
+            return new WP_Error( 'invalid_value', sprintf( __( 'Parameter %1$s must be at least %2$d.', 'welabs-plugin-composer' ), $param, $field_schema['minimum'] ) );
+        }
+
+        if ( isset( $field_schema['maximum'] ) && $value > $field_schema['maximum'] ) {
+            return new WP_Error( 'invalid_value', sprintf( __( 'Parameter %1$s must be at most %2$d.', 'welabs-plugin-composer' ), $param, $field_schema['maximum'] ) );
+        }
+
+        // Enum validation
+        if ( isset( $field_schema['enum'] ) && ! in_array( $value, $field_schema['enum'], true ) ) {
+            return new WP_Error( 'invalid_value', sprintf( __( 'Parameter %1$s must be one of: %2$s', 'welabs-plugin-composer' ), $param, implode( ', ', $field_schema['enum'] ) ) );
+        }
+
+        // Pattern validation
+        if ( isset( $field_schema['pattern'] ) && ! preg_match( '/' . $field_schema['pattern'] . '/', $value ) ) {
+            return new WP_Error( 'invalid_value', sprintf( __( 'Parameter %s does not match the required pattern.', 'welabs-plugin-composer' ), $param ) );
+        }
+
+        // URL validation
+        if ( isset( $field_schema['format'] ) && $field_schema['format'] === 'uri' && ! filter_var( $value, FILTER_VALIDATE_URL ) ) {
+            return new WP_Error( 'invalid_value', sprintf( __( 'Parameter %s must be a valid URL.', 'welabs-plugin-composer' ), $param ) );
+        }
+
+        // Length validation
+        if ( isset( $field_schema['maxLength'] ) && strlen( $value ) > $field_schema['maxLength'] ) {
+            return new WP_Error( 'invalid_value', sprintf( __( 'Parameter %1$s must be at most %2$d characters long.', 'welabs-plugin-composer' ), $param, $field_schema['maxLength'] ) );
+        }
+
+        return true;
+    }
+
+    /**
+     * Sanitize setting field
+     */
+    public function sanitize_setting_field( $value, $request, $param ) {
+        $schema = $this->get_item_schema();
+
+        if ( ! isset( $schema['properties'][ $param ] ) ) {
+            return $value;
+        }
+
+        $field_schema = $schema['properties'][ $param ];
+
+        // Type sanitization
+        if ( isset( $field_schema['type'] ) ) {
+            switch ( $field_schema['type'] ) {
+                case 'integer':
+                    return (int) $value;
+                case 'boolean':
+                    return (bool) $value;
+                case 'string':
+                    return sanitize_text_field( $value );
+                case 'array':
+                    return is_array( $value ) ? array_map( 'sanitize_text_field', $value ) : [];
+            }
+        }
+
+        // URL sanitization
+        if ( isset( $field_schema['format'] ) && $field_schema['format'] === 'uri' ) {
+            return esc_url_raw( $value );
+        }
+
+        return $value;
     }
 
     /**

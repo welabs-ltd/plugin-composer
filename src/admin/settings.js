@@ -26,6 +26,19 @@ function PluginComposerSettings() {
     const [activeTab, setActiveTab] = useState('general');
     const [showResetModal, setShowResetModal] = useState(false);
 
+    // Persist active tab in localStorage
+    useEffect(() => {
+        const savedTab = localStorage.getItem('plugin-composer-active-tab');
+        if (savedTab) {
+            setActiveTab(savedTab);
+        }
+    }, []);
+
+    const handleTabChange = (tabName) => {
+        setActiveTab(tabName);
+        localStorage.setItem('plugin-composer-active-tab', tabName);
+    };
+
     useEffect(() => {
         loadSettings();
     }, []);
@@ -36,6 +49,7 @@ function PluginComposerSettings() {
                 path: '/plugin-composer/v1/settings',
                 method: 'GET',
             });
+            console.log('Loaded settings:', response);
             setSettings(response);
         } catch (error) {
             console.error('Error loading settings:', error);
@@ -52,6 +66,8 @@ function PluginComposerSettings() {
         setSaving(true);
         setNotice(null);
 
+        console.log('Saving settings:', settings);
+
         try {
             const response = await apiFetch({
                 path: '/plugin-composer/v1/settings',
@@ -60,6 +76,8 @@ function PluginComposerSettings() {
             });
             
             if (response.success) {
+                // Reload settings to ensure UI reflects saved values
+                await loadSettings();
                 setNotice({
                     type: 'success',
                     message: __('Settings saved successfully!', 'welabs-plugin-composer')
@@ -92,6 +110,12 @@ function PluginComposerSettings() {
             ...prev,
             [key]: value
         }));
+    };
+
+    // Helper function to safely get numeric values
+    const getNumericValue = (value, defaultValue = 0) => {
+        const parsed = parseInt(value);
+        return isNaN(parsed) ? defaultValue : parsed;
     };
 
     const handleResetClick = () => {
@@ -171,7 +195,8 @@ function PluginComposerSettings() {
             <TabPanel
                 className="plugin-composer-tabs"
                 activeClass="active-tab"
-                onSelect={(tabName) => setActiveTab(tabName)}
+                initialTabName={activeTab}
+                onSelect={handleTabChange}
                 tabs={[
                     {
                         name: 'general',
@@ -298,8 +323,8 @@ function PluginComposerSettings() {
                                             <RangeControl
                                                 label={__('Rate Limit Attempts', 'welabs-plugin-composer')}
                                                 help={__('Maximum number of plugin generation attempts per time period', 'welabs-plugin-composer')}
-                                                value={settings.rate_limit_attempts || 5}
-                                                onChange={(value) => updateSetting('rate_limit_attempts', value)}
+                                                value={parseInt(settings.rate_limit_attempts) || 5}
+                                                onChange={(value) => updateSetting('rate_limit_attempts', parseInt(value))}
                                                 min={1}
                                                 max={50}
                                             />
@@ -310,8 +335,8 @@ function PluginComposerSettings() {
                                                 type="number"
                                                 label={__('Rate Limit Duration (seconds)', 'welabs-plugin-composer')}
                                                 help={__('Time period for rate limiting in seconds', 'welabs-plugin-composer')}
-                                                value={settings.rate_limit_duration || 3600}
-                                                onChange={(value) => updateSetting('rate_limit_duration', parseInt(value))}
+                                                value={parseInt(settings.rate_limit_duration) || 3600}
+                                                onChange={(value) => updateSetting('rate_limit_duration', parseInt(value) || 3600)}
                                             />
                                         </PanelRow>
                                     </PanelBody>
@@ -324,8 +349,8 @@ function PluginComposerSettings() {
                                                 type="number"
                                                 label={__('Max Plugin Name Length', 'welabs-plugin-composer')}
                                                 help={__('Maximum allowed length for plugin names', 'welabs-plugin-composer')}
-                                                value={settings.max_plugin_name_length || 100}
-                                                onChange={(value) => updateSetting('max_plugin_name_length', parseInt(value))}
+                                                value={parseInt(settings.max_plugin_name_length) || 100}
+                                                onChange={(value) => updateSetting('max_plugin_name_length', parseInt(value) || 100)}
                                             />
                                         </PanelRow>
                                         
@@ -334,8 +359,8 @@ function PluginComposerSettings() {
                                                 type="number"
                                                 label={__('Max Description Length', 'welabs-plugin-composer')}
                                                 help={__('Maximum allowed length for plugin descriptions', 'welabs-plugin-composer')}
-                                                value={settings.max_description_length || 500}
-                                                onChange={(value) => updateSetting('max_description_length', parseInt(value))}
+                                                value={parseInt(settings.max_description_length) || 500}
+                                                onChange={(value) => updateSetting('max_description_length', parseInt(value) || 500)}
                                             />
                                         </PanelRow>
                                         
@@ -344,8 +369,8 @@ function PluginComposerSettings() {
                                                 type="number"
                                                 label={__('Max License Length', 'welabs-plugin-composer')}
                                                 help={__('Maximum allowed length for license text', 'welabs-plugin-composer')}
-                                                value={settings.max_license_length || 50}
-                                                onChange={(value) => updateSetting('max_license_length', parseInt(value))}
+                                                value={parseInt(settings.max_license_length) || 50}
+                                                onChange={(value) => updateSetting('max_license_length', parseInt(value) || 50)}
                                             />
                                         </PanelRow>
                                         
@@ -354,8 +379,8 @@ function PluginComposerSettings() {
                                                 type="number"
                                                 label={__('Max Author Name Length', 'welabs-plugin-composer')}
                                                 help={__('Maximum allowed length for author names', 'welabs-plugin-composer')}
-                                                value={settings.max_author_name_length || 100}
-                                                onChange={(value) => updateSetting('max_author_name_length', parseInt(value))}
+                                                value={parseInt(settings.max_author_name_length) || 100}
+                                                onChange={(value) => updateSetting('max_author_name_length', parseInt(value) || 100)}
                                             />
                                         </PanelRow>
                                     </PanelBody>
@@ -368,8 +393,8 @@ function PluginComposerSettings() {
                                                 type="number"
                                                 label={__('File Permissions', 'welabs-plugin-composer')}
                                                 help={__('Octal permissions for generated files (e.g., 755, 644)', 'welabs-plugin-composer')}
-                                                value={settings.file_permissions || 755}
-                                                onChange={(value) => updateSetting('file_permissions', parseInt(value))}
+                                                value={parseInt(settings.file_permissions) || 755}
+                                                onChange={(value) => updateSetting('file_permissions', parseInt(value) || 755)}
                                             />
                                         </PanelRow>
                                         
@@ -472,8 +497,8 @@ function PluginComposerSettings() {
                                                 type="number"
                                                 label={__('File Cleanup Delay (minutes)', 'welabs-plugin-composer')}
                                                 help={__('Time to wait before cleaning up generated files', 'welabs-plugin-composer')}
-                                                value={settings.file_cleanup_delay || 30}
-                                                onChange={(value) => updateSetting('file_cleanup_delay', parseInt(value))}
+                                                value={parseInt(settings.file_cleanup_delay) || 30}
+                                                onChange={(value) => updateSetting('file_cleanup_delay', parseInt(value) || 30)}
                                             />
                                         </PanelRow>
                                         
