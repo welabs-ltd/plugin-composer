@@ -67,6 +67,7 @@ function PluginComposerSettings() {
         setNotice(null);
 
         console.log('Saving settings:', settings);
+        console.log('Rate limit attempts value:', settings.rate_limit_attempts, 'Type:', typeof settings.rate_limit_attempts);
 
         try {
             const response = await apiFetch({
@@ -326,7 +327,7 @@ function PluginComposerSettings() {
                                                 value={parseInt(settings.rate_limit_attempts) || 5}
                                                 onChange={(value) => updateSetting('rate_limit_attempts', parseInt(value))}
                                                 min={1}
-                                                max={50}
+                                                max={100}
                                             />
                                         </PanelRow>
                                         

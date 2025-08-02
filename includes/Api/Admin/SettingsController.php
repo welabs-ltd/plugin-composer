@@ -36,7 +36,8 @@ class SettingsController extends WP_REST_Controller {
                     'methods' => WP_REST_Server::EDITABLE,
                     'callback' => [ $this, 'update_settings' ],
                     'permission_callback' => [ $this, 'check_permissions' ],
-                    'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
+                    // Temporarily disable args validation to debug the issue
+                    // 'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
                 ],
             ]
         );
@@ -389,6 +390,9 @@ class SettingsController extends WP_REST_Controller {
         $params = $request->get_params();
         $errors = [];
 
+        // Debug logging
+        error_log( 'Plugin Composer Settings Update - Received params: ' . print_r( $params, true ) );
+
         $settings_to_update = [
             'rate_limit_attempts' => [
                 'sanitize' => 'intval',
@@ -532,6 +536,11 @@ class SettingsController extends WP_REST_Controller {
             if ( isset( $params[ $key ] ) ) {
                 $value = $params[ $key ];
 
+                // Debug logging for rate_limit_attempts
+                if ( $key === 'rate_limit_attempts' ) {
+                    error_log( 'Plugin Composer - Processing rate_limit_attempts: ' . print_r( $value, true ) );
+                }
+
                 // Sanitize the value
                 if ( $config['sanitize'] === 'array' ) {
                     $value = is_array( $value ) ? array_map( 'sanitize_text_field', $value ) : [];
@@ -541,10 +550,21 @@ class SettingsController extends WP_REST_Controller {
                     $value = $config['sanitize']( $value );
                 }
 
+                // Debug logging for rate_limit_attempts after sanitization
+                if ( $key === 'rate_limit_attempts' ) {
+                    error_log( 'Plugin Composer - rate_limit_attempts after sanitization: ' . print_r( $value, true ) );
+                }
+
                 // Validate the value
                 if ( ! $config['validate']( $value ) ) {
+                    error_log( 'Plugin Composer - Validation failed for ' . $key . ': ' . $config['error_message'] );
                     $errors[] = $config['error_message'];
                     continue;
+                }
+
+                // Debug logging for rate_limit_attempts before saving
+                if ( $key === 'rate_limit_attempts' ) {
+                    error_log( 'Plugin Composer - Saving rate_limit_attempts: ' . $value );
                 }
 
                 update_option( 'plugin_composer_' . $key, $value );
