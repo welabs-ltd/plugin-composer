@@ -29,21 +29,27 @@ warning() {
     echo -e "\n${YELLOW_BOLD}$1${COLOR_RESET}\n"
 }
 
-status "💃 Time to build the Texty Pro ZIP file 🕺"
+status "💃 Time to build the Plugin Composer ZIP file 🕺"
 
 # remove the build directory if exists and create one
 rm -rf "$DIR/build"
 mkdir -p "$BUILD_DIR"
 
-# Run the build.
-# status "Installing dependencies... 📦"
-# npm install
+# Install npm dependencies and build assets
+status "Installing npm dependencies... 📦"
+npm install
+
+status "Building assets... 🏗️"
+npm run build
+
+status "Generating localization files... 🌍"
+wp i18n make-pot . languages/plugin-composer.pot --domain=welabs-plugin-composer
 
 status "Generating build... 👷‍♀️"
 
 # Copy all files
 status "Copying files... ✌️"
-FILES=(plugin-composer.php readme.txt dist includes plugin-stub templates assets languages composer.json composer.lock)
+FILES=(plugin-composer.php readme.txt assets includes plugin-stub templates languages composer.json composer.lock src webpack.config.js package.json package-lock.json)
 
 for file in ${FILES[@]}; do
     if [ -f "$file" ] || [ -d "$file" ]; then
@@ -52,12 +58,13 @@ for file in ${FILES[@]}; do
 done
 
 # Install composer dependencies
-status "Installing dependencies... 📦"
+status "Installing composer dependencies... 📦"
 cd $BUILD_DIR
 composer install --optimize-autoloader --no-dev -q
 
-# Remove composer files
-rm composer.json composer.lock
+# Remove development files
+rm composer.json composer.lock package-lock.json package.json
+rm -rf src webpack.config.js
 
 # go one up, to the build dir
 status "Creating archive... 🎁"

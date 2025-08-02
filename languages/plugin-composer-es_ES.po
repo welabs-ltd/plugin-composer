@@ -1,0 +1,488 @@
+# Copyright (C) 2025 weLabs
+# This file is distributed under the GPL2.
+msgid ""
+msgstr ""
+"Project-Id-Version: Plugin-composer 0.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/plugin-composer\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-08-02T07:58:30+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Domain: welabs-plugin-composer\n"
+
+#. Plugin Name of the plugin
+#: plugin-composer.php
+msgid "Plugin-composer"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: plugin-composer.php
+msgid "https://welabs.dev/"
+msgstr ""
+
+#. Description of the plugin
+#: plugin-composer.php
+msgid "Customized plugin. Powered by weLabs."
+msgstr ""
+
+#. Author of the plugin
+#: plugin-composer.php
+msgid "weLabs"
+msgstr ""
+
+#: includes/Admin/Settings.php:26
+#: includes/Admin/Settings.php:77
+msgid "Plugin Composer Settings"
+msgstr ""
+
+#: includes/Admin/Settings.php:27
+msgid "Plugin Composer"
+msgstr ""
+
+#: includes/Admin/Settings.php:62
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:508
+msgid "Save Settings"
+msgstr ""
+
+#: includes/Admin/Settings.php:63
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:65
+msgid "Settings saved successfully!"
+msgstr ""
+
+#: includes/Admin/Settings.php:64
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:70
+#: src/admin/settings.js:75
+msgid "Error saving settings."
+msgstr ""
+
+#: includes/Admin/Settings.php:65
+msgid "Loading..."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:104
+msgid "Rate limit attempts must be between 1 and 100."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:111
+msgid "Rate limit duration must be between 60 and 86400 seconds."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:118
+msgid "Plugin name length must be between 10 and 200 characters."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:125
+msgid "Description length must be between 50 and 2000 characters."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:132
+msgid "License length must be between 10 and 100 characters."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:139
+msgid "Author name length must be between 10 and 200 characters."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:147
+msgid "At least one plugin type must be selected and all types must be valid."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:156
+msgid "Default plugin type must be valid and must be one of the allowed plugin types."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:163
+msgid "File permissions must be between 400 and 777."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:170
+msgid "Allowed file extensions must not be empty and limited to 20 extensions."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:177
+msgid "Required capability must be valid and accessible."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:184
+msgid "Allow guest access must be a boolean value."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:191
+msgid "Debug mode must be a boolean value."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:198
+msgid "Auto cleanup files must be a boolean value."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:205
+msgid "File cleanup delay must be between 1 and 1440 minutes."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:212
+msgid "Plugin preview must be a boolean value."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:219
+msgid "Default namespace must not be empty and must start with a capital letter and contain only letters, numbers, and underscores. Multi-word namespaces should use forward slashes (e.g., AB/AC)."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:226
+msgid "Default author name must not be empty and must be 100 characters or less."
+msgstr ""
+
+#: includes/Api/Admin/SettingsController.php:233
+msgid "Default author URL must be a valid URL."
+msgstr ""
+
+#: includes/ShortCode.php:33
+#: includes/ShortCode.php:80
+msgid "You must be logged in to generate plugins."
+msgstr ""
+
+#: includes/ShortCode.php:34
+msgid "Click here to log in"
+msgstr ""
+
+#: includes/ShortCode.php:45
+#: includes/ShortCode.php:87
+msgid "You do not have sufficient permissions to generate plugins."
+msgstr ""
+
+#: includes/ShortCode.php:108
+msgid "Too many attempts. Please try again later."
+msgstr ""
+
+#: includes/ShortCode.php:116
+msgid "Plugin name is required."
+msgstr ""
+
+#: includes/ShortCode.php:162
+msgid "Failed to generate plugin. Please try again."
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:44
+msgid "Error loading settings."
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:154
+msgid "Loading settings..."
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:141
+#: src/admin/settings.js:178
+msgid "General"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:142
+#: src/admin/settings.js:183
+msgid "Rate Limiting"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:143
+#: src/admin/settings.js:188
+msgid "Validation Rules"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:144
+#: src/admin/settings.js:193
+msgid "File Settings"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:145
+#: src/admin/settings.js:198
+msgid "Advanced"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:219
+msgid "Reset to Defaults"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:228
+msgid "Allow Guest Access"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:229
+msgid "Allow non-logged-in users to generate plugins"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:237
+msgid "Required Capability"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:238
+msgid "Minimum capability required for logged-in users"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:241
+msgid "Read"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:242
+msgid "Edit Posts"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:243
+msgid "Publish Posts"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:244
+msgid "Manage Options"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:252
+msgid "Default Plugin Type"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:253
+msgid "Default plugin type when generating new plugins"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:256
+#: src/admin/settings.js:405
+msgid "Container Based"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:257
+#: src/admin/settings.js:427
+msgid "Classic"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:265
+msgid "Default Namespace"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:266
+msgid "Default namespace for generated plugins (e.g., MyPlugin or AB/AC for multi-word)"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:275
+msgid "Default Author Name"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:276
+msgid "Default author name for generated plugins"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:285
+msgid "Default Author URL"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:286
+msgid "Default author URL for generated plugins"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:299
+msgid "Rate Limit Attempts"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:300
+msgid "Maximum number of plugin generation attempts per time period"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:311
+msgid "Rate Limit Duration (seconds)"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:312
+msgid "Time period for rate limiting in seconds"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:325
+msgid "Max Plugin Name Length"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:326
+msgid "Maximum allowed length for plugin names"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:335
+msgid "Max Description Length"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:336
+msgid "Maximum allowed length for plugin descriptions"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:345
+msgid "Max License Length"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:346
+msgid "Maximum allowed length for license text"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:355
+msgid "Max Author Name Length"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:356
+msgid "Maximum allowed length for author names"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:369
+msgid "File Permissions"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:370
+msgid "Octal permissions for generated files (e.g., 755, 644)"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:379
+msgid "Allowed Plugin Types"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:382
+msgid "Plugin types that users can generate. At least one must be selected."
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:432
+msgid "At least one plugin type must be selected."
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:440
+msgid "Allowed File Extensions"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:441
+msgid "Comma-separated list of allowed file extensions"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:454
+msgid "Enable Debug Mode"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:455
+msgid "Enable detailed logging for troubleshooting"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:463
+msgid "Auto-cleanup Generated Files"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:464
+msgid "Automatically clean up generated files after download"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:473
+msgid "File Cleanup Delay (minutes)"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:474
+msgid "Time to wait before cleaning up generated files"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:482
+msgid "Enable Plugin Preview"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:483
+msgid "Allow users to preview generated plugins before download"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:505
+msgid "Saving..."
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:515
+msgid "Confirm Reset"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:520
+msgid "Are you sure you want to reset all settings to their default values?"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:522
+msgid "This action cannot be undone."
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:530
+msgid "Cancel"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:116
+msgid "Settings reset to defaults successfully!"
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:121
+#: src/admin/settings.js:128
+msgid "Error resetting settings."
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:540
+msgid "Resetting..."
+msgstr ""
+
+#: assets/admin/settings.js:1
+#: src/admin/settings.js:543
+msgid "Reset Settings"
+msgstr ""
