@@ -8,7 +8,7 @@ namespace WeLabs\PluginStub\Contracts;
  * Implementing this interface ensures that the hooks are registered automatically.
  * If this interface is not implemented, the hooks must be registered manually by resolving the container.
  */
-interface Hookable {
+interface HookRegistry {
     /**
      * Register hooks for WordPress.
      * This method will be called automatically to register the hooks.

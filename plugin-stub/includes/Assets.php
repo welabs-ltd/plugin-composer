@@ -2,9 +2,9 @@
 
 namespace WeLabs\PluginStub;
 
-use WeLabs\PluginStub\Contracts\Hookable;
+use WeLabs\PluginStub\Contracts\HookRegistry;
 
-class Assets implements Hookable {
+class Assets implements HookRegistry {
     /**
      * Resister the hooks.
      *

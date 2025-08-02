@@ -5,6 +5,7 @@
 
 namespace WeLabs\PluginStub\DependencyManagement;
 
+use ReflectionClass;
 use WeLabs\PluginStub\ThirdParty\Packages\League\Container\Definition\DefinitionInterface;
 use WeLabs\PluginStub\ThirdParty\Packages\League\Container\ServiceProvider\AbstractServiceProvider;
 
@@ -56,11 +57,21 @@ abstract class BaseServiceProvider extends AbstractServiceProvider {
 	 *
 	 * @return DefinitionInterface
 	 */
-	protected function add_with_implements_tags( string $id, $concrete = null, bool $shared = null ): DefinitionInterface {
-		$definition = $this->getContainer()->add( $id, $concrete, $shared );
+	protected function add_with_implements_tags( string $id, $concrete = null, bool $shared = false ): DefinitionInterface {
+		$definition = $this->getContainer()->add( $id, $concrete )->setShared( $shared );
 
 		foreach ( class_implements( $id ) as $interface ) {
 			$definition->addTag( $interface );
+		}
+
+		$parent_classes = class_parents( $id );
+
+		foreach ( $parent_classes as $parent_class ) {
+			$parent = new ReflectionClass( $parent_class );
+
+			if ( $parent->isAbstract() ) {
+				$definition->addTag( $parent_class );
+			}
 		}
 
 		return $definition;

@@ -3,7 +3,7 @@
 namespace WeLabs\PluginStub;
 
 use WeLabs\PluginStub\DependencyManagement\Container;
-use WeLabs\PluginStub\Contracts\Hookable;
+use WeLabs\PluginStub\Contracts\HookRegistry;
 /**
  * PluginStub class
  *
@@ -178,7 +178,20 @@ final class PluginStub {
      */
     public function init_hooks() {
         // initialize the classes
-        add_action( 'init', [ $this, 'init_classes' ], 4 );
+
+        $container = $this->get_container();
+
+		/**
+		 * These classes have a register method for attaching hooks.
+		 *
+		 * @var RegisterHooksInterface[] $hook_register_classes
+		 */
+		$hook_register_classes = $container->get( HookRegistry::class );
+
+		foreach ( $hook_register_classes as $hook_register_class ) {
+			$hook_register_class->register_hooks();
+		}
+
         add_action( 'plugins_loaded', [ $this, 'after_plugins_loaded' ] );
     }
 
@@ -191,25 +204,6 @@ final class PluginStub {
         // include_once STUB_PLUGIN_DIR . '/functions.php';
     }
 
-    /**
-     * Init all the classes
-     *
-     * @return void
-     */
-    public function init_classes() {
-        $container = $this->get_container();
-
-		/**
-		 * These classes have a register method for attaching hooks.
-		 *
-		 * @var RegisterHooksInterface[] $hook_register_classes
-		 */
-		$hook_register_classes = $container->get( Hookable::class );
-
-		foreach ( $hook_register_classes as $hook_register_class ) {
-			$hook_register_class->register_hooks();
-		}
-    }
 
     /**
      * Executed after all plugins are loaded
