@@ -36,8 +36,7 @@ class SettingsController extends WP_REST_Controller {
                     'methods' => WP_REST_Server::EDITABLE,
                     'callback' => [ $this, 'update_settings' ],
                     'permission_callback' => [ $this, 'check_permissions' ],
-                    // Temporarily disable args validation to debug the issue
-                    // 'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
+                    'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
                 ],
             ]
         );
