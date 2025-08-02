@@ -133,7 +133,6 @@ final class PluginComposer {
 	 */
 	public function init_plugin() {
 		$this->includes();
-		$this->load_textdomain();
 		$this->init_hooks();
 
 		do_action( 'plugin_composer_loaded' );

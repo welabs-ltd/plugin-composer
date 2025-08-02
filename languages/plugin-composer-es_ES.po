@@ -17,55 +17,55 @@ msgstr ""
 #. Plugin Name of the plugin
 #: plugin-composer.php
 msgid "Plugin-composer"
-msgstr ""
+msgstr "Compositor de Plugins"
 
 #. Plugin URI of the plugin
 #. Author URI of the plugin
 #: plugin-composer.php
 msgid "https://welabs.dev/"
-msgstr ""
+msgstr "https://welabs.dev/"
 
 #. Description of the plugin
 #: plugin-composer.php
 msgid "Customized plugin. Powered by weLabs."
-msgstr ""
+msgstr "Plugin personalizado. Impulsado por weLabs."
 
 #. Author of the plugin
 #: plugin-composer.php
 msgid "weLabs"
-msgstr ""
+msgstr "weLabs"
 
 #: includes/Admin/Settings.php:26
 #: includes/Admin/Settings.php:77
 msgid "Plugin Composer Settings"
-msgstr ""
+msgstr "Configuración del Compositor de Plugins"
 
 #: includes/Admin/Settings.php:27
 msgid "Plugin Composer"
-msgstr ""
+msgstr "Compositor de Plugins"
 
 #: includes/Admin/Settings.php:62
 #: assets/admin/settings.js:1
 #: src/admin/settings.js:508
 msgid "Save Settings"
-msgstr ""
+msgstr "Guardar Configuración"
 
 #: includes/Admin/Settings.php:63
 #: assets/admin/settings.js:1
 #: src/admin/settings.js:65
 msgid "Settings saved successfully!"
-msgstr ""
+msgstr "¡Configuración guardada exitosamente!"
 
 #: includes/Admin/Settings.php:64
 #: assets/admin/settings.js:1
 #: src/admin/settings.js:70
 #: src/admin/settings.js:75
 msgid "Error saving settings."
-msgstr ""
+msgstr "Error al guardar la configuración."
 
 #: includes/Admin/Settings.php:65
 msgid "Loading..."
-msgstr ""
+msgstr "Cargando..."
 
 #: includes/Api/Admin/SettingsController.php:104
 msgid "Rate limit attempts must be between 1 and 100."
@@ -486,3 +486,11 @@ msgstr ""
 #: src/admin/settings.js:543
 msgid "Reset Settings"
 msgstr ""
+
+#: includes/Admin/Settings.php:66
+msgid "Welcome to Plugin Composer! This tool helps you create custom WordPress plugins."
+msgstr "¡Bienvenido al Compositor de Plugins! Esta herramienta te ayuda a crear plugins personalizados de WordPress."
+
+#: includes/ShortCode.php:34
+msgid "Please log in to access the plugin generator."
+msgstr "Por favor, inicia sesión para acceder al generador de plugins."

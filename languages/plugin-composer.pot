@@ -486,3 +486,11 @@ msgstr ""
 #: src/admin/settings.js:543
 msgid "Reset Settings"
 msgstr ""
+
+#: includes/Admin/Settings.php:66
+msgid "Welcome to Plugin Composer! This tool helps you create custom WordPress plugins."
+msgstr ""
+
+#: includes/ShortCode.php:34
+msgid "Please log in to access the plugin generator."
+msgstr ""

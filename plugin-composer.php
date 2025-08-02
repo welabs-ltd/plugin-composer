@@ -6,7 +6,7 @@
  * Version: 0.0.1
  * Author: weLabs
  * Author URI: https://welabs.dev/
- * Text Domain: plugin-composer
+ * Text Domain: welabs-plugin-composer
  * WC requires at least: 5.0.0
  * WC tested up to: 7.6.0
  * Domain Path: /languages/

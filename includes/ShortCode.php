@@ -28,11 +28,12 @@ class ShortCode implements Hookable {
 
         // Check if user is logged in (only if guest access is not allowed)
         if ( ! $allow_guest_access && ! is_user_logged_in() ) {
-            $login_message = apply_filters(
-                'plugin_composer_guest_message',
-                '<p>' . __( 'You must be logged in to generate plugins.', 'welabs-plugin-composer' ) . '</p>' .
-                '<p><a href="' . esc_url( wp_login_url( get_permalink() ) ) . '">' . __( 'Click here to log in', 'welabs-plugin-composer' ) . '</a></p>'
-            );
+                    $login_message = apply_filters(
+                        'plugin_composer_guest_message',
+                        '<p>' . __( 'You must be logged in to generate plugins.', 'welabs-plugin-composer' ) . '</p>' .
+                        '<p>' . __( 'Please log in to access the plugin generator.', 'welabs-plugin-composer' ) . '</p>' .
+                        '<p><a href="' . esc_url( wp_login_url( get_permalink() ) ) . '">' . __( 'Click here to log in', 'welabs-plugin-composer' ) . '</a></p>'
+                    );
             return $content . $login_message;
         }
 
@@ -138,7 +139,7 @@ class ShortCode implements Hookable {
             $zip_name = $builder->build( $request_data['plugin_name'] );
 
             if ( ! file_exists( $zip_name ) ) {
-                throw new \Exception( __( 'Failed to generate plugin file.', 'plugin-composer' ) );
+                throw new \Exception( __( 'Failed to generate plugin file.', 'welabs-plugin-composer' ) );
             }
 
             $plugin_folder_name = sanitize_title( $request_data['plugin_name'] );
@@ -176,11 +177,11 @@ class ShortCode implements Hookable {
         // Plugin name validation
         $plugin_name = sanitize_text_field( $post_data['plugin_name'] ?? '' );
         if ( empty( $plugin_name ) ) {
-            $errors['plugin_name'] = __( 'Plugin name is required.', 'plugin-composer' );
+            $errors['plugin_name'] = __( 'Plugin name is required.', 'welabs-plugin-composer' );
         } elseif ( strlen( $plugin_name ) > 100 ) {
-            $errors['plugin_name'] = __( 'Plugin name must be less than 100 characters.', 'plugin-composer' );
+            $errors['plugin_name'] = __( 'Plugin name must be less than 100 characters.', 'welabs-plugin-composer' );
         } elseif ( ! preg_match( '/^[a-zA-Z0-9\s\-_]+$/', $plugin_name ) ) {
-            $errors['plugin_name'] = __( 'Plugin name contains invalid characters.', 'plugin-composer' );
+            $errors['plugin_name'] = __( 'Plugin name contains invalid characters.', 'welabs-plugin-composer' );
         } else {
             $data['plugin_name'] = $plugin_name;
         }
@@ -188,7 +189,7 @@ class ShortCode implements Hookable {
         // Plugin description validation
         $description = sanitize_textarea_field( $post_data['plugin_description'] ?? '' );
         if ( ! empty( $description ) && strlen( $description ) > 500 ) {
-            $errors['plugin_description'] = __( 'Plugin description must be less than 500 characters.', 'plugin-composer' );
+            $errors['plugin_description'] = __( 'Plugin description must be less than 500 characters.', 'welabs-plugin-composer' );
         } else {
             $data['plugin_description'] = $description;
         }
@@ -196,7 +197,7 @@ class ShortCode implements Hookable {
         // Plugin license validation
         $license = sanitize_text_field( $post_data['plugin_license'] ?? '' );
         if ( ! empty( $license ) && strlen( $license ) > 50 ) {
-            $errors['plugin_license'] = __( 'Plugin license must be less than 50 characters.', 'plugin-composer' );
+            $errors['plugin_license'] = __( 'Plugin license must be less than 50 characters.', 'welabs-plugin-composer' );
         } else {
             $data['plugin_license'] = $license;
         }
@@ -204,7 +205,7 @@ class ShortCode implements Hookable {
         // Plugin URI validation
         $plugin_uri = esc_url_raw( $post_data['plugin_uri'] ?? '' );
         if ( ! empty( $plugin_uri ) && ! filter_var( $plugin_uri, FILTER_VALIDATE_URL ) ) {
-            $errors['plugin_uri'] = __( 'Please enter a valid plugin URL.', 'plugin-composer' );
+            $errors['plugin_uri'] = __( 'Please enter a valid plugin URL.', 'welabs-plugin-composer' );
         } else {
             $data['plugin_uri'] = $plugin_uri;
         }
@@ -212,7 +213,7 @@ class ShortCode implements Hookable {
         // Author name validation
         $author_name = sanitize_text_field( $post_data['plugin_author_name'] ?? '' );
         if ( ! empty( $author_name ) && strlen( $author_name ) > 100 ) {
-            $errors['plugin_author_name'] = __( 'Author name must be less than 100 characters.', 'plugin-composer' );
+            $errors['plugin_author_name'] = __( 'Author name must be less than 100 characters.', 'welabs-plugin-composer' );
         } else {
             $data['plugin_author_name'] = $author_name;
         }
@@ -220,7 +221,7 @@ class ShortCode implements Hookable {
         // Author email validation
         $author_email = sanitize_email( $post_data['plugin_author_email'] ?? '' );
         if ( ! empty( $author_email ) && ! is_email( $author_email ) ) {
-            $errors['plugin_author_email'] = __( 'Please enter a valid email address.', 'plugin-composer' );
+            $errors['plugin_author_email'] = __( 'Please enter a valid email address.', 'welabs-plugin-composer' );
         } else {
             $data['plugin_author_email'] = $author_email;
         }
@@ -228,7 +229,7 @@ class ShortCode implements Hookable {
         // Author URI validation
         $author_uri = esc_url_raw( $post_data['plugin_author_uri'] ?? '' );
         if ( ! empty( $author_uri ) && ! filter_var( $author_uri, FILTER_VALIDATE_URL ) ) {
-            $errors['plugin_author_uri'] = __( 'Please enter a valid author URL.', 'plugin-composer' );
+            $errors['plugin_author_uri'] = __( 'Please enter a valid author URL.', 'welabs-plugin-composer' );
         } else {
             $data['plugin_author_uri'] = $author_uri;
         }
@@ -238,9 +239,9 @@ class ShortCode implements Hookable {
         if ( ! empty( $namespace ) ) {
             // Support multi-word namespaces like "AB\AC" or single word like "MyPlugin"
             if ( ! preg_match( '/^[A-Z][a-zA-Z0-9_]*(\/[A-Z][a-zA-Z0-9_]*)*$/', $namespace ) ) {
-                $errors['plugin_namespace'] = __( 'Namespace must start with a capital letter and contain only letters, numbers, and underscores. Multi-word namespaces should use forward slashes (e.g., AB/AC).', 'plugin-composer' );
+                $errors['plugin_namespace'] = __( 'Namespace must start with a capital letter and contain only letters, numbers, and underscores. Multi-word namespaces should use forward slashes (e.g., AB/AC).', 'welabs-plugin-composer' );
             } elseif ( strlen( $namespace ) > 100 ) {
-                $errors['plugin_namespace'] = __( 'Namespace must be less than 100 characters.', 'plugin-composer' );
+                $errors['plugin_namespace'] = __( 'Namespace must be less than 100 characters.', 'welabs-plugin-composer' );
             } else {
                 $data['plugin_namespace'] = $namespace;
             }
@@ -276,14 +277,14 @@ class ShortCode implements Hookable {
      */
     private function serve_file_download( string $file_path, string $filename ): void {
         if ( ! file_exists( $file_path ) ) {
-            wp_die( esc_html__( 'File not found.', 'plugin-composer' ) );
+            wp_die( esc_html__( 'File not found.', 'welabs-plugin-composer' ) );
         }
 
         // Validate file path is within allowed directory
         $allowed_path = PLUGIN_COMPOSER_DIR . '/';
         $real_file_path = realpath( $file_path );
         if ( ! $real_file_path || strpos( $real_file_path, $allowed_path ) !== 0 ) {
-            wp_die( esc_html__( 'Invalid file path detected.', 'plugin-composer' ) );
+            wp_die( esc_html__( 'Invalid file path detected.', 'welabs-plugin-composer' ) );
         }
 
         // Set headers for file download

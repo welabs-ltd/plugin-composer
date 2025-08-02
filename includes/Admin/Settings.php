@@ -63,6 +63,7 @@ class Settings implements Hookable {
 					'settingsSaved' => __( 'Settings saved successfully!', 'welabs-plugin-composer' ),
 					'errorSaving' => __( 'Error saving settings.', 'welabs-plugin-composer' ),
 					'loading' => __( 'Loading...', 'welabs-plugin-composer' ),
+					'welcomeMessage' => __( 'Welcome to Plugin Composer! This tool helps you create custom WordPress plugins.', 'welabs-plugin-composer' ),
 				],
 			]
         );
