@@ -46,6 +46,7 @@ final class PluginStub {
 
         add_action( 'plugins_loaded', [ $this, 'init_plugin' ] );
         add_action( 'woocommerce_flush_rewrite_rules', [ $this, 'flush_rewrite_rules' ] );
+        add_action( 'rest_api_init', [ $this, 'register_rest_route' ] );
     }
 
     /**
@@ -90,6 +91,15 @@ final class PluginStub {
             $this->flush_rewrite_rules();
         }
     }
+
+    /**
+	 * Register plugin REST routes
+	 *
+	 * @return void
+	 */
+	public function register_rest_route() {
+		$this->container['admin_settings_rest']->register_routes();
+	}
 
     /**
      * Flush rewrite rules after plugin_stub is activated or woocommerce is activated
