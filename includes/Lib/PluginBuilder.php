@@ -20,6 +20,7 @@ class PluginBuilder implements BuilderContract {
         'plugin_author_email' => 'contact@welabs.dev',
         'plugin_author_uri' => 'https://welabs.dev',
         'plugin_requires' => '',
+        'plugin_is_settings_included' => 'no',
     ];
 
     protected $required_files_and_folders = [
@@ -60,16 +61,9 @@ class PluginBuilder implements BuilderContract {
             $this->file_system->copy( $src, $dest );
         }
 
-        // Conditionally copy settings assets
-        $this->placeholders['include_settings'] = true; // need to implement checkbox on the composer form shortcode
-        if ( $this->placeholders['include_settings'] ?? false ) {
-            foreach ( $this->settings_files_and_folders as $item ) {
-                $src = $this->get_stub_plugin_path() . '/' . $item;
-                $dest = $dest_dir . '/' . $item;
-                $this->file_system->copy( $src, $dest );
-            }
-        }
-
+        $this->get_stub_plugin_settings_files_and_folders( $dest_dir );
+        $this->process_stub_plugin_settings( $dest_dir );
+        
         $zip_path = $dest_dir . time() . '.zip';
 
         $placeholders = $this->get_placeholders( $plugin_name );
@@ -105,6 +99,7 @@ class PluginBuilder implements BuilderContract {
      * @type string    $plugin_author_email       The email of the plugin author.
      * @type string    $plugin_author_uri         The url of the plugin author profile.
      * @type string    $plugin_requires           Comma separated require plugins slug.
+     * @type string    $plugin_is_settings_included           Whether to include plugin settings.
      * }
      *
      * @return void
@@ -131,5 +126,59 @@ class PluginBuilder implements BuilderContract {
 
     protected function get_plugin_directory_name( $plugin_name ): string {
         return sanitize_title( $plugin_name );
+    }
+
+    /**
+     * Copy settings related files and folders if settings is included
+     *
+     * @param string $dest_dir
+     * @return void
+     */
+    public function get_stub_plugin_settings_files_and_folders( $dest_dir ): void {
+        if ( $this->placeholders['plugin_is_settings_included'] === 'yes' ) {
+            foreach ( $this->settings_files_and_folders as $item ) {
+                $src = $this->get_stub_plugin_path() . '/' . $item;
+                $dest = $dest_dir . '/' . $item;
+                $this->file_system->copy( $src, $dest );
+            }
+        }
+    }
+
+    /**
+     * Process settings related code in PluginStub.php
+     *
+     * @param string $dest_dir
+     * @return void
+     */
+    public function process_stub_plugin_settings( $dest_dir ): void {
+        $plugin_stub_path = $dest_dir . '/includes/PluginStub.php';
+        $plugin_stub_content = file_get_contents( $plugin_stub_path );
+        
+        if ( $this->placeholders['plugin_is_settings_included'] === 'yes' ) {
+            // Add Register settings REST route code
+            $register_rest_route_code = <<<PHP
+            \$this->container['admin_settings_rest']->register_routes();
+            PHP;
+
+            // Add Init settings classes code
+            $init_settings_classes_code = <<<PHP
+            \$this->container['admin_settings'] = new Admin\Settings();
+            \t\t\$this->container['admin_settings_rest'] = new Admin\REST\SettingsController();
+            PHP;
+        } else {
+            $register_rest_route_code = '// Register your REST routes here';
+            $init_settings_classes_code = '';
+        }
+        
+        // Replace placeholders in PluginStub.php
+        $plugin_stub_content = str_replace( '// REGISTER_SETTINGS_REST_ROUTE', $register_rest_route_code, $plugin_stub_content );
+
+        if ( empty( $init_settings_classes_code ) ) {
+            // Remove the whole line containing the placeholder
+            $plugin_stub_content = preg_replace('/^[ \t]*\/\/ INIT_PLUGIN_SETTINGS_CLASSES.*\R?/m', '', $plugin_stub_content);
+        } else {
+            $plugin_stub_content = str_replace( '// INIT_PLUGIN_SETTINGS_CLASSES', $init_settings_classes_code, $plugin_stub_content );
+        }
+        file_put_contents( $plugin_stub_path, $plugin_stub_content );
     }
 }

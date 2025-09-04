@@ -98,7 +98,7 @@ final class PluginStub {
 	 * @return void
 	 */
 	public function register_rest_route() {
-		$this->container['admin_settings_rest']->register_routes();
+        // REGISTER_SETTINGS_REST_ROUTE
 	}
 
     /**
@@ -176,8 +176,7 @@ final class PluginStub {
      */
     public function init_classes() {
         $this->container['scripts'] = new Assets();
-        $this->container['admin_settings'] = new Admin\Settings();
-        $this->container['admin_settings_rest'] = new Admin\REST\SettingsController();
+        // INIT_PLUGIN_SETTINGS_CLASSES
     }
 
     /**

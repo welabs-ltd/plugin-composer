@@ -66,28 +66,6 @@ class Assets {
 			'Plugin_Stub_Admin',
 			array()
 		);
-
-		$page = get_current_screen();
-		if ( 'toplevel_page_plugin_stub-settings' == $page->id ) {
-			$asset_file = include PLUGIN_STUB_DIR . '/assets/build/admin/script.asset.php';
-
-			wp_enqueue_script(
-				'plugin_stub_admin_page',
-				PLUGIN_STUB_PLUGIN_ASSET . '/build/admin/script.js',
-				$asset_file['dependencies'],
-				$asset_file['version'],
-				true
-			);
-
-			wp_enqueue_style(
-				'plugin_stub_admin_styles',
-				PLUGIN_STUB_PLUGIN_ASSET . '/build/admin.css',
-				array( 'wp-components' ),
-				$asset_file['version'] ?? null,
-			);
-
-			wp_enqueue_style( 'wp-components' );
-		}
 	}
 
 	/**

@@ -11,6 +11,10 @@ class Settings {
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_admin_settings_menu' ), 100 );
+		
+		if ( is_admin() ) {
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_settings_scripts' ), 10 );
+		}
 	}
 
 	/**
@@ -41,5 +45,35 @@ class Settings {
 			<div id="PluginStubSettings"></div>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Enqueue admin settings scripts
+	 *
+	 * @return void
+	 */
+	public function enqueue_admin_settings_scripts() {
+		$screen = get_current_screen();
+		
+		if ( 'toplevel_page_plugin_stub-settings' == $screen->id ) {
+			$asset_file = include PLUGIN_STUB_DIR . '/assets/build/admin/script.asset.php';
+
+			wp_enqueue_script(
+				'plugin_stub_admin_page',
+				PLUGIN_STUB_PLUGIN_ASSET . '/build/admin/script.js',
+				$asset_file['dependencies'],
+				$asset_file['version'],
+				true
+			);
+
+			wp_enqueue_style(
+				'plugin_stub_admin_styles',
+				PLUGIN_STUB_PLUGIN_ASSET . '/build/admin.css',
+				array( 'wp-components' ),
+				$asset_file['version'] ?? null,
+			);
+
+			wp_enqueue_style( 'wp-components' );
+		}
 	}
 }

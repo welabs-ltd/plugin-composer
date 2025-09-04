@@ -1,7 +1,9 @@
 {
-    "name": "shop-front",
-    "version": "1.0.0",
-    "description": "Run the following command for development environment.",
+    "name": "welabs/plugin-stub",
+    "version": "0.0.1",
+    "description": "plugin_description",
+    "author": "plugin_author_name",
+    "license": "plugin_license",
     "main": "index.js",
     "scripts": {
         "build": "wp-scripts build",
@@ -11,15 +13,6 @@
         "lint:js": "wp-scripts lint-js",
         "packages-update": "wp-scripts packages-update"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/aminurislamarnob/shop-front.git"
-    },
-    "keywords": [
-        "woocommerce"
-    ],
-    "author": "aminur",
-    "license": "GPL-2.0-or-later",
     "dependencies": {
         "@wordpress/api-fetch": "^7.0.0",
         "@wordpress/block-library": "^9.7.0",

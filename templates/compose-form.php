@@ -34,6 +34,13 @@
         <label class="control-label" for="plugin_author_uri"><?php echo esc_html__( 'Author URL', 'plugin-composer' ); ?></label>
         <input name="plugin_author_uri" id="plugin_author_uri" type="url"  class="input-control" placeholder="<?php echo esc_url( 'https://author.profile' ); ?>">
     </div>
+    <div class="form-group">
+        <label class="control-label" for="plugin_is_settings_included"><?php echo esc_html__( 'Include Plugin Settings?', 'plugin-composer' ); ?></label>
+        <select name="plugin_is_settings_included" id="plugin_is_settings_included" class="input-control">
+            <option value="no"><?php echo esc_html__( 'No', 'plugin-composer' ); ?></option>
+            <option value="yes"><?php echo esc_html__( 'Yes', 'plugin-composer' ); ?></option>
+        </select>
+    </div>
 
     <?php wp_nonce_field( 'wlb-compose-plugin', 'wlb-compose-plugin' ); ?>
 
