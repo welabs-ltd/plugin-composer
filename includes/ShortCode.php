@@ -15,7 +15,7 @@ class ShortCode {
         $attr = shortcode_atts(
             [
 				'class' => '',
-				'submit-text' => 'Submit',
+				'submit-text' => __( 'Build Plugin', 'plugin-composer' ),
 			], $attr
         );
         $error_messages = apply_filters( 'get_welabs_plugin_compose_form_errors', $this->error_messages );

@@ -1,28 +1,120 @@
-.wlb-compose-plugin-form {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 20px;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+.wlb-composer-plugin-wrapper *{
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif!important;
+}
+.wlb-composer-plugin-wrapper {
+    max-width: 672px;
+    margin: 20px auto 40px!important;
 }
 
-.wlb-compose-plugin-form .form-group {
-    display: flex;
-    padding: 10px 0;
-}
-.wlb-compose-plugin-form .form-group .error-message {
+.wlb-composer-plugin-wrapper .wlb-compose-plugin-form {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: .5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    max-width: 640px;
     width: 100%;
-    color: brown;
-}
-.wlb-compose-plugin-form .form-group label {
-    width: 20%;
-}
-.wlb-compose-plugin-form .form-group input, .wlb-compose-plugin-form .form-group .input-group, .wlb-compose-plugin-form .form-group textarea {
-    width: 79%;
-}
-.wlb-compose-plugin-form .form-group .input-group input {
-    width: 100%;
-}
-.wlb-compose-plugin-form .form-group input[type='submit'], .wlb-compose-plugin-form .form-group button {
-    margin-left: 20%;
-    width: max-content;
 }
 
+.wlb-composer-plugin-wrapper .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.wlb-composer-plugin-wrapper .control-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: rgba(55, 65, 81);
+    font-size: .875rem;
+    line-height: 1.25rem;
+}
+
+.wlb-composer-plugin-wrapper .input-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    border: 1px solid #d1d5db;
+    border-radius: .375rem;
+    background-color: rgba(249,250,251);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    -webkit-border-radius: .375rem;
+    -moz-border-radius: .375rem;
+    -ms-border-radius: .375rem;
+    -o-border-radius: .375rem;
+}
+
+.wlb-composer-plugin-wrapper .input-control:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    outline: none;
+    background-color: #fff;
+}
+
+.wlb-composer-plugin-wrapper textarea.input-control {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.wlb-composer-plugin-wrapper .from-fields-col-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.wlb-composer-plugin-wrapper .error-message {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.wlb-composer-plugin-wrapper input[type="submit"] {
+    background-color: #007CF5;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+    border: none;
+    border-radius: .375rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    -webkit-border-radius: .375rem;
+    -moz-border-radius: .375rem;
+    -ms-border-radius: .375rem;
+    -o-border-radius: .375rem;
+}
+
+.wlb-composer-plugin-wrapper input[type="submit"]:hover {
+    background-color: #4f46e5;
+}
+.wlb-composer-plugin-wrapper .form-group.wlb-submit-wrapper{
+    margin-bottom: 0;
+}
+.wlb-composer-plugin-wrapper select.input-control {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #f9fafb;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%23666666' stroke-width='2' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px 8px;
+
+    padding-right: 2.5rem; /* creates space between text and icon */
+}
+.wlb-composer-plugin-wrapper select.input-control:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    outline: none;
+    background-color: #fff;
+}
+
+
+/* Optional: Mobile responsive two-column stacking */
+@media (max-width: 600px) {
+    .wlb-composer-plugin-wrapper .from-fields-col-2 {
+        grid-template-columns: 1fr;
+    }
+}
