@@ -166,6 +166,8 @@ final class PluginStub {
      */
     public function init_classes() {
         $this->container['scripts'] = new Assets();
+        $this->container['admin_settings'] = new Admin\Settings();
+        $this->container['admin_settings_rest'] = new Admin\REST\SettingsController();
     }
 
     /**

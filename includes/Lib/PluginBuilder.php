@@ -22,6 +22,29 @@ class PluginBuilder implements BuilderContract {
         'plugin_requires' => '',
     ];
 
+    protected $required_files_and_folders = [
+        '.github',
+        'assets',
+        'bin',
+        'includes/Assets.php',
+        'includes/PluginStub.php',
+        'templates',
+        '.gitignore',
+        'composer.json',
+        'phpcs.xml',
+        'plugin-stub.php',
+        'README.md',
+    ];
+
+    protected $settings_files_and_folders = [
+        'src',
+        'includes/Admin',
+        'package.json',
+        'postcss.config.js',
+        'tailwind.config.js',
+        'webpack.config.js',
+    ];
+
     public function __construct( FileSystemContract $file_system ) {
         $this->file_system = $file_system;
     }
@@ -29,10 +52,24 @@ class PluginBuilder implements BuilderContract {
     public function build( $plugin_name ): string {
         $plugin_dir_name = $this->get_plugin_directory_name( $plugin_name );
         $dest_dir = $this->get_dest_plugin_path( $plugin_dir_name );
-        $this->file_system->copy(
-            $this->get_stub_plugin_path(),
-            $dest_dir
-        );
+
+        // Copy only required files and folders
+        foreach ( $this->required_files_and_folders as $item ) {
+            $src = $this->get_stub_plugin_path() . '/' . $item;
+            $dest = $dest_dir . '/' . $item;
+            $this->file_system->copy( $src, $dest );
+        }
+
+        // Conditionally copy settings assets
+        $this->placeholders['include_settings'] = true; // need to implement checkbox on the composer form shortcode
+        if ( $this->placeholders['include_settings'] ?? false ) {
+            foreach ( $this->settings_files_and_folders as $item ) {
+                $src = $this->get_stub_plugin_path() . '/' . $item;
+                $dest = $dest_dir . '/' . $item;
+                $this->file_system->copy( $src, $dest );
+            }
+        }
+
         $zip_path = $dest_dir . time() . '.zip';
 
         $placeholders = $this->get_placeholders( $plugin_name );
