@@ -19,11 +19,11 @@ const GeneralSettings = () => {
                     path: '/plugin-stub/v1/settings',
                 });
 
-				if( response.pluginstub_dashboard_page_id ){
-                	setDashboardPage(response.pluginstub_dashboard_page_id);
+				if( response.plugin_stub_dashboard_page_id ){
+                	setDashboardPage(response.plugin_stub_dashboard_page_id);
 				}
-				if( response.pluginstub_page_title ){
-					setPageTitle(response.pluginstub_page_title);
+				if( response.plugin_stub_page_title ){
+					setPageTitle(response.plugin_stub_page_title);
 				}
                 setError(null); // Clear any previous errors
 				setIsLoading( false );
@@ -70,15 +70,15 @@ const GeneralSettings = () => {
 		event.preventDefault();
 		setIsLoading( true );
 		try {
-			const { pluginstub_dashboard_page_id } = await apiFetch( {
+			const { plugin_stub_dashboard_page_id } = await apiFetch( {
 				path: '/plugin-stub/v1/settings',
 				method: 'POST',
 				data: {
-					pluginstub_dashboard_page_id: dashboardPage,
-					pluginstub_page_title: pageTitle,
+					plugin_stub_dashboard_page_id: dashboardPage,
+					plugin_stub_page_title: pageTitle,
 				},
 			} );
-			setDashboardPage( pluginstub_dashboard_page_id );
+			setDashboardPage( plugin_stub_dashboard_page_id );
 			setMessage(
 				__( 'Settings saved successfully!', 'plugin-stub' )
 			);

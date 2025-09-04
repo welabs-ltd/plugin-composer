@@ -17,8 +17,8 @@ const OrderSettings = () => {
                     path: '/plugin-stub/v1/settings',
                 });
 
-                if( response.pluginstub_dashboard_page_id ){
-                	setProductPerPage(response.pluginstub_dashboard_page_id);
+                if( response.plugin_stub_dashboard_page_id ){
+                	setProductPerPage(response.plugin_stub_dashboard_page_id);
 				}
                 setError(null); // Clear any previous errors
 				setIsLoading( false );
@@ -35,14 +35,14 @@ const OrderSettings = () => {
 		event.preventDefault();
 		setIsLoading( true );
 		try {
-			const { pluginstub_product_per_page } = await apiFetch( {
+			const { plugin_stub_product_per_page } = await apiFetch( {
 				path: '/plugin-stub/v1/settings',
 				method: 'POST',
 				data: {
-					pluginstub_product_per_page: productPerPage,
+					plugin_stub_product_per_page: productPerPage,
 				},
 			} );
-			setProductPerPage( pluginstub_product_per_page );
+			setProductPerPage( plugin_stub_product_per_page );
 			setMessage(
 				__( 'Settings saved successfully!', 'plugin-stub' )
 			);
