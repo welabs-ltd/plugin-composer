@@ -27,7 +27,7 @@ const App = () => (
 
 document.addEventListener( 'DOMContentLoaded', () => {
 	const container = document.getElementById(
-		'welabsSettings'
+		'PluginStubSettings'
 	);
 	const root = createRoot( container );
 	root.render( <App /> );

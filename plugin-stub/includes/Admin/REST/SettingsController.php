@@ -30,7 +30,7 @@ class SettingsController extends WP_REST_Controller {
 	 * Sets the namespace and rest base for the controller.
 	 */
 	public function __construct() {
-		$this->namespace = 'msf-shop-front/v1';
+		$this->namespace = 'plugin-stub/v1';
 		$this->rest_base = 'settings';
 	}
 
@@ -67,7 +67,7 @@ class SettingsController extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error The response or error object.
 	 */
 	public function get_settings( $request ) {
-		$settings = get_option( 'msf_settings', array() );
+		$settings = get_option( 'plugin_stub_settings', array() );
 
 		return rest_ensure_response( $settings );
 	}
@@ -79,21 +79,21 @@ class SettingsController extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error The response or error object.
 	 */
 	public function update_settings( $request ) {
-		$msf_settings = get_option( 'msf_settings', array() );
+		$plugin_stub_settings = get_option( 'plugin_stub_settings', array() );
 
-		if ( $request->has_param( 'msf_dashboard_page_id' ) ) {
-			$msf_settings['msf_dashboard_page_id'] = sanitize_text_field( $request->get_param( 'msf_dashboard_page_id' ) );
+		if ( $request->has_param( 'plugin_stub_dashboard_page_id' ) ) {
+			$plugin_stub_settings['plugin_stub_dashboard_page_id'] = sanitize_text_field( $request->get_param( 'plugin_stub_dashboard_page_id' ) );
 		}
 
-		if ( $request->has_param( 'msf_product_per_page' ) ) {
-			$msf_settings['msf_product_per_page'] = sanitize_text_field( $request->get_param( 'msf_product_per_page' ) );
+		if ( $request->has_param( 'plugin_stub_product_per_page' ) ) {
+			$plugin_stub_settings['plugin_stub_product_per_page'] = sanitize_text_field( $request->get_param( 'plugin_stub_product_per_page' ) );
 		}
 
-		if ( $request->has_param( 'msf_page_title' ) ) {
-			$msf_settings['msf_page_title'] = sanitize_text_field( $request->get_param( 'msf_page_title' ) );
+		if ( $request->has_param( 'plugin_stub_page_title' ) ) {
+			$plugin_stub_settings['plugin_stub_page_title'] = sanitize_text_field( $request->get_param( 'plugin_stub_page_title' ) );
 		}
 
-		update_option( 'msf_settings', $msf_settings );
+		update_option( 'plugin_stub_settings', $plugin_stub_settings );
 
 		return $this->get_settings( $request );
 	}
@@ -129,18 +129,18 @@ class SettingsController extends WP_REST_Controller {
 			'title'      => 'settings',
 			'type'       => 'object',
 			'properties' => array(
-				'msf_dashboard_page_id' => array(
-					'description' => __( 'Dashboard Page.', 'shop-front' ),
+				'plugin_stub_dashboard_page_id' => array(
+					'description' => __( 'Dashboard Page.', 'plugin-stub' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 				),
-				'msf_product_per_page'  => array(
-					'description' => __( 'Products Per Page.', 'shop-front' ),
+				'plugin_stub_product_per_page'  => array(
+					'description' => __( 'Products Per Page.', 'plugin-stub' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 				),
-				'msf_page_title'  => array(
-					'description' => __( 'Page Title.', 'shop-front' ),
+				'plugin_stub_page_title'  => array(
+					'description' => __( 'Page Title.', 'plugin-stub' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 				),

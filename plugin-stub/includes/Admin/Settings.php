@@ -20,10 +20,10 @@ class Settings {
 	 */
 	public function add_admin_settings_menu() {
         add_menu_page(
-            'Welabs Settings',
-            'Welabs',
+            'PluginStub Settings',
+            'PluginStub',
             'manage_options',
-            'welabs-settings',
+            'plugin_stub-settings',
             array( $this, 'settings_page_content' ),
             'dashicons-admin-generic',
             55.5
@@ -38,7 +38,7 @@ class Settings {
 	public function settings_page_content() {
 		?>
 		<div class="wrap">
-			<div id="welabsSettings"></div>
+			<div id="PluginStubSettings"></div>
 		</div>
 		<?php
 	}
