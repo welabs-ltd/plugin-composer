@@ -1,7 +1,7 @@
 <div class="wlb-composer-plugin-wrapper">
     <form action="" method="POST" class="wlb-compose-plugin-form <?php echo esc_attr( $attr['class'] ?? '' ); ?>">
         <div class="form-group">
-            <label class="control-label" for="plugin_name"><?php echo esc_html__( 'Plugin Name *', 'plugin-composer' ); ?></label>
+            <label class="control-label" for="plugin_name"><?php echo esc_html__( 'Plugin Name', 'plugin-composer' ); ?><span class="required">*</span></label>
             <div class="input-group">
                 <input name="plugin_name" id="plugin_name" required class="input-control" placeholder="<?php echo esc_attr__( 'My Plugin', 'plugin-composer' ); ?>">
                 <div class="error-message"><?php echo esc_html( $error_messages['plugin_name'] ?? '' ); ?></div>

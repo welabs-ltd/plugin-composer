@@ -62,6 +62,10 @@
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
 }
+.wlb-composer-plugin-wrapper .required{
+    color: #dc2626;
+    margin-left: 0.25rem;
+}
 
 .wlb-composer-plugin-wrapper .error-message {
     color: #dc2626;
