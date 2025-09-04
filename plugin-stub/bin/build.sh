@@ -37,7 +37,8 @@ mkdir -p "$BUILD_DIR"
 
 # Run the build.
 # status "Installing dependencies... 📦"
-# npm install
+npm install
+npm run build
 
 status "Generating build... 👷‍♀️"
 
