@@ -11,13 +11,15 @@
             <label class="control-label" for="plugin_description"><?php echo esc_html__( 'Plugin Description', 'plugin-composer' ); ?></label>
             <textarea name="plugin_description" id="plugin_description"  rows="2" class="input-control" placeholder="<?php echo esc_attr__( 'Plugin desc.', 'plugin-composer' ); ?>"></textarea>
         </div>
-        <div class="form-group">
-            <label class="control-label" for="plugin_requires"><?php echo esc_html__( 'Requires Plugins', 'plugin-composer' ); ?></label>
-            <input name="plugin_requires" id="plugin_requires" class="input-control" placeholder="<?php echo esc_attr( 'e.i woocommerce, dokan-lite, dokan-pro' ); ?>">
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="plugin_license"><?php echo esc_html__( 'Plugin License', 'plugin-composer' ); ?></label>
-            <input name="plugin_license" id="plugin_license" class="input-control" placeholder="<?php echo esc_attr__( 'License e.g., GPL2', 'plugin-composer' ); ?>">
+        <div class="from-fields-col-2 from-fields-col-style-1">
+            <div class="form-group">
+                <label class="control-label" for="plugin_requires"><?php echo esc_html__( 'Requires Plugins', 'plugin-composer' ); ?></label>
+                <input name="plugin_requires" id="plugin_requires" class="input-control" placeholder="<?php echo esc_attr( 'e.i woocommerce, dokan-lite, dokan-pro' ); ?>">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="plugin_license"><?php echo esc_html__( 'Plugin License', 'plugin-composer' ); ?></label>
+                <input name="plugin_license" id="plugin_license" class="input-control" placeholder="<?php echo esc_attr__( 'License e.g., GPL2', 'plugin-composer' ); ?>">
+            </div>
         </div>
         <div class="form-group">
             <label class="control-label" for="plugin_uri"><?php echo esc_html__( 'Plugin URL', 'plugin-composer' ); ?></label>
