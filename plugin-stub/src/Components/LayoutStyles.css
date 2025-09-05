@@ -133,3 +133,24 @@
 .welabs-admin-settings-sidebar-nav nav ul li {
     margin: 0;
 }
+.welabs-admin-settings-setting-wrapper label {
+    font-size: 14px!important;
+    font-style: normal;
+    font-weight: 600!important;
+    display: block!important;
+    text-transform: capitalize!important;
+    margin-bottom: 10px;
+}
+.welabs-admin-settings-setting-wrapper .components-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.welabs-admin-settings-setting-wrapper .components-button.is-primary {
+    width: fit-content;
+    justify-content: center;
+    height: 38px;
+}
+.welabs-admin-settings-setting-wrapper .components-input-base.components-select-control {
+    gap: 0;
+}

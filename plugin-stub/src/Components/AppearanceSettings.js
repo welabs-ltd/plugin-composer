@@ -1,10 +1,11 @@
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from 'react';
-import { Button, Card, CardBody, Notice, TextControl, Spinner } from '@wordpress/components';
+import { Button, Card, CardBody, Notice, ColorPicker, Spinner } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 
 const OrderSettings = () => {
-	const [ productPerPage, setProductPerPage ] = useState( '' );
+	const [ primaryColor, setPrimaryColor ] = useState('');
+	const [ textColor, setTextColor ] = useState('');
 	const [ isLoading, setIsLoading ] = useState( false );
 	const [ message, setMessage ] = useState( '' );
 	const [ error, setError ] = useState( '' );
@@ -17,8 +18,12 @@ const OrderSettings = () => {
                     path: '/plugin-stub/v1/settings',
                 });
 
-                if( response.plugin_stub_dashboard_page_id ){
-                	setProductPerPage(response.plugin_stub_dashboard_page_id);
+                if( response.plugin_stub_primary_color ){
+                	setPrimaryColor(response.plugin_stub_primary_color);
+				}
+
+                if( response.plugin_stub_text_color ){
+                	setTextColor(response.plugin_stub_text_color);
 				}
                 setError(null); // Clear any previous errors
 				setIsLoading( false );
@@ -35,14 +40,14 @@ const OrderSettings = () => {
 		event.preventDefault();
 		setIsLoading( true );
 		try {
-			const { plugin_stub_product_per_page } = await apiFetch( {
+			const res = await apiFetch( {
 				path: '/plugin-stub/v1/settings',
 				method: 'POST',
 				data: {
-					plugin_stub_product_per_page: productPerPage,
+					plugin_stub_primary_color: primaryColor,
+					plugin_stub_text_color: textColor,
 				},
 			} );
-			setProductPerPage( plugin_stub_product_per_page );
 			setMessage(
 				__( 'Settings saved successfully!', 'plugin-stub' )
 			);
@@ -91,12 +96,24 @@ const OrderSettings = () => {
 			<form onSubmit={ handleSubmit }>
 				<Card>
 					<CardBody>
-						<TextControl
-							label={ __( 'Product per page', 'plugin-stub' ) }
-							help={ __( 'Default: 10', 'plugin-stub' ) }
-							value={ productPerPage }
-							onChange={ setProductPerPage }
-						/>
+						<div>
+							<label>{ __( 'Primary color', 'nothing-os' ) }</label>
+							<ColorPicker
+								color={primaryColor}
+								onChange={setPrimaryColor}
+								enableAlpha
+								defaultValue="#fff"
+							/>
+						</div>
+						<div>
+							<label>{ __( 'Text color', 'nothing-os' ) }</label>
+							<ColorPicker
+								color={textColor}
+								onChange={setTextColor}
+								enableAlpha
+								defaultValue="#000"
+							/>
+						</div>
 						<Button variant="primary" type="submit" disabled={ isLoading }>
 							{ isLoading && <Spinner /> }
 							{ __( 'Save Changes', 'plugin-stub' ) }

@@ -93,6 +93,14 @@ class SettingsController extends WP_REST_Controller {
 			$plugin_stub_settings['plugin_stub_page_title'] = sanitize_text_field( $request->get_param( 'plugin_stub_page_title' ) );
 		}
 
+		if ( $request->has_param( 'plugin_stub_primary_color' ) ) {
+			$plugin_stub_settings['plugin_stub_primary_color'] = sanitize_text_field( $request->get_param( 'plugin_stub_primary_color' ) );
+		}
+
+		if ( $request->has_param( 'plugin_stub_text_color' ) ) {
+			$plugin_stub_settings['plugin_stub_text_color'] = sanitize_text_field( $request->get_param( 'plugin_stub_text_color' ) );
+		}
+
 		update_option( 'plugin_stub_settings', $plugin_stub_settings );
 
 		return $this->get_settings( $request );
@@ -141,6 +149,16 @@ class SettingsController extends WP_REST_Controller {
 				),
 				'plugin_stub_page_title'  => array(
 					'description' => __( 'Page Title.', 'plugin-stub' ),
+					'type'        => 'string',
+					'context'     => array( 'view', 'edit' ),
+				),
+				'plugin_stub_primary_color'  => array(
+					'description' => __( 'Primary Color.', 'plugin-stub' ),
+					'type'        => 'string',
+					'context'     => array( 'view', 'edit' ),
+				),
+				'plugin_stub_text_color'  => array(
+					'description' => __( 'Text Color.', 'plugin-stub' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 				),

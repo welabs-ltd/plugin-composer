@@ -70,7 +70,7 @@ const GeneralSettings = () => {
 		event.preventDefault();
 		setIsLoading( true );
 		try {
-			const { plugin_stub_dashboard_page_id } = await apiFetch( {
+			const res = await apiFetch( {
 				path: '/plugin-stub/v1/settings',
 				method: 'POST',
 				data: {
@@ -78,7 +78,6 @@ const GeneralSettings = () => {
 					plugin_stub_page_title: pageTitle,
 				},
 			} );
-			setDashboardPage( plugin_stub_dashboard_page_id );
 			setMessage(
 				__( 'Settings saved successfully!', 'plugin-stub' )
 			);
