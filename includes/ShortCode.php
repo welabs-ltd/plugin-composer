@@ -15,7 +15,7 @@ class ShortCode {
         $attr = shortcode_atts(
             [
 				'class' => '',
-				'submit-text' => 'Submit',
+				'submit-text' => __( 'Build Plugin', 'plugin-composer' ),
 			], $attr
         );
         $error_messages = apply_filters( 'get_welabs_plugin_compose_form_errors', $this->error_messages );
@@ -57,6 +57,7 @@ class ShortCode {
         $request_data['plugin_author_email'] = sanitize_text_field( $post_data['plugin_author_email'] ?? '' );
         $request_data['plugin_author_uri'] = sanitize_text_field( $post_data['plugin_uri'] ?? '' );
         $request_data['plugin_requires'] = sanitize_text_field( $post_data['plugin_requires'] ?? '' );
+        $request_data['plugin_is_settings_included'] = sanitize_text_field( $post_data['plugin_is_settings_included'] ?? 'no' );
 
         $request_data = apply_filters( 'welabs_plugin_composer_form_data', array_filter( $request_data ) );
 

@@ -23,6 +23,10 @@ if ( ! defined( 'PLUGIN_STUB_FILE' ) ) {
     define( 'PLUGIN_STUB_FILE', __FILE__ );
 }
 
+if ( ! defined( 'PLUGIN_STUB_BASENAME' ) ) {
+    define( 'PLUGIN_STUB_BASENAME', plugin_basename( __FILE__ ) );
+}
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 /**
