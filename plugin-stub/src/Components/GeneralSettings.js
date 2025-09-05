@@ -127,7 +127,7 @@ const GeneralSettings = () => {
 				<Card>
 					<CardBody>
 						<SelectControl
-							label="Select Dashboard Page"
+							label={ __( 'Select Dashboard Page', 'plugin-stub' ) }
 							value={ dashboardPage }
 							options={ pages }
 							onChange={ ( page ) => setDashboardPage( page ) }
