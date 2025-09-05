@@ -97,7 +97,7 @@ const OrderSettings = () => {
 				<Card>
 					<CardBody>
 						<div>
-							<label>{ __( 'Primary color', 'nothing-os' ) }</label>
+							<label>{ __( 'Primary color', 'plugin-stub' ) }</label>
 							<ColorPicker
 								color={primaryColor}
 								onChange={setPrimaryColor}
@@ -106,7 +106,7 @@ const OrderSettings = () => {
 							/>
 						</div>
 						<div>
-							<label>{ __( 'Text color', 'nothing-os' ) }</label>
+							<label>{ __( 'Text color', 'plugin-stub' ) }</label>
 							<ColorPicker
 								color={textColor}
 								onChange={setTextColor}

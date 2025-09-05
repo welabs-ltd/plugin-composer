@@ -26,7 +26,7 @@ const Layout = () => {
                         <li className={isActive("/") ? "active" : ""}>
                             <Link to="/">
                                 <div className='menu-title'>{ __( 'General', 'plugin-stub' ) }</div>
-                                <div className='menu-title-description'>{ __( 'Set dashbord page', 'plugin-stub' ) }</div>
+                                <div className='menu-title-description'>{ __( 'Set dashboard page', 'plugin-stub' ) }</div>
                                 <div className='menu-icon'>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-gear" viewBox="0 0 16 16">
                                         <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>

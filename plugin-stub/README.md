@@ -10,7 +10,7 @@ To update dependency versions according to composer.json (Modifies your composer
 composer update
 ```
 
-### 🚀 For Prroduction Environment
+### 🚀 For Production Environment
 Run the following command for production environment to ignore the dev dependencies.
 ```
 composer install --optimize-autoloader --no-dev -q
