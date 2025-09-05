@@ -2,8 +2,7 @@
 Run the following command for development environment.
 ```
 composer install
-npm install
-npm run start
+NODE_DEVELOPMENT_COMMANDS
 ```
 
 To update dependency versions according to composer.json (Modifies your composer.lock)
@@ -15,8 +14,7 @@ composer update
 Run the following command for production environment to ignore the dev dependencies.
 ```
 composer install --optimize-autoloader --no-dev -q
-npm install
-npm run build
+NODE_PRODUCTION_COMMANDS
 ```
 
 ### 📦 For Build Release

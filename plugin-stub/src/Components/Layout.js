@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { __ } from '@wordpress/i18n';
-import logo from '../images/settings-logo.svg';
+import logo from '../../assets/images/settings-logo.svg';
 import './LayoutStyles.css';
 
 const Layout = () => {

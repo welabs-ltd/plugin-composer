@@ -36,9 +36,7 @@ rm -rf "$DIR/build"
 mkdir -p "$BUILD_DIR"
 
 # Run the build.
-# status "Installing dependencies... 📦"
-npm install
-npm run build
+NODE_PRODUCTION_COMMANDS
 
 status "Generating build... 👷‍♀️"
 

@@ -14,7 +14,7 @@
         <div class="from-fields-col-2 from-fields-col-style-1">
             <div class="form-group">
                 <label class="control-label" for="plugin_requires"><?php echo esc_html__( 'Requires Plugins', 'plugin-composer' ); ?></label>
-                <input name="plugin_requires" id="plugin_requires" class="input-control" placeholder="<?php echo esc_attr( 'e.i woocommerce, dokan-lite, dokan-pro' ); ?>">
+                <input name="plugin_requires" id="plugin_requires" class="input-control" placeholder="<?php echo esc_attr( 'e.i woocommerce, dokan-lite' ); ?>">
             </div>
             <div class="form-group">
                 <label class="control-label" for="plugin_license"><?php echo esc_html__( 'Plugin License', 'plugin-composer' ); ?></label>

@@ -11,7 +11,8 @@ class Settings {
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_admin_settings_menu' ), 100 );
-		
+		add_filter( 'plugin_action_links_' . PLUGIN_STUB_BASENAME, array( $this, 'plugin_action_link' ) );
+
 		if ( is_admin() ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_settings_scripts' ), 10 );
 		}
@@ -24,8 +25,8 @@ class Settings {
 	 */
 	public function add_admin_settings_menu() {
         add_menu_page(
-            'PluginStub Settings',
-            'PluginStub',
+            __( 'PluginStub Settings', 'plugin-stub' ),
+            __( 'PluginStub', 'plugin-stub' ),
             'manage_options',
             'plugin_stub-settings',
             array( $this, 'settings_page_content' ),
@@ -33,6 +34,20 @@ class Settings {
             55.5
         );
 	}
+
+	/**
+	 * Add Settings action link on the plugin screen.
+	 *
+	 * @param mixed $links Plugin Action links.
+	 *
+	 * @return array
+	 */
+    public function plugin_action_link( $links ){
+        $plugin_action_links = array(
+        '<a href="' . esc_url( admin_url( 'admin.php?page=plugin_stub-settings' ) ) . '"> '. __('Settings', 'plugin-stub') . '</a>',
+        );
+        return array_merge( $links, $plugin_action_links );
+    }
 
 	/**
 	 * Plugin settings page

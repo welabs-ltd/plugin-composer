@@ -63,6 +63,12 @@ class PluginBuilder implements BuilderContract {
 
         $this->get_stub_plugin_settings_files_and_folders( $dest_dir );
         $this->process_stub_plugin_settings( $dest_dir );
+        // $this->process_stub_plugin_settings_node_commands( $dest_dir );
+        $this->replace_stub_plugin_settings( $dest_dir . '/README.md', "NODE_DEVELOPMENT_COMMANDS", "npm install\nnpm run start" );
+        
+        $this->replace_stub_plugin_settings( $dest_dir . '/README.md', "NODE_PRODUCTION_COMMANDS", "npm install\nnpm run build" );
+
+        $this->replace_stub_plugin_settings( $dest_dir . '/bin/build.sh', "NODE_PRODUCTION_COMMANDS", "status 'Installing npm dependencies... 📦'\nnpm install\nnpm run build" );
         
         $zip_path = $dest_dir . time() . '.zip';
 
@@ -180,5 +186,24 @@ class PluginBuilder implements BuilderContract {
             $plugin_stub_content = str_replace( '// INIT_PLUGIN_SETTINGS_CLASSES', $init_settings_classes_code, $plugin_stub_content );
         }
         file_put_contents( $plugin_stub_path, $plugin_stub_content );
+    }
+
+    /**
+     * Replace settings related node commands.
+     *
+     * @param string $dest_dir
+     * @return void
+     */
+    public function replace_stub_plugin_settings( $file_path, $replace_to, $replace_by ): void {
+        $readme_content = file_get_contents($file_path);
+        
+        if ( $this->placeholders['plugin_is_settings_included'] === 'yes' ) {
+            $replace_to_content = $replace_by;
+        } else {
+            $replace_to_content = '';
+        }
+
+        $readme_content = str_replace($replace_to, $replace_to_content, $readme_content);
+        file_put_contents($file_path, $readme_content);
     }
 }
