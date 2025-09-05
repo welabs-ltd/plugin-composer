@@ -57,7 +57,7 @@
     min-height: 80px;
 }
 
-.wlb-composer-plugin-wrapper .from-fields-col-2 {
+.wlb-composer-plugin-wrapper .form-fields-col-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
@@ -118,7 +118,7 @@
 
 /* Optional: Mobile responsive two-column stacking */
 @media (max-width: 600px) {
-    .wlb-composer-plugin-wrapper .from-fields-col-2 {
+    .wlb-composer-plugin-wrapper .form-fields-col-2 {
         grid-template-columns: 1fr;
     }
 }
