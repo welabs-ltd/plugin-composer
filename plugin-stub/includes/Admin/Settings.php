@@ -25,8 +25,8 @@ class Settings {
 	 */
 	public function add_admin_settings_menu() {
         add_menu_page(
-            __( 'PluginStub Settings', 'plugin-stub' ),
-            __( 'PluginStub', 'plugin-stub' ),
+            __( 'Plugin Stub Settings', 'plugin-stub' ),
+            __( 'Plugin Stub', 'plugin-stub' ),
             'manage_options',
             'plugin_stub-settings',
             array( $this, 'settings_page_content' ),
