@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from '@wordpress/element';
 import { Button, Card, CardBody, Notice, Spinner, SelectControl, TextControl } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 

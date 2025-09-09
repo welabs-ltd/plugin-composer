@@ -1,4 +1,4 @@
-import React from 'react';
+import React from '@wordpress/element';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { __ } from '@wordpress/i18n';
 import logo from '../../assets/images/settings-logo.svg';

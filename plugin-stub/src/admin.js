@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from '@wordpress/element';
 import { createRoot } from 'react-dom/client';
 import {
 	HashRouter as Router,
