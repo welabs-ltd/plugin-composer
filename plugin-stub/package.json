@@ -1,0 +1,34 @@
+{
+    "name": "plugin-stub",
+    "version": "0.0.1",
+    "description": "plugin_description",
+    "author": "plugin_author_name",
+    "license": "plugin_license",
+    "main": "index.js",
+    "scripts": {
+        "build": "wp-scripts build",
+        "start": "wp-scripts start",
+        "format": "wp-scripts format",
+        "lint:css": "wp-scripts lint-style",
+        "lint:js": "wp-scripts lint-js",
+        "packages-update": "wp-scripts packages-update"
+    },
+    "dependencies": {
+        "@wordpress/api-fetch": "^7.0.0",
+        "@wordpress/components": "^28.0.0",
+        "@wordpress/element": "^6.0.0",
+        "react-dom": "^18.3.1",
+        "react-router-dom": "^6.23.1"
+    },
+    "devDependencies": {
+        "@wordpress/scripts": "^28.0.0",
+        "autoprefixer": "^10.4.19",
+        "css-loader": "^7.1.2",
+        "postcss": "^8.4.38",
+        "postcss-loader": "^8.1.1",
+        "sass": "^1.71.0",
+        "sass-loader": "^14.1.0",
+        "style-loader": "^4.0.0",
+        "tailwindcss": "^3.4.3"
+    }
+}
