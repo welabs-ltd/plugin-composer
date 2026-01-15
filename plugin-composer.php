@@ -3,7 +3,7 @@
  * Plugin Name: Plugin-composer
  * Plugin URI:  https://welabs.dev/
  * Description: Customized plugin. Powered by weLabs.
- * Version: 1.2.0
+ * Version: 1.3.0
  * Author: weLabs
  * Author URI: https://welabs.dev/
  * Text Domain: plugin-composer
