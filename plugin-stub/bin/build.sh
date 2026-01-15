@@ -9,6 +9,15 @@ cd ..
 DIR=$(pwd)
 BUILD_DIR="$DIR/build/plugin-stub"
 
+# Extract plugin version from plugin-stub.php
+VERSION=$(grep -E '^[[:space:]]*\* Version:' "$DIR/plugin-stub.php" | head -n1 | sed -E 's/.*Version:[[:space:]]*([^[:space:]]+).*/\1/')
+if [ -z "$VERSION" ]; then
+    error "Could not determine version from plugin-stub.php"
+    exit 1
+fi
+
+
+
 # Enable nicer messaging for build status.
 BLUE_BOLD='\033[1;34m'
 GREEN_BOLD='\033[1;32m'
@@ -61,10 +70,10 @@ rm composer.json composer.lock
 # go one up, to the build dir
 status "Creating archive... 🎁"
 cd ..
-zip -r -q plugin-stub.zip plugin-stub
+zip -r -q plugin-stub-${VERSION}.zip plugin-stub
 
 # remove the source directory
 rm -rf plugin-stub
 
 success "Done. You've built Plugin Stub! 🎉 "
-echo -e "\n${BLUE_BOLD}File Path${COLOR_RESET}: ${YELLOW_BOLD}$(pwd)/plugin-stub.zip${COLOR_RESET} \n"
+echo -e "\n${BLUE_BOLD}File Path${COLOR_RESET}: ${YELLOW_BOLD}$(pwd)/plugin-stub-${VERSION}.zip${COLOR_RESET} \n"
