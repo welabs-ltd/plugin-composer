@@ -229,9 +229,46 @@ final class PluginStub {
      * @param string $name
      * @return string
      */
-    public function get_template( $name ) {
+    public function get_template_path( $name ) {
         $template = untrailingslashit( PLUGIN_STUB_TEMPLATE_DIR ) . '/' . untrailingslashit( $name );
 
         return apply_filters( 'plugin-stub_template', $template, $name );
+    }
+
+    /**
+     * Get templates passing attributes and including the file.
+     * You can use this method to load php template file by following:
+     * Example-1: welabs_plugin_stub()->get_template( 'admin/custom-meta-fields.php' );
+     * Example-2: welabs_plugin_stub()->get_template( 'admin/custom-meta-fields.php', [
+			'loop' => $loop,
+			'variation_data' => $variation_data,
+			'variation' => $variation
+		] );
+     * 
+     * @param mixed  $template_name
+     * @param array  $args          (default: array())
+     * @param string $template_path (default: '')
+     * @param string $default_path  (default: '')
+     *
+     * @return void
+     */
+    function get_template( $template_name, $args = [] ) {
+        if ( $args && is_array( $args ) ) {
+            extract( $args ); // phpcs:ignore
+        }
+
+        $template_path = $this->get_template_path( $template_name );
+
+        if ( ! file_exists( $template_path ) ) {
+            _doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', esc_html( $template_path ) ), PLUGIN_STUB_PLUGIN_VERSION );
+
+            return;
+        }
+
+        do_action( 'plugin_stub_before_template_part', $template_name, $args );
+
+        include $this->get_template_path( $template_name );
+
+        do_action( 'plugin_stub_after_template_part', $template_name, $args );
     }
 }
