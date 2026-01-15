@@ -21,7 +21,7 @@ You may easily generate a PSR4 auto-loading WordPress plugin by submitting a sim
 ```
 
 
-👉 **Official Demo Link:** Try out the [Plugin Composer](https://welabs.dev/plugin-composer).
+👉 **Official Demo Link:** Try out the [Plugin Composer](https://welabs.dev/compose-plugin/).
 
 ### Build Release:
 
