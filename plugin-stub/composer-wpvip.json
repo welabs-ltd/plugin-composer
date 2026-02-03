@@ -1,0 +1,46 @@
+{
+    "name": "welabs/plugin-stub",
+    "description": "plugin_description",
+    "license": "plugin_license",
+    "autoload": {
+        "psr-4": {
+            "WeLabs\\PluginStub\\": "includes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "plugin_author_name",
+            "email": "plugin_author_email",
+            "homepage": "plugin_author_uri"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+        "tareq1988/wp-php-cs-fixer": "dev-master",
+        "phpunit/phpunit": "^9.6",
+        "wp-phpunit/wp-phpunit": "^6.1",
+        "yoast/phpunit-polyfills": "^1.0",
+        "symfony/var-dumper": "^5.4",
+        "squizlabs/php_codesniffer": "^3.13",
+        "automattic/vipwpcs": "^3.0",
+        "wp-coding-standards/wpcs": "^3.0",
+        "phpcompatibility/phpcompatibility-wp": "^2.1"
+    },
+   "scripts": {
+        "phpcs": [
+            "vendor/bin/phpcs -p -s"
+        ],
+        "phpcs:report": [
+            "vendor/bin/phpcs --report-file='phpcs-report.txt'"
+        ],
+        "phpcbf": [
+            "vendor/bin/phpcbf -p"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

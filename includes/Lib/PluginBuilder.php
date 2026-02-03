@@ -21,10 +21,12 @@ class PluginBuilder implements BuilderContract {
         'plugin_author_uri' => 'https://welabs.dev',
         'plugin_requires' => '',
         'plugin_is_settings_included' => 'no',
+        'plugin_is_wpvip_supported' => 'no',
     ];
 
     protected $required_files_and_folders = [
-        '.github',
+        '.github/pull_request_template.md',
+        '.github/workflows/phpcs.yml',
         'assets',
         'bin',
         'includes/Assets.php',
@@ -62,6 +64,7 @@ class PluginBuilder implements BuilderContract {
         }
 
         $this->get_stub_plugin_settings_files_and_folders( $dest_dir );
+        $this->get_stub_plugin_wpvip_configuration( $dest_dir );
         $this->process_stub_plugin_settings( $dest_dir );
         // $this->process_stub_plugin_settings_node_commands( $dest_dir );
         $this->replace_stub_plugin_settings( $dest_dir . '/README.md', "NODE_DEVELOPMENT_COMMANDS", "npm install\nnpm run start" );
@@ -106,6 +109,7 @@ class PluginBuilder implements BuilderContract {
      * @type string    $plugin_author_uri         The url of the plugin author profile.
      * @type string    $plugin_requires           Comma separated require plugins slug.
      * @type string    $plugin_is_settings_included           Whether to include plugin settings.
+     * @type string    $plugin_is_wpvip_supported           Whether to include WP VIP support.
      * }
      *
      * @return void
@@ -205,5 +209,33 @@ class PluginBuilder implements BuilderContract {
 
         $readme_content = str_replace($replace_to, $replace_to_content, $readme_content);
         file_put_contents($file_path, $readme_content);
+    }
+
+    /**
+     * Copy WP VIP related configuration
+     *
+     * @param string $dest_dir
+     * @return void
+     */
+    public function get_stub_plugin_wpvip_configuration( $dest_dir ): void {
+        if ( $this->placeholders['plugin_is_wpvip_supported'] === 'yes' ) {
+            // Copy content of phpcs-wpvip.yml and replace phpcs.yml
+            $src_phpcs_wpvip_yml = $this->get_stub_plugin_path() . '/.github/workflows/phpcs-wpvip.yml';
+            $dest_phpcs_yml = $dest_dir . '/.github/workflows/phpcs.yml';
+            $content_phpcs_wpvip_yml = file_get_contents( $src_phpcs_wpvip_yml );
+            file_put_contents( $dest_phpcs_yml, $content_phpcs_wpvip_yml );
+
+            // Copy content of phpcs.xml and replace phpcs-wpvip.xml
+            $src_phpcs_wpvip_xml = $this->get_stub_plugin_path() . '/phpcs-wpvip.xml';
+            $dest_phpcs_xml = $dest_dir . '/phpcs.xml';
+            $content_phpcs_wpvip_xml = file_get_contents( $src_phpcs_wpvip_xml );
+            file_put_contents( $dest_phpcs_xml, $content_phpcs_wpvip_xml );
+
+            // Copy content of composer-wpvip.json and replace composer.json
+            $src_composer_wpvip_json = $this->get_stub_plugin_path() . '/composer-wpvip.json';
+            $dest_composer_json = $dest_dir . '/composer.json';
+            $content_composer_wpvip_json = file_get_contents( $src_composer_wpvip_json );
+            file_put_contents( $dest_composer_json, $content_composer_wpvip_json );
+        }
     }
 }

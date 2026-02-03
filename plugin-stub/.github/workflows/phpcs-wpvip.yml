@@ -1,0 +1,57 @@
+name: WordPress VIP Code Inspection
+
+on:
+  pull_request:
+
+jobs:
+  phpcs:
+    name: PHPCS (VIP Standards)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer, cs2pr
+
+      - name: Cache Composer
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+
+      - name: Install dependencies
+        run: composer install --no-progress --prefer-dist
+
+      - name: Get changed PHP files
+        id: changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            **/*.php
+
+      - name: Run PHPCS
+        if: steps.changed.outputs.any_changed == 'true'
+        run: |
+          echo "${{ steps.changed.outputs.all_changed_files }}" | tr ' ' '\n' > files.txt
+
+          php -d error_reporting=E_ALL\&~E_DEPRECATED \
+          vendor/bin/phpcs \
+            --standard=phpcs.xml \
+            --report=checkstyle \
+            --report-file=phpcs-report.xml \
+            --parallel=8 \
+            --warning-severity=1 \
+            --error-severity=1 \
+            $(cat files.txt)
+
+          cs2pr phpcs-report.xml
+
+      - name: No PHP changes
+        if: steps.changed.outputs.any_changed != 'true'
+        run: echo "No PHP files changed."
