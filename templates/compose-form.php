@@ -47,6 +47,13 @@
                     <option value="yes"><?php echo esc_html__( 'Yes', 'plugin-composer' ); ?></option>
                 </select>
             </div>
+            <div class="form-group">
+                <label class="control-label" for="plugin_is_wpvip_supported"><?php echo esc_html__( 'Do You Want WP VIP Support?', 'plugin-composer' ); ?></label>
+                <select name="plugin_is_wpvip_supported" id="plugin_is_wpvip_supported" class="input-control">
+                    <option value="no"><?php echo esc_html__( 'No', 'plugin-composer' ); ?></option>
+                    <option value="yes"><?php echo esc_html__( 'Yes', 'plugin-composer' ); ?></option>
+                </select>
+            </div>
         </div>
 
         <?php wp_nonce_field( 'wlb-compose-plugin', 'wlb-compose-plugin' ); ?>
