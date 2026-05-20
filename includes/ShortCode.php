@@ -16,6 +16,20 @@ class ShortCode {
             [
 				'class' => '',
 				'submit-text' => __( 'Build Plugin', 'plugin-composer' ),
+				'placeholder_plugin_name'         => __( 'My Plugin', 'plugin-composer' ),
+				'placeholder_plugin_description'  => __( 'Plugin desc.', 'plugin-composer' ),
+				'placeholder_plugin_requires'     => __( 'e.i woocommerce, dokan-lite', 'plugin-composer' ),
+				'placeholder_plugin_license'      => __( 'License e.g., GPL2', 'plugin-composer' ),
+				'placeholder_plugin_uri'          => 'https://company.com/my-plugin',
+				'placeholder_plugin_author_name'  => __( 'weLabs', 'plugin-composer' ),
+				'placeholder_plugin_author_email' => 'contact@welabs.dev',
+				'placeholder_plugin_author_uri'   => 'https://author.profile',
+				'show_settings_field'             => 'yes',
+				'show_wpvip_field'                => 'yes',
+				'button_bg_color'                 => '',
+				'button_text_color'               => '',
+				'button_bg_hover_color'           => '',
+				'button_text_hover_color'         => '',
 			], $attr
         );
         $error_messages = apply_filters( 'get_welabs_plugin_compose_form_errors', $this->error_messages );

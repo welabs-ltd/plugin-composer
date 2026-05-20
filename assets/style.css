@@ -74,8 +74,8 @@
 }
 
 .wlb-composer-plugin-wrapper input[type="submit"] {
-    background-color: #007CF5;
-    color: white;
+    background-color: var(--wlb-btn-bg, #007CF5);
+    color: var(--wlb-btn-text, #ffffff);
     padding: 0.75rem 1.5rem;
     font-size: .875rem;
     line-height: 1.25rem;
@@ -83,7 +83,7 @@
     border: none;
     border-radius: .375rem;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
     -webkit-border-radius: .375rem;
     -moz-border-radius: .375rem;
     -ms-border-radius: .375rem;
@@ -91,7 +91,8 @@
 }
 
 .wlb-composer-plugin-wrapper input[type="submit"]:hover {
-    background-color: #4f46e5;
+    background-color: var(--wlb-btn-bg-hover, #4f46e5);
+    color: var(--wlb-btn-text-hover, var(--wlb-btn-text, #ffffff));
 }
 .wlb-composer-plugin-wrapper .form-group.wlb-submit-wrapper{
     margin-bottom: 0;

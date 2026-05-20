@@ -185,6 +185,7 @@ final class PluginComposer {
 		$this->container['assets']      = new Assets();
 		$this->container['file_system'] = new FileSystem();
 		$this->container['builder']     = new PluginBuilder( $this->get_file_system() );
+		$this->container['blocks']      = new Blocks();
 	}
 
 	/**
