@@ -23,6 +23,18 @@ You may easily generate a PSR4 auto-loading WordPress plugin by submitting a sim
 
 👉 **Official Demo Link:** Try out the [Plugin Composer](https://welabs.dev/compose-plugin/).
 
+### Gutenberg Block ###
+
+A **Plugin Composer** block is bundled (category: *Widgets*). Insert it from the block inserter to render the same form a shortcode would — no shortcode markup needed.
+
+Sidebar controls:
+
+- **Form settings** — submit button label, toggles to show/hide the *Include Plugin Settings?* and *WP VIP Support* fields.
+- **Submit button colors** — background and text color for both normal and hover states (applied via CSS variables on the form wrapper, so hover works without inline `<style>` injection).
+- **Field placeholders** — override the placeholder text for any of the eight inputs (Plugin Name, Description, Requires, License, URL, Author Name/Email/URL).
+
+The block is **dynamic** — it has no `save` output. Rendering is delegated server-side to the `[wlb_plugin_composer]` shortcode, so the form template, validation, and submission flow stay in one place. Every sidebar control maps to a shortcode attribute, so `[wlb_plugin_composer submit-text="Go" button_bg_color="#000" show_wpvip_field="no" placeholder_plugin_name="My awesome plugin"]` works identically.
+
 ### Block Development:
 
 ```
