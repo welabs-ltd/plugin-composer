@@ -47,3 +47,23 @@ npm run start
 ```
 bin/build.sh
 ```
+
+## Changelog ##
+
+### 1.5.0 ###
+- **New:** Gutenberg block (`welabs/plugin-composer`) — dynamic block that renders the existing shortcode server-side. Sidebar controls: submit button label, show/hide toggles for *Include Plugin Settings?* and *WP VIP Support* fields, submit button background/text colors (normal + hover via CSS variables), and overridable placeholders for all eight inputs.
+- **New:** Shortcode attributes mirroring every block control — `placeholder_plugin_*`, `show_settings_field`, `show_wpvip_field`, `button_bg_color` / `button_text_color` / `button_bg_hover_color` / `button_text_hover_color`.
+- **New:** `vendor_namespace` placeholder in `PluginBuilder` — rebrands `WeLabs` / `welabs` (PHP namespace, composer vendor, function prefix, CSS classes, JS strings, URLs) across the generated plugin in one shot.
+- **Fix:** Plugin zip download was returning corrupted files when an output buffer (e.g. Redis Object Cache) or gzip handler was active. The handler now clears buffers, disables compression, sends `Content-Length`, and exits after streaming.
+
+### 1.4.0 ###
+- Introduced WP VIP coding standard support.
+- Improved form UI.
+
+### 1.3.0 ###
+- Built zip filenames now include the version.
+- `get_template()` accepts template args.
+
+### 1.2.0 ###
+- React-based plugin settings scaffold with dynamic settings links and node-command injection.
+- Modernized form design.
