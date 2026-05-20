@@ -22,6 +22,7 @@ class PluginBuilder implements BuilderContract {
         'plugin_requires' => '',
         'plugin_is_settings_included' => 'no',
         'plugin_is_wpvip_supported' => 'no',
+        'vendor_namespace' => 'WeLabs',
     ];
 
     protected $required_files_and_folders = [
@@ -121,6 +122,13 @@ class PluginBuilder implements BuilderContract {
     public function get_placeholders( $plugin_name ): array {
         $plugin_name = $this->get_plugin_directory_name( $plugin_name );
         $plugin_name = str_replace( '-', ' ', $plugin_name );
+
+        $vendor = preg_replace( '/[^A-Za-z0-9]/', '', (string) ( $this->placeholders['vendor_namespace'] ?? 'WeLabs' ) );
+        if ( $vendor === '' ) {
+            $vendor = 'WeLabs';
+        }
+        $vendor_lower = strtolower( $vendor );
+
         $default = [
             'Plugin_Stub' => str_replace( ' ', '_', ucwords( $plugin_name ) ),
             'PluginStub' => str_replace( ' ', '', ucwords( $plugin_name ) ),
@@ -129,6 +137,9 @@ class PluginBuilder implements BuilderContract {
             'PLUGIN_STUB' => str_replace( ' ', '_', strtoupper( $plugin_name ) ),
             'Plugin Stub'  => ucwords( $plugin_name ),
             'plugin-stub' => str_replace( ' ', '-', strtolower( $plugin_name ) ),
+            // Vendor namespace tokens — rewritten across all stub files (PHP, composer.json, CSS, JS).
+            'WeLabs' => $vendor,
+            'welabs' => $vendor_lower,
         ];
 
         return array_merge( $default, $this->placeholders );

@@ -1,0 +1,38 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "welabs/plugin-composer",
+	"title": "Plugin Composer",
+	"category": "widgets",
+	"icon": "hammer",
+	"description": "Renders the Plugin Composer form so visitors can scaffold a WordPress plugin.",
+	"keywords": [ "plugin", "composer", "welabs", "scaffold" ],
+	"textdomain": "plugin-composer",
+	"supports": {
+		"html": false,
+		"customClassName": true,
+		"className": true
+	},
+	"attributes": {
+		"submitText": {
+			"type": "string",
+			"default": "Build Plugin"
+		},
+		"placeholderPluginName": { "type": "string", "default": "" },
+		"placeholderPluginDescription": { "type": "string", "default": "" },
+		"placeholderPluginRequires": { "type": "string", "default": "" },
+		"placeholderPluginLicense": { "type": "string", "default": "" },
+		"placeholderPluginUri": { "type": "string", "default": "" },
+		"placeholderPluginAuthorName": { "type": "string", "default": "" },
+		"placeholderPluginAuthorEmail": { "type": "string", "default": "" },
+		"placeholderPluginAuthorUri": { "type": "string", "default": "" },
+		"showSettingsField": { "type": "boolean", "default": true },
+		"showWpvipField": { "type": "boolean", "default": true },
+		"buttonBgColor": { "type": "string", "default": "" },
+		"buttonTextColor": { "type": "string", "default": "" },
+		"buttonBgHoverColor": { "type": "string", "default": "" },
+		"buttonTextHoverColor": { "type": "string", "default": "" }
+	},
+	"editorScript": "file:./index.js",
+	"style": "welabs_plugin_composer_style"
+}

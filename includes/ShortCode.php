@@ -16,6 +16,20 @@ class ShortCode {
             [
 				'class' => '',
 				'submit-text' => __( 'Build Plugin', 'plugin-composer' ),
+				'placeholder_plugin_name'         => __( 'My Plugin', 'plugin-composer' ),
+				'placeholder_plugin_description'  => __( 'Plugin desc.', 'plugin-composer' ),
+				'placeholder_plugin_requires'     => __( 'e.i woocommerce, dokan-lite', 'plugin-composer' ),
+				'placeholder_plugin_license'      => __( 'License e.g., GPL2', 'plugin-composer' ),
+				'placeholder_plugin_uri'          => 'https://company.com/my-plugin',
+				'placeholder_plugin_author_name'  => __( 'weLabs', 'plugin-composer' ),
+				'placeholder_plugin_author_email' => 'contact@welabs.dev',
+				'placeholder_plugin_author_uri'   => 'https://author.profile',
+				'show_settings_field'             => 'yes',
+				'show_wpvip_field'                => 'yes',
+				'button_bg_color'                 => '',
+				'button_text_color'               => '',
+				'button_bg_hover_color'           => '',
+				'button_text_hover_color'         => '',
 			], $attr
         );
         $error_messages = apply_filters( 'get_welabs_plugin_compose_form_errors', $this->error_messages );
@@ -68,27 +82,36 @@ class ShortCode {
 
         $plugin_folder_name = sanitize_title( $request_data['plugin_name'] );
 
-        header( 'Content-type: application/zip' ); //this could be a different header
-        header( 'Content-Disposition: attachment; filename="' . $plugin_folder_name . '.zip"' );
-
-        ignore_user_abort( true );
-
-        $context = stream_context_create();
-
-        $file = fopen( $zip_name, 'rb', false, $context );
-
-        while ( ! feof( $file ) ) {
-            echo stream_get_contents( $file, 2014 );
+        // Discard any active output buffers (e.g. Redis Object Cache, gzip handler)
+        // so cached HTML doesn't get interleaved with or appended to our zip bytes.
+        while ( ob_get_level() > 0 ) {
+            ob_end_clean();
         }
 
-        fclose( $file );
+        // Disable on-the-fly compression — gzipping application/zip corrupts the stream.
+        if ( function_exists( 'ini_set' ) ) {
+            @ini_set( 'zlib.output_compression', 'Off' ); // phpcs:ignore
+        }
+        if ( function_exists( 'apache_setenv' ) ) {
+            @apache_setenv( 'no-gzip', '1' ); // phpcs:ignore
+        }
 
-        flush();
+        ignore_user_abort( true );
+        nocache_headers();
+
+        header( 'Content-Type: application/zip' );
+        header( 'Content-Disposition: attachment; filename="' . $plugin_folder_name . '.zip"' );
+        header( 'Content-Length: ' . filesize( $zip_name ) );
+        header( 'Content-Transfer-Encoding: binary' );
+        header( 'Pragma: public' );
+
+        readfile( $zip_name );
 
         if ( file_exists( $zip_name ) ) {
             unlink( $zip_name );
         }
 
-        wp_safe_redirect( '' );
+        // Stop WordPress from rendering the page template after our binary payload.
+        exit;
     }
 }

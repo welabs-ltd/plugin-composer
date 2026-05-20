@@ -18,7 +18,7 @@ final class PluginComposer {
 	 *
 	 * @var string
 	 */
-	public $version = '1.4.0';
+	public $version = '1.5.0';
 
 	/**
 	 * Instance of self
@@ -185,6 +185,7 @@ final class PluginComposer {
 		$this->container['assets']      = new Assets();
 		$this->container['file_system'] = new FileSystem();
 		$this->container['builder']     = new PluginBuilder( $this->get_file_system() );
+		$this->container['blocks']      = new Blocks();
 	}
 
 	/**

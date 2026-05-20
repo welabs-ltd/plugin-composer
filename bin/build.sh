@@ -35,9 +35,12 @@ status "💃 Time to build the Texty Pro ZIP file 🕺"
 rm -rf "$DIR/build"
 mkdir -p "$BUILD_DIR"
 
-# Run the build.
-# status "Installing dependencies... 📦"
-# npm install
+# Build block assets into /dist
+status "Installing npm dependencies... 📦"
+npm install
+
+status "Building block assets... 👷‍♀️"
+npm run build
 
 status "Generating build... 👷‍♀️"
 

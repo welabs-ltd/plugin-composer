@@ -12,7 +12,10 @@ A WordPress plugin that **generates other WordPress plugins**. The `[wlb_plugin_
 composer install
 composer phpcs        # WPCS sniff
 composer phpcbf       # auto-fix
-bin/build.sh          # produces ../build/plugin-composer.zip
+npm install
+npm run start         # block dev (watch) -> dist/
+npm run build         # block prod build  -> dist/
+bin/build.sh          # full release: npm build + composer no-dev + zip
 ```
 
 No tests are wired up (phpunit is in `require-dev` but there's no `tests/`).
@@ -33,3 +36,7 @@ No tests are wired up (phpunit is in `require-dev` but there's no `tests/`).
 **When adding a new template variable**, update all three: `PluginBuilder::$placeholders`, `templates/compose-form.php`, and the sanitizer list in `ShortCode::handle_form_submission`.
 
 **Filters:** `welabs_pc_container_{service}`, `get_welabs_plugin_compose_form`, `get_welabs_plugin_compose_form_errors`, `welabs_plugin_composer_form_data`.
+
+## Gutenberg block
+
+`src/blocks/plugin-composer/` (built to `dist/blocks/plugin-composer/` via `@wordpress/scripts` + a `webpack.config.js` that overrides output to `dist/`). The block is dynamic — `save` returns `null`; `Blocks::render_plugin_composer` builds a `[wlb_plugin_composer ...]` string and runs `do_shortcode()`, so the form template and submission handling stay shortcode-driven. `dist/` is gitignored; `bin/build.sh` runs `npm install && npm run build` before staging.
